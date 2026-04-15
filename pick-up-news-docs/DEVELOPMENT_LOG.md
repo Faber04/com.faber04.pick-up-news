@@ -10,6 +10,38 @@ This file logs all development sessions for the PickUpNews project.
 - Issues: [Any issues encountered and resolved]
 - Next Steps: [Planned for next session]
 
+## Session: Bug Fix - RSS Parser Error
+- Date: 15 April 2026
+- Start Time: 15:00
+- End Time: 15:30
+- Duration: 30 minutes
+
+## Changes Made
+- Fixed TypeError: this.removeAllListeners is not a function error
+- Downgraded rss-parser from version 3.13.0 to 3.12.0 (stable version)
+- Cleaned node_modules and package-lock.json
+- Reinstalled dependencies with corrected rss-parser version
+- Rebuilt application with new asset files
+- Updated index.html with new asset references
+- Redeployed application to production server
+- Cleaned up old asset files from FTP server
+
+## Testing
+- Verified build process completes successfully
+- Confirmed new asset files generated with different hashes
+- Tested FTP upload of updated files
+- Validated production URL loads without errors
+
+## Issues Encountered
+- rss-parser v3.13.0 has EventEmitter compatibility issues in browser environment
+- FTP server doesn't support file deletion commands
+- Asset files renamed for FTP compatibility (no subdirectories)
+
+## Next Steps
+- Test RSS feed parsing functionality in production
+- Monitor for any remaining issues
+- Consider alternative RSS parsing solutions for better browser compatibility
+
 ---
 
 ## Session: FTP Deployment Completion

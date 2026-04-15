@@ -60,7 +60,7 @@ export const AddFeedForm = ({ onAddFeed, loading, onClose }: AddFeedFormProps) =
           </label>
           <input
             id="feed-url"
-            type="url"
+            type="text"
             value={url}
             onChange={(e) => setUrl(e.target.value)}
             placeholder="es. example.com/rss o www.example.com/feed"

@@ -240,4 +240,5 @@ export class RSSService {
       return 'https://' + url;
     }
     return url;
-  }}
+  }
+}

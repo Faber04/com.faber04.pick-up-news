@@ -33,12 +33,19 @@ export class RSSService {
 
   // Parse RSS/Atom XML directly using DOMParser
   static parseXML(xml: string): RSSItem[] {
+    // Clean up XML string - remove BOM, trim whitespace
+    xml = xml.replace(/^\uFEFF/, '').trim();
+    
     const parser = new DOMParser();
     const doc = parser.parseFromString(xml, 'application/xml');
 
     // Check for parse errors
     if (doc.querySelector('parsererror')) {
-      throw new Error('Invalid XML');
+      // Try to parse as HTML fallback for malformed XML
+      const htmlDoc = parser.parseFromString(xml, 'text/html');
+      if (!htmlDoc.body) throw new Error('Invalid XML');
+      // Return empty array for HTML (not a valid feed)
+      return [];
     }
 
     const items: RSSItem[] = [];
@@ -95,6 +102,12 @@ export class RSSService {
     if (!response.ok) throw new Error(`corsproxy HTTP error: ${response.status}`);
     const xml = await response.text();
     if (!xml || xml.trim().length === 0) throw new Error('Empty response from corsproxy');
+    
+    // Check if response is HTML (error page) instead of XML
+    if (xml.trim().toLowerCase().startsWith('<!doctype html') || xml.trim().toLowerCase().startsWith('<html')) {
+      throw new Error('corsproxy returned HTML (likely 404 or error page)');
+    }
+    
     return this.parseXML(xml);
   }
 

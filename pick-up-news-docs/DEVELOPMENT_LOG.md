@@ -10,6 +10,34 @@ This file logs all development sessions for the PickUpNews project.
 - Issues: [Any issues encountered and resolved]
 - Next Steps: [Planned for next session]
 
+## Session: CORS Fix - RSS Feed Fetching
+- Date: 15 April 2026
+- Start Time: 17:00
+- End Time: 17:20
+- Duration: 20 minutes
+
+## Changes Made
+- Implemented rss2json.com service to bypass CORS restrictions
+- Modified RSS parser to use JSON API instead of direct XML parsing
+- Simplified parser code by leveraging rss2json's structured JSON output
+- Redeployed application with CORS-compatible RSS fetching
+
+## Testing
+- Verified RSS feeds from external domains (like theguardian.com) now load without CORS errors
+- Confirmed JSON parsing works correctly with rss2json API response
+- Tested production deployment with updated assets
+
+## Issues Encountered
+- Browser CORS policy blocked direct RSS feed requests
+- rss2json service provides reliable CORS-free RSS to JSON conversion
+
+## Next Steps
+- Test various RSS feed formats with the new service
+- Monitor rss2json service reliability and rate limits
+- Consider fallback options if rss2json becomes unavailable
+
+---
+
 ## Session: Final Bug Fix - Custom RSS Parser Implementation
 - Date: 15 April 2026
 - Start Time: 16:00

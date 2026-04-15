@@ -19,3 +19,12 @@ This file documents all errors encountered during development, their solutions, 
 - Prevention: Always use browser-compatible libraries for client-side applications. Test RSS parsing functionality thoroughly before deployment
 
 ---
+
+## Error: CORS Policy Block
+- Date: 15 April 2026
+- Error Description: Browser blocked RSS feed requests due to CORS policy when trying to fetch feeds from external domains like theguardian.com
+- Cause: Direct fetch requests from browser to external RSS feeds blocked by same-origin policy
+- Solution: Implemented rss2json.com service as CORS proxy - converts RSS feeds to JSON and handles CORS automatically
+- Prevention: Always use CORS-compatible services or proxies for external API calls in browser applications
+
+---

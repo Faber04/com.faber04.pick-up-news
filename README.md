@@ -1,4 +1,4 @@
-# �️ PickUpNews
+# <img src="public/vite.svg" width="36" height="36" align="absmiddle" /> PickUpNews
 
 **Un'applicazione web per leggere feed RSS in un'unica interfaccia elegante e intuitiva.**
 

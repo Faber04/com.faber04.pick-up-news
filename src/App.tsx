@@ -48,8 +48,9 @@ function App() {
       <div className="max-w-6xl mx-auto px-4 py-8">
         {/* Header */}
         <header className="text-center mb-8">
-          <h1 className="text-4xl font-bold text-gray-800 mb-2">
-            �️ PickUpNews
+          <h1 className="text-4xl font-bold text-gray-800 mb-2 flex items-center justify-center gap-3">
+            <img src={`${import.meta.env.BASE_URL}vite.svg`} alt="PN" className="w-10 h-10" />
+            PickUpNews
           </h1>
           <p className="text-gray-600">
             Leggi i tuoi feed RSS preferiti in un'unica interfaccia

@@ -3,11 +3,9 @@ import { RSSFeed } from '../types';
 interface FeedListProps {
   feeds: RSSFeed[];
   onRemoveFeed: (feedId: string) => void;
-  onRefresh: () => Promise<void>;
-  loading: boolean;
 }
 
-export const FeedList = ({ feeds, onRemoveFeed, onRefresh, loading }: FeedListProps) => {
+export const FeedList = ({ feeds, onRemoveFeed }: FeedListProps) => {
   if (feeds.length === 0) {
     return (
       <div className="text-center py-8 text-gray-500">
@@ -19,16 +17,6 @@ export const FeedList = ({ feeds, onRemoveFeed, onRefresh, loading }: FeedListPr
 
   return (
     <div className="mb-6">
-      <div className="flex justify-end mb-4">
-        <button
-          onClick={onRefresh}
-          disabled={loading}
-          className="bg-green-500 hover:bg-green-600 disabled:bg-green-300 text-white px-4 py-2 rounded-lg font-medium transition-colors"
-        >
-          {loading ? 'Aggiornando...' : '🔄 Aggiorna'}
-        </button>
-      </div>
-
       <div className="space-y-2">
         {feeds.map((feed) => (
           <div

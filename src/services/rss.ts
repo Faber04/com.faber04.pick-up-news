@@ -235,6 +235,7 @@ export class RSSService {
 
   static normalizeUrl(url: string): string {
     // If URL doesn't start with http:// or https://, add https://
+    // Handles both full URLs and shorthand like "www.example.com" or "example.com"
     if (!url.startsWith('http://') && !url.startsWith('https://')) {
       return 'https://' + url;
     }

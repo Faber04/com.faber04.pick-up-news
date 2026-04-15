@@ -12,6 +12,36 @@ This file logs all development sessions for the PickUpNews project.
 
 ---
 
+## Session: FTP Deployment Credentials Setup
+- Date: 15 April 2026
+- Start Time: 12:15
+- End Time: 12:30
+- Duration: 15 minutes
+
+## Changes Made
+- Created INTERNAL/ directory for sensitive deployment files
+- Added INTERNAL/ to .gitignore to prevent accidental commits
+- Created DEPLOY_CREDENTIALS.md with FTP credentials for Aruba hosting
+- Documented FTP server details, credentials, and deployment instructions
+- Updated project state documentation to reflect FTP setup completion
+
+## Testing
+- Verified .gitignore properly excludes INTERNAL/ directory
+- Confirmed sensitive files are not tracked by Git
+- Committed and pushed .gitignore changes to GitHub
+
+## Issues Encountered
+- None
+
+## Next Steps
+- Test application with real RSS feeds
+- Add search and filtering functionality
+- Improve error handling and user feedback
+- Add loading animations and better UX
+- Perform first FTP deployment
+
+---
+
 ## Session: README Documentation Update
 - Date: 15 April 2026
 - Start Time: 11:45

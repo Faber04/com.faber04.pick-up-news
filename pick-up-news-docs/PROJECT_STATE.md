@@ -11,6 +11,7 @@
 - UI components created and integrated.
 - State management with localStorage persistence.
 - Development server running and tested.
+- FTP deployment credentials configured and secured.
 
 ## Objectives
 - Implement RSS feed management (add, remove feeds). ✅ COMPLETED
@@ -20,12 +21,12 @@
 - Integrate RSS parsing. ✅ COMPLETED
 
 ## Next Steps
-- Test with real RSS feeds.
-- Add search/filter functionality.
-- Improve error handling and loading states.
-- Add more UI polish and animations.
+- Test application with real RSS feeds.
+- Add search and filtering functionality.
+- Improve error handling and user feedback.
+- Add loading animations and better UX.
 - Create GitHub repository `com.faber04.app.pick-up-news`. ✅ COMPLETED
-- Set up FTP deployment configuration.
+- Set up FTP deployment configuration. ✅ COMPLETED
 
 ## Completed Features
 - Project scaffolding.
@@ -36,6 +37,8 @@
 - Core RSS functionality.
 - Complete UI implementation.
 - State management and persistence.
+- Comprehensive README documentation.
+- FTP deployment credentials setup.
 
 ## Known Issues
 - None at this time.

@@ -20,10 +20,22 @@ PickUpNews ti permette di aggregare e leggere facilmente tutti i tuoi feed RSS p
 - **Frontend Framework**: React 18 con TypeScript
 - **Build Tool**: Vite 4 (sviluppo rapido e build ottimizzato)
 - **Styling**: Tailwind CSS 3 (utility-first CSS framework)
-- **RSS Parsing**: Parser personalizzato con API rss2json.com (per gestire CORS e compatibilità browser)
+- **RSS Parsing**: Parser XML personalizzato via `DOMParser` nativo del browser (supporta RSS 2.0 e Atom)
 - **Routing**: React Router DOM (per future espansioni)
 - **State Management**: React Hooks + localStorage
 - **Type Checking**: TypeScript 5 (type safety completa)
+
+## 🌐 Architettura RSS e gestione CORS
+
+I feed RSS vengono letti direttamente dal browser usando una catena di proxy/fallback a 3 livelli per massimizzare la disponibilità:
+
+| Livello | Servizio | Metodo | Limite item |
+|---------|----------|--------|-------------|
+| 1° (primario) | [api.allorigins.win](https://api.allorigins.win) | Restituisce XML raw → parse con `DOMParser` | Tutti gli item del feed |
+| 2° (fallback) | [corsproxy.io](https://corsproxy.io) | Restituisce XML raw → parse con `DOMParser` | Tutti gli item del feed |
+| 3° (fallback finale) | [rss2json.com](https://rss2json.com) | Restituisce JSON pre-parsato | Max 10 item (tier gratuito) |
+
+Ogni chiamata è protetta da un timeout di **10 secondi** tramite `AbortController`: se un proxy non risponde entro il limite, si passa automaticamente al successivo. Gli item vengono sempre ordinati per data decrescente (più recenti prima) con normalizzazione cross-browser del formato data.
 
 ## 📋 Prerequisiti
 

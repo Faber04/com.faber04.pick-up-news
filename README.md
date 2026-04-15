@@ -1,4 +1,4 @@
-# 📰 PickUpNews
+# �️ PickUpNews
 
 **Un'applicazione web per leggere feed RSS in un'unica interfaccia elegante e intuitiva.**
 

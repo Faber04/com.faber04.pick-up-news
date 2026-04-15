@@ -58,7 +58,7 @@ npm run build
 I file ottimizzati saranno nella cartella `dist/`
 
 ### 4. Deployment Online
-L'applicazione sarà disponibile su: `https://faber04.com/app/pick-up-news/`
+L'applicazione sarà disponibile su: `https://www.faber04.com/app/pick-up-news/`
 
 ## 📖 Come Usare PickUpNews
 

@@ -46,12 +46,10 @@ Ogni chiamata è protetta da un timeout di **10 secondi** tramite `AbortControll
   - Riduce dipendenze esterne e semplifica la catena di fallback
   - Catena: corsproxy.io → rss2json.com
 
-### v1.0.1
--  Icon alignment & branding consistency
+### v1.1.0
+- 🎯 Icon alignment & branding consistency
   - Allineamento icone in header e README
   - Coerenza visiva con branding PN
-
-### v1.1.0
 - � Layout dark mode / light mode
 - �🌈 Restyling basato su scala colori logo
   - Palette colori derivata dal logo PickUpNews

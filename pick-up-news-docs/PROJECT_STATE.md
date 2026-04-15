@@ -33,15 +33,13 @@
    - Simplify fallback chain to: corsproxy.io → rss2json.com
    - Update documentation accordingly
 
-### v1.0.1
+### v1.1.0
 1. Icon alignment & branding consistency across app
    - Header icons alignment
    - README icon consistency
    - Coerenza branding PN
-
-### v1.1.0
-1. Implement dark mode / light mode toggle in settings or header
-2. Restyling based on app logo color palette
+2. Implement dark mode / light mode toggle in settings or header
+3. Restyling based on app logo color palette
    - Derive color scheme from PickUpNews logo
    - Apply consistently across UI components
 

@@ -12,6 +12,35 @@ This file logs all development sessions for the PickUpNews project.
 
 ---
 
+## Session: FTP Directory Path Correction
+- Date: 15 April 2026
+- Start Time: 12:45
+- End Time: 13:00
+- Duration: 15 minutes
+
+## Changes Made
+- Updated DEPLOY_CREDENTIALS.md with correct FTP deployment directory
+- Set deployment path to /faber04.com/app/pick-up-news/ (not root)
+- Added security warning not to deploy to root directory
+- Updated README.md with correct production URL
+- Enhanced deployment instructions with proper directory structure
+
+## Testing
+- Verified build still works after documentation changes
+- Committed and pushed changes to GitHub
+
+## Issues Encountered
+- None
+
+## Next Steps
+- Test application with real RSS feeds
+- Add search and filtering functionality
+- Improve error handling and user feedback
+- Add loading animations and better UX
+- Perform first FTP deployment to /faber04.com/app/pick-up-news/
+
+---
+
 ## Session: FTP Deployment Credentials Setup
 - Date: 15 April 2026
 - Start Time: 12:15

@@ -1,40 +1,121 @@
-# PickUpNews
+# 📰 PickUpNews
 
-A React webapp for reading RSS feeds. Users can manually add RSS feeds and view news by site or chronologically.
+**Un'applicazione web per leggere feed RSS in un'unica interfaccia elegante e intuitiva.**
 
-## Features
+PickUpNews ti permette di aggregare e leggere facilmente tutti i tuoi feed RSS preferiti. Aggiungi manualmente i tuoi feed RSS, visualizza le news in ordine cronologico o raggruppate per sito, e leggi gli articoli completi con un semplice click.
 
-- Manual RSS feed management
-- View news by individual site or all feeds together chronologically
-- Essential news details on home page (title, description up to 120 chars, date, source)
-- Full news view on click/tap
-- Responsive design
+## ✨ Caratteristiche Principali
 
-## Tech Stack
+- **📡 Gestione Feed RSS**: Aggiungi e rimuovi facilmente feed RSS manualmente
+- **📅 Visualizzazione Cronologica**: Vedi tutte le news ordinate per data (più recenti prima)
+- **🏷️ Visualizzazione per Sito**: Raggruppa le news per fonte/testata
+- **📱 Design Responsivo**: Perfetto su desktop, tablet e mobile
+- **💾 Persistenza Locale**: I tuoi feed vengono salvati automaticamente nel browser
+- **🔍 Anteprima Intelligente**: Descrizioni troncate a 120 caratteri per una lettura veloce
+- **📖 Lettura Completa**: Modal con articolo completo e link originale
+- **⚡ Performance**: Caricamento veloce grazie a Vite e ottimizzazioni React
 
-- React 18
-- TypeScript
-- Vite
-- Tailwind CSS
-- RSS Parser
-- React Router
+## 🛠️ Tecnologie Utilizzate
 
-## Getting Started
+- **Frontend Framework**: React 18 con TypeScript
+- **Build Tool**: Vite 4 (sviluppo rapido e build ottimizzato)
+- **Styling**: Tailwind CSS 3 (utility-first CSS framework)
+- **RSS Parsing**: rss-parser (parsing affidabile di feed RSS/Atom)
+- **Routing**: React Router DOM (per future espansioni)
+- **State Management**: React Hooks + localStorage
+- **Type Checking**: TypeScript 5 (type safety completa)
 
-1. Clone the repository
-2. Install dependencies: `npm install`
-3. Start development server: `npm run dev`
-4. Build for production: `npm run build`
+## 📋 Prerequisiti
 
-## Project Structure
+- **Node.js**: Versione 18.0.0 o superiore
+- **npm**: Versione 8.0.0 o superiore (viene con Node.js)
 
-- `src/components/`: Reusable UI components
-- `src/pages/`: Page components
-- `src/services/`: API and RSS parsing services
-- `src/types/`: TypeScript definitions
-- `src/utils/`: Utility functions
-- `pick-up-news-docs/`: Project documentation
+## 🚀 Installazione e Avvio
 
-## Documentation
+### 1. Clona il Repository
+```bash
+git clone https://github.com/Faber04/com.faber04.pick-up-news.git
+cd com.faber04.pick-up-news
+```
 
-See `pick-up-news-docs/` for detailed project documentation including agent instructions, development logs, and project state.
+### 2. Installa le Dipendenze
+```bash
+npm install
+```
+
+### 3. Avvia il Server di Sviluppo
+```bash
+npm run dev
+```
+
+L'applicazione sarà disponibile su `http://localhost:5173/`
+
+### 4. Build per la Produzione
+```bash
+npm run build
+```
+
+I file ottimizzati saranno nella cartella `dist/`
+
+## 📖 Come Usare PickUpNews
+
+### Aggiungere un Feed RSS
+1. Clicca sul pulsante **"+ Aggiungi Feed RSS"**
+2. Inserisci il nome del feed (es. "Corriere della Sera")
+3. Inserisci l'URL del feed RSS
+4. Clicca **"Aggiungi Feed"**
+
+### Visualizzare le News
+- **Cronologico**: Vedi tutte le news ordinate per data
+- **Per Sito**: Raggruppa le news per testata/fonte
+
+### Leggere gli Articoli
+- Clicca su qualsiasi notizia per aprire il modal con il contenuto completo
+- Usa il pulsante "Leggi l'articolo completo" per andare al sito originale
+
+## 📁 Struttura del Progetto
+
+```
+com.faber04.pick-up-news/
+├── public/                 # File statici
+├── src/
+│   ├── components/         # Componenti React riutilizzabili
+│   │   ├── AddFeedForm.tsx # Form per aggiungere feed
+│   │   ├── FeedList.tsx    # Lista dei feed configurati
+│   │   ├── NewsList.tsx    # Lista delle news
+│   │   ├── ViewControls.tsx # Controlli vista (cronologico/per sito)
+│   │   └── NewsDetailModal.tsx # Modal dettaglio notizia
+│   ├── hooks/              # Custom React hooks
+│   │   └── useAppState.ts  # Hook gestione stato app
+│   ├── services/           # Servizi e API
+│   │   └── rss.ts          # Servizio parsing RSS
+│   ├── types/              # Definizioni TypeScript
+│   │   └── index.ts        # Tipi per RSS e stato app
+│   └── utils/              # Utilità helper
+├── pick-up-news-docs/      # Documentazione progetto
+│   ├── AGENT_INSTRUCTIONS.md
+│   ├── DEVELOPMENT_LOG.md
+│   ├── ERROR_LOG.md
+│   ├── PROJECT_STATE.md
+│   └── SESSION_TEMPLATE.md
+└── README.md
+```
+
+## 🔧 Script Disponibili
+
+- `npm run dev` - Avvia server di sviluppo
+- `npm run build` - Build per produzione
+- `npm run preview` - Anteprima build produzione
+- `npm run lint` - Esegue ESLint per controllo codice
+
+## 🤝 Contributi
+
+Questo progetto è sviluppato da @Faber04. Sentiti libero di aprire issue per segnalare bug o suggerire miglioramenti!
+
+## 📄 Licenza
+
+Questo progetto è distribuito sotto licenza MIT.
+
+---
+
+**Sviluppato da @Faber04**

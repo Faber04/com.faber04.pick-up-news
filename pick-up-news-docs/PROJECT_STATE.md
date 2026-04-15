@@ -16,6 +16,7 @@
 - Critical bug (removeAllListeners error) resolved with custom browser-compatible RSS parser ✅ COMPLETED
 - CORS issues resolved with rss2json.com proxy service ✅ COMPLETED
 - HTML rendering in news descriptions fixed ✅ COMPLETED
+- Page title updated to "Pick-Up News" ✅ COMPLETED
 
 ## Objectives
 - Implement RSS feed management (add, remove feeds). ✅ COMPLETED

@@ -10,6 +10,29 @@ This file logs all development sessions for the PickUpNews project.
 - Issues: [Any issues encountered and resolved]
 - Next Steps: [Planned for next session]
 
+## Session: Title Update and Republish
+- Date: 15 April 2026
+- Start Time: 18:00
+- End Time: 18:05
+- Duration: 5 minutes
+
+## Changes Made
+- Updated page title from "Vite + React + TS" to "Pick-Up News"
+- Rebuilt application with new title
+- Republished to production server
+
+## Testing
+- Verified title appears correctly in browser tab
+- Confirmed application loads properly with updated title
+
+## Issues Encountered
+- None
+
+## Next Steps
+- Application is ready for use with proper branding
+
+---
+
 ## Session: HTML Rendering Fix - News Descriptions
 - Date: 15 April 2026
 - Start Time: 17:30

@@ -50,8 +50,8 @@ Ogni chiamata è protetta da un timeout di **10 secondi** tramite `AbortControll
 - 🎯 Icon alignment & branding consistency
   - Allineamento icone in header e README
   - Coerenza visiva con branding PN
-- � Layout dark mode / light mode
-- �🌈 Restyling basato su scala colori logo
+- 🎨 Layout dark mode / light mode
+- 🌈 Restyling basato su scala colori logo
   - Palette colori derivata dal logo PickUpNews
   - Applicazione coerente nell'intera UI
 

@@ -12,6 +12,35 @@ This file logs all development sessions for the PickUpNews project.
 
 ---
 
+## Session: Production URL Correction
+- Date: 15 April 2026
+- Start Time: 13:15
+- End Time: 13:30
+- Duration: 15 minutes
+
+## Changes Made
+- Corrected production URL from faber04.com to www.faber04.com
+- Updated README.md with correct production URL
+- Updated INTERNAL/DEPLOY_CREDENTIALS.md with proper directory structure
+- Set deployment path to /www.faber04.com/app/pick-up-news/
+- Updated access URL to https://www.faber04.com/app/pick-up-news/
+
+## Testing
+- Verified build still works after URL changes
+- Committed and pushed changes to GitHub
+
+## Issues Encountered
+- None
+
+## Next Steps
+- Test application with real RSS feeds
+- Add search and filtering functionality
+- Improve error handling and user feedback
+- Add loading animations and better UX
+- Perform first FTP deployment to /www.faber04.com/app/pick-up-news/
+
+---
+
 ## Session: FTP Directory Path Correction
 - Date: 15 April 2026
 - Start Time: 12:45

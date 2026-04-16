@@ -70,7 +70,7 @@ Ogni chiamata è protetta da un timeout di **10 secondi** tramite `AbortControll
   - Validazione URL in tempo reale
   - Salvataggio delle modifiche con conferma
 
-### v1.3.0 JSON Feed Auto-Detection
+### v1.3.0
 - 🔍 Auto-detect JSON feeds from websites
   - 🔄 Fallback to RSS/Atom if JSON unavailable
   - ✏️ Manual feed URL input if auto-detection fails

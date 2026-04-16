@@ -31,6 +31,7 @@
 **v1.0.0** (Commit 70542e5) — Removed api.allorigins.win proxy, simplified CORS chain
 **v1.1.1** (Commit 938358d) — URL parsing, UI alignment, XML robustness
 **v1.2.0** (Commit UNRELEASED) — Icon alignment, dark mode, color palette restyling
+**v1.4.0** (PLANNED) — Settings page, credits, mobile modal metadata layout
 
 ## Next Steps (Roadmap)
 
@@ -76,6 +77,16 @@
   - Fallback to RSS/Atom if JSON unavailable
   - Manual feed URL input if auto-detection fails
   - Support for multiple feed format detection
+
+### v1.4.0 (PLANNED)
+1. Creazione pagina impostazioni
+2. Credits nella pagina impostazioni
+   - App creata da Faber04 con link al profilo GitHub
+   - Numero versione
+   - Copyright e anno
+3. Aggiustamento layout mobile
+   - Nella modale dell'articolo selezionato le info (testata, data) vanno a capo
+   - Sostituire il formato data con `DD/MM/YY (HH:MM)`
 
 ## Completed Features
 - Project scaffolding.

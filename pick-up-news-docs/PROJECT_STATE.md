@@ -32,6 +32,7 @@
 **v1.1.1** (Commit 938358d) — URL parsing, UI alignment, XML robustness
 **v1.2.0** (Commit UNRELEASED) — Icon alignment, dark mode, color palette restyling
 **v1.4.0** (PLANNED) — Settings page, credits, mobile modal metadata layout
+**v2.0.0** (PLANNED) — User registration
 
 ## Next Steps (Roadmap)
 
@@ -87,6 +88,9 @@
 3. Mobile layout adjustment
    - In the selected article modal, metadata (source, date) wraps onto multiple lines
    - Replace the date format with `DD/MM/YY (HH:MM)`
+
+### v2.0.0 (PLANNED)
+1. User registration
 
 ## Completed Features
 - Project scaffolding.

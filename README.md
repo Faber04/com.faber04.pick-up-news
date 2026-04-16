@@ -86,6 +86,9 @@ Each call is protected by a **10-second timeout** using `AbortController`: if a 
   - In the selected article modal, metadata (source, date) wraps onto multiple lines
   - Compact date format: `DD/MM/YY (HH:MM)`
 
+### v2.0.0
+- 👤 User registration
+
 ## Prerequisites
 
 - **Node.js**: Version 18.0.0 or higher

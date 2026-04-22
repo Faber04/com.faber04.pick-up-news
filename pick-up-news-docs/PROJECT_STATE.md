@@ -43,7 +43,7 @@
 **v1.2.2** (Commit UNRELEASED) — Drag & drop sorting + by-site order alignment
 **v1.2.3** (Commit UNRELEASED) — Mobile feed layout fix + touch DnD + edit refresh timestamp
 **v1.4.0** (PLANNED) — Settings page, credits, mobile modal metadata layout
-**v2.0.0** (PLANNED) — User registration
+**v2.0.0** (PLANNED) — Export/Import feeds
 
 ## Next Steps (Roadmap)
 
@@ -118,7 +118,14 @@
    - Replace the date format with `DD/MM/YY (HH:MM)`
 
 ### v2.0.0 (PLANNED)
-1. User registration
+1. Export feeds to JSON file
+   - All feeds exported with title and URL
+   - Download as JSON file with timestamp
+2. Import feeds from JSON file
+   - Load previously exported file
+   - Feeds added to end of existing feeds list
+   - Duplicate detection by feed URL
+   - Feeds with duplicate URL are skipped (not added)
 
 ## Completed Features
 - Project scaffolding.

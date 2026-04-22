@@ -102,7 +102,13 @@ Each call is protected by a **10-second timeout** using `AbortController`: if a 
   - Compact date format: `DD/MM/YY (HH:MM)`
 
 ### v2.0.0
-- 👤 User registration
+- � Export feeds to JSON file
+  - Download all feeds with title and URL as a JSON file
+- 📤 Import feeds from JSON file
+  - Load previously exported feeds
+  - Feeds added to the end of existing feeds list
+  - Duplicate detection by feed URL
+  - Feeds with duplicate URL are skipped
 
 ## Prerequisites
 

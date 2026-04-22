@@ -9,6 +9,8 @@ PickUpNews allows you to easily aggregate and read all your favorite RSS feeds. 
 ## ✨ Key Features
 
 - **📡 RSS Feed Management**: Easily add and remove RSS feeds manually
+- **↕️ Feed Ordering**: Reorder feeds in the Feeds page and keep order persisted in localStorage
+- **✏️ Feed Editing**: Edit feed name and URL with real-time URL validation and save confirmation
 - **📅 Chronological View**: See all news sorted by date (most recent first)
 - **🏷️ Site View**: Group news by source/site
 - **📱 Responsive Design**: Perfect on desktop, tablet, and mobile
@@ -61,11 +63,11 @@ Each call is protected by a **10-second timeout** using `AbortController`: if a 
   - ✅ Color palette derived from the PickUpNews logo
   - ✅ Consistent application throughout the UI
 
-### v1.2.1
-- 📋 Feed sorting in the Feeds section
-  - Ability to reorder feeds via drag & drop or arrow buttons
+### v1.2.1 ✅
+- ✅ Feed sorting in the Feeds section
+  - Reorder feeds via up/down arrow buttons
   - Automatic order saving in localStorage
-- ✏️ Edit RSS feeds
+- ✅ RSS feed editing
   - Edit mode for each feed's name and URL
   - Real-time URL validation
   - Save changes with confirmation
@@ -129,7 +131,7 @@ The application will be available at: `https://www.faber04.com/app/pick-up-news/
 ### Navigation
 The app has two sections accessible from the header:
 - **🏠 Home** — the list of news from your feeds
-- **📡 Feeds** — RSS feed management (add and remove)
+- **📡 Feeds** — RSS feed management (add, reorder, edit, remove)
 
 ### Adding an RSS Feed
 1. Go to the **Feeds** section (header at the top right)
@@ -150,6 +152,18 @@ From the **Home** section, you can choose two viewing modes:
 ### Removing a Feed
 1. Go to the **Feeds** section
 2. Click on the 🗑️ icon next to the feed to remove
+
+### Reordering Feeds
+1. Go to the **Feeds** section
+2. Use **↑** or **↓** next to a feed to move it up or down
+3. The new order is saved automatically
+
+### Editing a Feed
+1. Go to the **Feeds** section
+2. Click the **✏️** icon next to the feed
+3. Update name and/or URL
+4. Verify the URL status in real time
+5. Click **Salva** and confirm
 
 ## 📁 Project Structure
 

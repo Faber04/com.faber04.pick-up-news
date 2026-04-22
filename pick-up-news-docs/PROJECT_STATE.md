@@ -17,6 +17,8 @@
 - CORS issues resolved with rss2json.com proxy service ✅ COMPLETED
 - HTML rendering in news descriptions fixed ✅ COMPLETED
 - Page title updated to "Pick-Up News" ✅ COMPLETED
+- Feed sorting with persistent order in localStorage ✅ COMPLETED
+- Feed editing with real-time URL validation and save confirmation ✅ COMPLETED
 
 ## Objectives
 - Implement RSS feed management (add, remove feeds). ✅ COMPLETED
@@ -31,6 +33,7 @@
 **v1.0.0** (Commit 70542e5) — Removed api.allorigins.win proxy, simplified CORS chain
 **v1.1.1** (Commit 938358d) — URL parsing, UI alignment, XML robustness
 **v1.2.0** (Commit UNRELEASED) — Icon alignment, dark mode, color palette restyling
+**v1.2.1** (Commit UNRELEASED) — Feed sorting + feed editing
 **v1.4.0** (PLANNED) — Settings page, credits, mobile modal metadata layout
 **v2.0.0** (PLANNED) — User registration
 
@@ -64,11 +67,11 @@
    - Color scheme derived from PickUpNews mark
    - Applied consistently across UI components
 
-### v1.2.1 (NEXT)
-1. Feed sorting capability in Feeds section
-   - Drag & drop or arrow buttons for reordering feeds
+### v1.2.1 ✅ COMPLETED
+1. ✅ Feed sorting capability in Feeds section
+   - Reordering feeds via arrow buttons
    - Automatic order persistence in localStorage
-2. Feed editing capability
+2. ✅ Feed editing capability
    - Edit mode for feed name and URL
    - Real-time URL validation
    - Save changes with confirmation

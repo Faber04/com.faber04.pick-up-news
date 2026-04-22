@@ -2,6 +2,32 @@
 
 This file logs all development sessions for the PickUpNews project.
 
+## Session: v1.2.1 Feed Sorting + Feed Editing
+- Date: 22 April 2026
+- Start Time: 11:00
+- End Time: 11:35
+- Duration: 35 minutes
+
+## Changes Made
+- Implemented feed sorting in Feeds page using up/down controls per feed
+- Added feed reorder persistence via existing localStorage synchronization in app state
+- Implemented feed editing mode in FeedList (title + URL)
+- Added real-time URL validation during editing using existing URL validator
+- Added save confirmation flow before applying feed edits
+- Updated app state with new `moveFeed` and `updateFeed` actions
+- Wired new actions through App and FeedsPage
+- Updated README and PROJECT_STATE to reflect v1.2.1 completion
+
+## Testing
+- Ran production build successfully (`npm run build`)
+- Verified TypeScript compilation and Vite bundling without errors
+
+## Issues Encountered
+- None
+
+## Next Steps
+- Proceed with v1.3.0 JSON feed auto-detection
+
 ## Session: v1.2.0 Branding + Dark Mode + Palette Restyle
 - Date: 16 April 2026
 - Start Time: 10:10

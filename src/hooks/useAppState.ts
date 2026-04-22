@@ -98,6 +98,65 @@ export const useAppState = () => {
     }));
   }, []);
 
+  const moveFeed = useCallback((feedId: string, direction: 'up' | 'down') => {
+    setState(prev => {
+      const currentIndex = prev.feeds.findIndex(feed => feed.id === feedId);
+      if (currentIndex === -1) {
+        return prev;
+      }
+
+      const targetIndex = direction === 'up' ? currentIndex - 1 : currentIndex + 1;
+      if (targetIndex < 0 || targetIndex >= prev.feeds.length) {
+        return prev;
+      }
+
+      const reorderedFeeds = [...prev.feeds];
+      const [movedFeed] = reorderedFeeds.splice(currentIndex, 1);
+      reorderedFeeds.splice(targetIndex, 0, movedFeed);
+
+      return {
+        ...prev,
+        feeds: reorderedFeeds
+      };
+    });
+  }, []);
+
+  const updateFeed = useCallback((feedId: string, updates: { title: string; url: string }) => {
+    if (!RSSService.validateFeedUrl(updates.url)) {
+      setState(prev => ({ ...prev, error: 'Invalid RSS feed URL' }));
+      return false;
+    }
+
+    const normalizedUrl = RSSService.normalizeUrl(updates.url);
+
+    setState(prev => ({
+      ...prev,
+      feeds: prev.feeds.map(feed => {
+        if (feed.id !== feedId) {
+          return feed;
+        }
+
+        return {
+          ...feed,
+          title: updates.title.trim(),
+          url: normalizedUrl,
+          error: undefined
+        };
+      }),
+      news: prev.news.map(news =>
+        news.feedId === feedId
+          ? {
+              ...news,
+              feedTitle: updates.title.trim()
+            }
+          : news
+      ),
+      error: null
+    }));
+
+    return true;
+  }, []);
+
   const refreshNews = useCallback(async () => {
     if (state.feeds.length === 0) return;
 
@@ -152,6 +211,8 @@ export const useAppState = () => {
     setFilterOptions,
     addFeed,
     removeFeed,
+    moveFeed,
+    updateFeed,
     refreshNews,
     getFilteredNews,
     clearError

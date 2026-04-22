@@ -7,6 +7,8 @@ interface FeedsPageProps {
   loading: boolean;
   onAddFeed: (url: string, title: string) => Promise<void>;
   onRemoveFeed: (feedId: string) => void;
+  onMoveFeed: (feedId: string, direction: 'up' | 'down') => void;
+  onEditFeed: (feedId: string, updates: { title: string; url: string }) => boolean;
   onRefresh: () => Promise<void>;
 }
 
@@ -15,6 +17,8 @@ export const FeedsPage = ({
   loading,
   onAddFeed,
   onRemoveFeed,
+  onMoveFeed,
+  onEditFeed,
   onRefresh,
 }: FeedsPageProps) => {
   const [showForm, setShowForm] = useState(false);
@@ -55,6 +59,8 @@ export const FeedsPage = ({
       <FeedList
         feeds={feeds}
         onRemoveFeed={onRemoveFeed}
+        onMoveFeed={onMoveFeed}
+        onEditFeed={onEditFeed}
       />
     </div>
   );

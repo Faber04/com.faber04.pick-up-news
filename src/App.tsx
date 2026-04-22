@@ -20,6 +20,8 @@ function App() {
     toggleTheme,
     addFeed,
     removeFeed,
+    moveFeed,
+    updateFeed,
     refreshNews,
     getFilteredNews,
     clearError
@@ -78,6 +80,8 @@ function App() {
           loading={state.loading}
           onAddFeed={addFeed}
           onRemoveFeed={removeFeed}
+          onMoveFeed={moveFeed}
+          onEditFeed={updateFeed}
           onRefresh={refreshNews}
         />
       ) : (

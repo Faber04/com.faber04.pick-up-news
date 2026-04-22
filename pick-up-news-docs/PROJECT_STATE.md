@@ -126,6 +126,7 @@
    - Feeds added to end of existing feeds list
    - Duplicate detection by feed URL
    - Feeds with duplicate URL are skipped (not added)
+   - "Carica Feed" button in "Gestione Feed RSS" between "Aggiungi Feed" and "Aggiorna"
 
 ## Completed Features
 - Project scaffolding.

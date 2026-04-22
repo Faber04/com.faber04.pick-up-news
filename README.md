@@ -93,6 +93,7 @@ Each call is protected by a **10-second timeout** using `AbortController`: if a 
 
 ### v1.4.0
 - ⚙️ Settings page creation
+  - "Carica Feed" button placed in the "Gestione Feed RSS" section between "Aggiungi Feed" and "Aggiorna"
 - 🙌 Credits in the settings page
   - App created by Faber04 with link to the GitHub profile
   - Version number

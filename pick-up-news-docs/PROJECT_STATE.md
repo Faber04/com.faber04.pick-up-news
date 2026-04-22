@@ -21,6 +21,9 @@
 - Feed editing with real-time URL validation and save confirmation ✅ COMPLETED
 - Feed sorting via drag & drop in Feeds ✅ COMPLETED
 - Home "Per Sito" order aligned with Feeds sorting ✅ COMPLETED
+- Mobile Feeds layout fixed for action controls placement ✅ COMPLETED
+- Touch drag & drop support in Feeds sorting ✅ COMPLETED
+- Feed edit now reloads feed and updates "Ultimo aggiornamento" ✅ COMPLETED
 
 ## Objectives
 - Implement RSS feed management (add, remove feeds). ✅ COMPLETED
@@ -37,6 +40,7 @@
 **v1.2.0** (Commit UNRELEASED) — Icon alignment, dark mode, color palette restyling
 **v1.2.1** (Commit UNRELEASED) — Feed sorting + feed editing
 **v1.2.2** (Commit UNRELEASED) — Drag & drop sorting + by-site order alignment
+**v1.2.3** (Commit UNRELEASED) — Mobile feed layout fix + touch DnD + edit refresh timestamp
 **v1.4.0** (PLANNED) — Settings page, credits, mobile modal metadata layout
 **v2.0.0** (PLANNED) — User registration
 
@@ -85,6 +89,15 @@
    - Persistent order in localStorage
 2. ✅ Home "Per Sito" respects configured feed order
    - Feed groups are rendered in the same order as Feeds configuration
+
+### v1.2.3 ✅ COMPLETED
+1. ✅ Mobile layout fix in Feeds page
+   - Sorting/action controls moved below metadata and "Ultimo aggiornamento"
+2. ✅ Touch drag & drop support in Feeds
+   - Feed reordering works on mobile touch interactions
+3. ✅ Feed edit save refresh
+   - Edited feed is reloaded after save
+   - "Ultimo aggiornamento" is refreshed on successful reload
 
 ### v1.3.0 JSON Feed Auto-Detection (PLANNED)
 1.  Auto-detect JSON feeds from websites

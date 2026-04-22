@@ -11,7 +11,9 @@ PickUpNews allows you to easily aggregate and read all your favorite RSS feeds. 
 - **📡 RSS Feed Management**: Easily add and remove RSS feeds manually
 - **↕️ Feed Ordering**: Reorder feeds in the Feeds page and keep order persisted in localStorage
 - **🖱️ Drag & Drop Ordering**: Reorder feeds by dragging directly in the Feeds page
+- **📲 Touch Drag & Drop**: Feed drag & drop sorting also works on mobile touch devices
 - **✏️ Feed Editing**: Edit feed name and URL with real-time URL validation and save confirmation
+- **🔄 Instant Feed Reload on Edit**: Saving feed edits reloads the feed and updates "Last updated"
 - **📅 Chronological View**: See all news sorted by date (most recent first)
 - **🏷️ Site View**: Group news by source/site
 - **🧭 Consistent Source Order**: In "By Site" mode, Home follows the same order configured in Feeds
@@ -77,6 +79,11 @@ Each call is protected by a **10-second timeout** using `AbortController`: if a 
 ### v1.2.2 ✅
 - ✅ Feed sorting via drag & drop in the Feeds section
 - ✅ "By Site" order in Home aligned with the feed order configured in Feeds
+
+### v1.2.3 ✅
+- ✅ Mobile Feeds layout fix: action controls moved under metadata/"Last updated"
+- ✅ Touch drag & drop support for feed ordering on mobile
+- ✅ Feed edit save now triggers feed reload and updates "Last updated"
 
 ### v1.3.0
 - 🔍 Auto-detect JSON feeds from websites
@@ -163,7 +170,7 @@ From the **Home** section, you can choose two viewing modes:
 1. Go to the **Feeds** section
 2. Use **↑** or **↓** next to a feed to move it up or down
 3. Or drag a feed using the **⋮⋮** handle and drop it in the desired position
-3. The new order is saved automatically
+4. The new order is saved automatically
 
 ### Feed Order in Home (By Site)
 1. Reorder feeds in the **Feeds** section
@@ -176,6 +183,7 @@ From the **Home** section, you can choose two viewing modes:
 3. Update name and/or URL
 4. Verify the URL status in real time
 5. Click **Salva** and confirm
+6. The feed is reloaded automatically and "Last updated" is refreshed
 
 ## 📁 Project Structure
 

@@ -7,7 +7,7 @@ interface FeedListProps {
   onRemoveFeed: (feedId: string) => void;
   onMoveFeed: (feedId: string, direction: 'up' | 'down') => void;
   onMoveFeedToIndex: (feedId: string, targetIndex: number) => void;
-  onEditFeed: (feedId: string, updates: { title: string; url: string }) => boolean;
+  onEditFeed: (feedId: string, updates: { title: string; url: string }) => Promise<boolean>;
 }
 
 export const FeedList = ({ feeds, onRemoveFeed, onMoveFeed, onMoveFeedToIndex, onEditFeed }: FeedListProps) => {
@@ -15,6 +15,8 @@ export const FeedList = ({ feeds, onRemoveFeed, onMoveFeed, onMoveFeedToIndex, o
   const [editTitle, setEditTitle] = useState('');
   const [editUrl, setEditUrl] = useState('');
   const [draggedFeedId, setDraggedFeedId] = useState<string | null>(null);
+  const [dragOverFeedId, setDragOverFeedId] = useState<string | null>(null);
+  const [savingFeedId, setSavingFeedId] = useState<string | null>(null);
 
   const isEditing = (feedId: string) => editingFeedId === feedId;
   const isUrlValid = editUrl.trim().length > 0 && RSSService.validateFeedUrl(editUrl.trim());
@@ -31,7 +33,7 @@ export const FeedList = ({ feeds, onRemoveFeed, onMoveFeed, onMoveFeedToIndex, o
     setEditUrl('');
   };
 
-  const saveEditing = (feedId: string) => {
+  const saveEditing = async (feedId: string) => {
     const title = editTitle.trim();
     const url = editUrl.trim();
     if (!title || !url || !RSSService.validateFeedUrl(url)) {
@@ -42,7 +44,10 @@ export const FeedList = ({ feeds, onRemoveFeed, onMoveFeed, onMoveFeedToIndex, o
       return;
     }
 
-    const updated = onEditFeed(feedId, { title, url });
+    setSavingFeedId(feedId);
+    const updated = await onEditFeed(feedId, { title, url });
+    setSavingFeedId(null);
+
     if (updated) {
       cancelEditing();
     }
@@ -51,15 +56,18 @@ export const FeedList = ({ feeds, onRemoveFeed, onMoveFeed, onMoveFeedToIndex, o
   const handleDragStart = (feedId: string) => {
     if (editingFeedId) return;
     setDraggedFeedId(feedId);
+    setDragOverFeedId(feedId);
   };
 
   const handleDragEnd = () => {
     setDraggedFeedId(null);
+    setDragOverFeedId(null);
   };
 
   const handleDrop = (targetFeedId: string) => {
     if (!draggedFeedId || draggedFeedId === targetFeedId) {
       setDraggedFeedId(null);
+      setDragOverFeedId(null);
       return;
     }
 
@@ -69,6 +77,44 @@ export const FeedList = ({ feeds, onRemoveFeed, onMoveFeed, onMoveFeedToIndex, o
     }
 
     setDraggedFeedId(null);
+    setDragOverFeedId(null);
+  };
+
+  const handleTouchStart = (feedId: string) => {
+    if (editingFeedId) return;
+    setDraggedFeedId(feedId);
+    setDragOverFeedId(feedId);
+  };
+
+  const handleTouchMove = (event: React.TouchEvent<HTMLDivElement>) => {
+    if (!draggedFeedId) {
+      return;
+    }
+
+    const touch = event.touches[0];
+    const hoveredElement = document.elementFromPoint(touch.clientX, touch.clientY) as HTMLElement | null;
+    const hoveredRow = hoveredElement?.closest('[data-feed-row-id]') as HTMLElement | null;
+    const hoveredFeedId = hoveredRow?.dataset.feedRowId;
+
+    if (hoveredFeedId) {
+      setDragOverFeedId(hoveredFeedId);
+    }
+  };
+
+  const handleTouchEnd = () => {
+    if (!draggedFeedId || !dragOverFeedId || draggedFeedId === dragOverFeedId) {
+      setDraggedFeedId(null);
+      setDragOverFeedId(null);
+      return;
+    }
+
+    const targetIndex = feeds.findIndex(feed => feed.id === dragOverFeedId);
+    if (targetIndex !== -1) {
+      onMoveFeedToIndex(draggedFeedId, targetIndex);
+    }
+
+    setDraggedFeedId(null);
+    setDragOverFeedId(null);
   };
 
   if (feeds.length === 0) {
@@ -86,14 +132,19 @@ export const FeedList = ({ feeds, onRemoveFeed, onMoveFeed, onMoveFeedToIndex, o
         {feeds.map((feed, index) => (
           <div
             key={feed.id}
+            data-feed-row-id={feed.id}
             draggable={!editingFeedId}
             onDragStart={() => handleDragStart(feed.id)}
             onDragEnd={handleDragEnd}
+            onDragEnter={() => draggedFeedId && setDragOverFeedId(feed.id)}
             onDragOver={(e) => e.preventDefault()}
             onDrop={() => handleDrop(feed.id)}
-            className={`flex items-center justify-between surface rounded-lg p-4 transition ${draggedFeedId === feed.id ? 'opacity-60' : ''}`}
+            onTouchStart={() => handleTouchStart(feed.id)}
+            onTouchMove={handleTouchMove}
+            onTouchEnd={handleTouchEnd}
+            className={`surface rounded-lg p-4 transition ${draggedFeedId === feed.id ? 'opacity-60' : ''} ${dragOverFeedId === feed.id && draggedFeedId !== feed.id ? 'ring-2 ring-[color:var(--ring)]' : ''}`}
           >
-            <div className="flex-1">
+            <div>
               {isEditing(feed.id) ? (
                 <div className="space-y-2 pr-4">
                   <div>
@@ -139,16 +190,16 @@ export const FeedList = ({ feeds, onRemoveFeed, onMoveFeed, onMoveFeedToIndex, o
                 <p className="text-xs text-[var(--danger)]">Errore: {feed.error}</p>
               )}
             </div>
-            <div className="ml-4 flex items-center gap-1">
+            <div className="mt-3 flex flex-wrap items-center gap-2">
               {isEditing(feed.id) ? (
                 <>
                   <button
                     onClick={() => saveEditing(feed.id)}
-                    disabled={!editTitle.trim() || !isUrlValid}
+                    disabled={!editTitle.trim() || !isUrlValid || savingFeedId === feed.id}
                     className="btn-brand disabled:opacity-50 px-3 py-2 rounded-md text-sm font-medium"
                     title="Salva modifiche"
                   >
-                    Salva
+                    {savingFeedId === feed.id ? 'Salvataggio...' : 'Salva'}
                   </button>
                   <button
                     onClick={cancelEditing}
@@ -162,7 +213,7 @@ export const FeedList = ({ feeds, onRemoveFeed, onMoveFeed, onMoveFeedToIndex, o
                 <>
                   <span
                     className="text-muted px-2 py-1 select-none cursor-grab"
-                    title="Trascina per riordinare"
+                    title="Trascina per riordinare (desktop e touch)"
                     aria-label="Trascina per riordinare"
                   >
                     ⋮⋮

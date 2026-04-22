@@ -9,7 +9,7 @@ interface FeedsPageProps {
   onRemoveFeed: (feedId: string) => void;
   onMoveFeed: (feedId: string, direction: 'up' | 'down') => void;
   onMoveFeedToIndex: (feedId: string, targetIndex: number) => void;
-  onEditFeed: (feedId: string, updates: { title: string; url: string }) => boolean;
+  onEditFeed: (feedId: string, updates: { title: string; url: string }) => Promise<boolean>;
   onRefresh: () => Promise<void>;
 }
 

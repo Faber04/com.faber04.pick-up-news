@@ -139,40 +139,80 @@ export const useAppState = () => {
     });
   }, []);
 
-  const updateFeed = useCallback((feedId: string, updates: { title: string; url: string }) => {
+  const updateFeed = useCallback(async (feedId: string, updates: { title: string; url: string }) => {
     if (!RSSService.validateFeedUrl(updates.url)) {
       setState(prev => ({ ...prev, error: 'Invalid RSS feed URL' }));
       return false;
     }
 
+    const updatedTitle = updates.title.trim();
     const normalizedUrl = RSSService.normalizeUrl(updates.url);
+    setState(prev => ({ ...prev, loading: true, error: null }));
 
-    setState(prev => ({
-      ...prev,
-      feeds: prev.feeds.map(feed => {
-        if (feed.id !== feedId) {
-          return feed;
-        }
+    try {
+      const fetchedItems = await RSSService.fetchFeed(normalizedUrl);
+      const now = new Date();
+
+      const refreshedFeedNews = fetchedItems.map(item => ({
+        ...item,
+        feedId,
+        feedTitle: updatedTitle,
+        truncatedDescription: RSSService.truncateDescription(item.contentSnippet || item.summary || '', 120)
+      }));
+
+      setState(prev => {
+        const newsWithoutCurrentFeed = prev.news.filter(news => news.feedId !== feedId);
+        const mergedNews = [...newsWithoutCurrentFeed, ...refreshedFeedNews].sort((a, b) => {
+          const dateA = new Date(a.isoDate || a.pubDate || '').getTime();
+          const dateB = new Date(b.isoDate || b.pubDate || '').getTime();
+          return dateB - dateA;
+        });
 
         return {
-          ...feed,
-          title: updates.title.trim(),
-          url: normalizedUrl,
-          error: undefined
-        };
-      }),
-      news: prev.news.map(news =>
-        news.feedId === feedId
-          ? {
-              ...news,
-              feedTitle: updates.title.trim()
+          ...prev,
+          feeds: prev.feeds.map(feed => {
+            if (feed.id !== feedId) {
+              return feed;
             }
-          : news
-      ),
-      error: null
-    }));
 
-    return true;
+            return {
+              ...feed,
+              title: updatedTitle,
+              url: normalizedUrl,
+              lastFetched: now,
+              error: undefined
+            };
+          }),
+          news: mergedNews,
+          loading: false,
+          error: null
+        };
+      });
+
+      return true;
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : 'Failed to refresh feed after update';
+
+      setState(prev => ({
+        ...prev,
+        feeds: prev.feeds.map(feed => {
+          if (feed.id !== feedId) {
+            return feed;
+          }
+
+          return {
+            ...feed,
+            title: updatedTitle,
+            url: normalizedUrl,
+            error: errorMessage
+          };
+        }),
+        loading: false,
+        error: errorMessage
+      }));
+
+      return false;
+    }
   }, []);
 
   const refreshNews = useCallback(async () => {

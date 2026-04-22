@@ -2,6 +2,28 @@
 
 This file logs all development sessions for the PickUpNews project.
 
+## Session: v1.2.3 Mobile Feed Layout + Touch DnD + Edit Refresh
+- Date: 22 April 2026
+- Start Time: 15:35
+- End Time: 16:05
+- Duration: 30 minutes
+
+## Changes Made
+- Fixed mobile layout in Feeds page by moving feed action controls below metadata and "Ultimo aggiornamento"
+- Added touch-friendly drag & drop handling for feed reordering on mobile devices
+- Improved feed edit save flow: after saving title/URL changes, the edited feed is reloaded immediately
+- Updated "Ultimo aggiornamento" after successful feed reload on edit
+
+## Testing
+- Ran production build successfully (`npm run build`)
+- Verified TypeScript compilation and Vite bundling without errors
+
+## Issues Encountered
+- None
+
+## Next Steps
+- Proceed with v1.3.0 JSON feed auto-detection
+
 ## Session: v1.2.2 Drag & Drop + Home By-Site Order
 - Date: 22 April 2026
 - Start Time: 15:05

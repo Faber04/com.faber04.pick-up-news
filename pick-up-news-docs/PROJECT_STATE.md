@@ -111,6 +111,6 @@
 - React ^18.2.0
 - Vite ^4.4.5
 - TypeScript ^5.0.2
-- rss-parser ^3.13.0
+- Browser-native RSS/Atom parsing + CORS proxies (`corsproxy.io` -> `rss2json.com`)
 - react-router-dom ^7.14.1
 - Tailwind CSS ^3.4.0

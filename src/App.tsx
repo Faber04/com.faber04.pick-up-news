@@ -21,6 +21,7 @@ function App() {
     addFeed,
     removeFeed,
     moveFeed,
+    moveFeedToIndex,
     updateFeed,
     refreshNews,
     getFilteredNews,
@@ -81,6 +82,7 @@ function App() {
           onAddFeed={addFeed}
           onRemoveFeed={removeFeed}
           onMoveFeed={moveFeed}
+          onMoveFeedToIndex={moveFeedToIndex}
           onEditFeed={updateFeed}
           onRefresh={refreshNews}
         />
@@ -111,6 +113,7 @@ function App() {
               <NewsList
                 news={filteredNews}
                 viewMode={viewMode}
+                feedOrder={state.feeds.map(feed => feed.id)}
                 loading={state.loading}
                 onNewsClick={handleNewsClick}
               />

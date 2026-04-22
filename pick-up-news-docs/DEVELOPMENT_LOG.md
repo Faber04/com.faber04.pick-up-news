@@ -2,6 +2,29 @@
 
 This file logs all development sessions for the PickUpNews project.
 
+## Session: v1.2.2 Drag & Drop + Home By-Site Order
+- Date: 22 April 2026
+- Start Time: 15:05
+- End Time: 15:30
+- Duration: 25 minutes
+
+## Changes Made
+- Added drag & drop feed sorting in Feeds list
+- Kept arrow sorting controls and integrated drag sorting with the same persisted order model
+- Added index-based feed reorder action in app state (`moveFeedToIndex`)
+- Updated Home "Per Sito" grouping to follow feed order configured in Feeds
+- Updated markdown documentation for v1.2.2 (README and PROJECT_STATE)
+
+## Testing
+- Ran production build successfully (`npm run build`)
+- Verified TypeScript compilation and Vite bundling without errors
+
+## Issues Encountered
+- None
+
+## Next Steps
+- Proceed with v1.3.0 JSON feed auto-detection
+
 ## Session: v1.2.1 Feed Sorting + Feed Editing
 - Date: 22 April 2026
 - Start Time: 11:00

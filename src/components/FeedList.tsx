@@ -6,13 +6,15 @@ interface FeedListProps {
   feeds: RSSFeed[];
   onRemoveFeed: (feedId: string) => void;
   onMoveFeed: (feedId: string, direction: 'up' | 'down') => void;
+  onMoveFeedToIndex: (feedId: string, targetIndex: number) => void;
   onEditFeed: (feedId: string, updates: { title: string; url: string }) => boolean;
 }
 
-export const FeedList = ({ feeds, onRemoveFeed, onMoveFeed, onEditFeed }: FeedListProps) => {
+export const FeedList = ({ feeds, onRemoveFeed, onMoveFeed, onMoveFeedToIndex, onEditFeed }: FeedListProps) => {
   const [editingFeedId, setEditingFeedId] = useState<string | null>(null);
   const [editTitle, setEditTitle] = useState('');
   const [editUrl, setEditUrl] = useState('');
+  const [draggedFeedId, setDraggedFeedId] = useState<string | null>(null);
 
   const isEditing = (feedId: string) => editingFeedId === feedId;
   const isUrlValid = editUrl.trim().length > 0 && RSSService.validateFeedUrl(editUrl.trim());
@@ -46,6 +48,29 @@ export const FeedList = ({ feeds, onRemoveFeed, onMoveFeed, onEditFeed }: FeedLi
     }
   };
 
+  const handleDragStart = (feedId: string) => {
+    if (editingFeedId) return;
+    setDraggedFeedId(feedId);
+  };
+
+  const handleDragEnd = () => {
+    setDraggedFeedId(null);
+  };
+
+  const handleDrop = (targetFeedId: string) => {
+    if (!draggedFeedId || draggedFeedId === targetFeedId) {
+      setDraggedFeedId(null);
+      return;
+    }
+
+    const targetIndex = feeds.findIndex(feed => feed.id === targetFeedId);
+    if (targetIndex !== -1) {
+      onMoveFeedToIndex(draggedFeedId, targetIndex);
+    }
+
+    setDraggedFeedId(null);
+  };
+
   if (feeds.length === 0) {
     return (
       <div className="text-center py-8 text-muted">
@@ -61,7 +86,12 @@ export const FeedList = ({ feeds, onRemoveFeed, onMoveFeed, onEditFeed }: FeedLi
         {feeds.map((feed, index) => (
           <div
             key={feed.id}
-            className="flex items-center justify-between surface rounded-lg p-4"
+            draggable={!editingFeedId}
+            onDragStart={() => handleDragStart(feed.id)}
+            onDragEnd={handleDragEnd}
+            onDragOver={(e) => e.preventDefault()}
+            onDrop={() => handleDrop(feed.id)}
+            className={`flex items-center justify-between surface rounded-lg p-4 transition ${draggedFeedId === feed.id ? 'opacity-60' : ''}`}
           >
             <div className="flex-1">
               {isEditing(feed.id) ? (
@@ -130,6 +160,13 @@ export const FeedList = ({ feeds, onRemoveFeed, onMoveFeed, onEditFeed }: FeedLi
                 </>
               ) : (
                 <>
+                  <span
+                    className="text-muted px-2 py-1 select-none cursor-grab"
+                    title="Trascina per riordinare"
+                    aria-label="Trascina per riordinare"
+                  >
+                    ⋮⋮
+                  </span>
                   <button
                     onClick={() => onMoveFeed(feed.id, 'up')}
                     disabled={index === 0}

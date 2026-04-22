@@ -8,6 +8,7 @@ interface FeedsPageProps {
   onAddFeed: (url: string, title: string) => Promise<void>;
   onRemoveFeed: (feedId: string) => void;
   onMoveFeed: (feedId: string, direction: 'up' | 'down') => void;
+  onMoveFeedToIndex: (feedId: string, targetIndex: number) => void;
   onEditFeed: (feedId: string, updates: { title: string; url: string }) => boolean;
   onRefresh: () => Promise<void>;
 }
@@ -18,6 +19,7 @@ export const FeedsPage = ({
   onAddFeed,
   onRemoveFeed,
   onMoveFeed,
+  onMoveFeedToIndex,
   onEditFeed,
   onRefresh,
 }: FeedsPageProps) => {
@@ -60,6 +62,7 @@ export const FeedsPage = ({
         feeds={feeds}
         onRemoveFeed={onRemoveFeed}
         onMoveFeed={onMoveFeed}
+        onMoveFeedToIndex={onMoveFeedToIndex}
         onEditFeed={onEditFeed}
       />
     </div>

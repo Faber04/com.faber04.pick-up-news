@@ -4,11 +4,12 @@ import { NewsItem, ViewMode } from '../types';
 interface NewsListProps {
   news: NewsItem[];
   viewMode: ViewMode;
+  feedOrder: string[];
   loading: boolean;
   onNewsClick: (newsItem: NewsItem) => void;
 }
 
-export const NewsList = ({ news, viewMode, loading, onNewsClick }: NewsListProps) => {
+export const NewsList = ({ news, viewMode, feedOrder, loading, onNewsClick }: NewsListProps) => {
   if (loading) {
     return (
       <div className="text-center py-8">
@@ -29,12 +30,27 @@ export const NewsList = ({ news, viewMode, loading, onNewsClick }: NewsListProps
 
   const groupedNews = viewMode === 'by-feed'
     ? news.reduce((acc, item) => {
-        const feedTitle = item.feedTitle;
-        if (!acc[feedTitle]) acc[feedTitle] = [];
-        acc[feedTitle].push(item);
+        if (!acc[item.feedId]) {
+          acc[item.feedId] = {
+            feedTitle: item.feedTitle,
+            items: []
+          };
+        }
+
+        acc[item.feedId].items.push(item);
         return acc;
-      }, {} as Record<string, NewsItem[]>)
+      }, {} as Record<string, { feedTitle: string; items: NewsItem[] }> )
     : null;
+
+  const orderedGroups = groupedNews
+    ? Object.entries(groupedNews).sort(([feedIdA], [feedIdB]) => {
+        const indexA = feedOrder.indexOf(feedIdA);
+        const indexB = feedOrder.indexOf(feedIdB);
+        const safeIndexA = indexA === -1 ? Number.MAX_SAFE_INTEGER : indexA;
+        const safeIndexB = indexB === -1 ? Number.MAX_SAFE_INTEGER : indexB;
+        return safeIndexA - safeIndexB;
+      })
+    : [];
 
   return (
     <div className="space-y-6">
@@ -46,11 +62,11 @@ export const NewsList = ({ news, viewMode, loading, onNewsClick }: NewsListProps
         </div>
       ) : (
         <div className="space-y-3">
-          {Object.entries(groupedNews!).map(([feedTitle, feedNews]) => (
+          {orderedGroups.map(([feedId, group]) => (
             <FeedAccordion
-              key={feedTitle}
-              feedTitle={feedTitle}
-              feedNews={feedNews}
+              key={feedId}
+              feedTitle={group.feedTitle}
+              feedNews={group.items}
               onNewsClick={onNewsClick}
             />
           ))}

@@ -19,6 +19,8 @@
 - Page title updated to "Pick-Up News" ✅ COMPLETED
 - Feed sorting with persistent order in localStorage ✅ COMPLETED
 - Feed editing with real-time URL validation and save confirmation ✅ COMPLETED
+- Feed sorting via drag & drop in Feeds ✅ COMPLETED
+- Home "Per Sito" order aligned with Feeds sorting ✅ COMPLETED
 
 ## Objectives
 - Implement RSS feed management (add, remove feeds). ✅ COMPLETED
@@ -34,6 +36,7 @@
 **v1.1.1** (Commit 938358d) — URL parsing, UI alignment, XML robustness
 **v1.2.0** (Commit UNRELEASED) — Icon alignment, dark mode, color palette restyling
 **v1.2.1** (Commit UNRELEASED) — Feed sorting + feed editing
+**v1.2.2** (Commit UNRELEASED) — Drag & drop sorting + by-site order alignment
 **v1.4.0** (PLANNED) — Settings page, credits, mobile modal metadata layout
 **v2.0.0** (PLANNED) — User registration
 
@@ -75,6 +78,13 @@
    - Edit mode for feed name and URL
    - Real-time URL validation
    - Save changes with confirmation
+
+### v1.2.2 ✅ COMPLETED
+1. ✅ Feed sorting via drag & drop in Feeds section
+   - Drag feed cards and drop in desired position
+   - Persistent order in localStorage
+2. ✅ Home "Per Sito" respects configured feed order
+   - Feed groups are rendered in the same order as Feeds configuration
 
 ### v1.3.0 JSON Feed Auto-Detection (PLANNED)
 1.  Auto-detect JSON feeds from websites

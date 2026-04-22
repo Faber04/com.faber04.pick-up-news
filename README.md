@@ -10,9 +10,11 @@ PickUpNews allows you to easily aggregate and read all your favorite RSS feeds. 
 
 - **📡 RSS Feed Management**: Easily add and remove RSS feeds manually
 - **↕️ Feed Ordering**: Reorder feeds in the Feeds page and keep order persisted in localStorage
+- **🖱️ Drag & Drop Ordering**: Reorder feeds by dragging directly in the Feeds page
 - **✏️ Feed Editing**: Edit feed name and URL with real-time URL validation and save confirmation
 - **📅 Chronological View**: See all news sorted by date (most recent first)
 - **🏷️ Site View**: Group news by source/site
+- **🧭 Consistent Source Order**: In "By Site" mode, Home follows the same order configured in Feeds
 - **📱 Responsive Design**: Perfect on desktop, tablet, and mobile
 - **💾 Local Persistence**: Your feeds are automatically saved in the browser
 - **🔍 Smart Preview**: Descriptions truncated to 120 characters for quick reading
@@ -71,6 +73,10 @@ Each call is protected by a **10-second timeout** using `AbortController`: if a 
   - Edit mode for each feed's name and URL
   - Real-time URL validation
   - Save changes with confirmation
+
+### v1.2.2 ✅
+- ✅ Feed sorting via drag & drop in the Feeds section
+- ✅ "By Site" order in Home aligned with the feed order configured in Feeds
 
 ### v1.3.0
 - 🔍 Auto-detect JSON feeds from websites
@@ -156,7 +162,13 @@ From the **Home** section, you can choose two viewing modes:
 ### Reordering Feeds
 1. Go to the **Feeds** section
 2. Use **↑** or **↓** next to a feed to move it up or down
+3. Or drag a feed using the **⋮⋮** handle and drop it in the desired position
 3. The new order is saved automatically
+
+### Feed Order in Home (By Site)
+1. Reorder feeds in the **Feeds** section
+2. Go back to **Home** and switch to **By Site**
+3. Feed groups will follow the same order configured in Feeds
 
 ### Editing a Feed
 1. Go to the **Feeds** section

@@ -121,6 +121,24 @@ export const useAppState = () => {
     });
   }, []);
 
+  const moveFeedToIndex = useCallback((feedId: string, targetIndex: number) => {
+    setState(prev => {
+      const currentIndex = prev.feeds.findIndex(feed => feed.id === feedId);
+      if (currentIndex === -1 || targetIndex < 0 || targetIndex >= prev.feeds.length || currentIndex === targetIndex) {
+        return prev;
+      }
+
+      const reorderedFeeds = [...prev.feeds];
+      const [movedFeed] = reorderedFeeds.splice(currentIndex, 1);
+      reorderedFeeds.splice(targetIndex, 0, movedFeed);
+
+      return {
+        ...prev,
+        feeds: reorderedFeeds
+      };
+    });
+  }, []);
+
   const updateFeed = useCallback((feedId: string, updates: { title: string; url: string }) => {
     if (!RSSService.validateFeedUrl(updates.url)) {
       setState(prev => ({ ...prev, error: 'Invalid RSS feed URL' }));
@@ -212,6 +230,7 @@ export const useAppState = () => {
     addFeed,
     removeFeed,
     moveFeed,
+    moveFeedToIndex,
     updateFeed,
     refreshNews,
     getFilteredNews,

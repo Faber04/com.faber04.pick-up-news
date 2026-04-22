@@ -22,6 +22,7 @@
 - Feed sorting via drag & drop in Feeds ✅ COMPLETED
 - Home "Per Sito" order aligned with Feeds sorting ✅ COMPLETED
 - Mobile Feeds layout fixed for action controls placement ✅ COMPLETED
+- Desktop Feeds layout keeps action controls right-aligned ✅ COMPLETED
 - Touch drag & drop support in Feeds sorting ✅ COMPLETED
 - Feed edit now reloads feed and updates "Ultimo aggiornamento" ✅ COMPLETED
 
@@ -93,6 +94,7 @@
 ### v1.2.3 ✅ COMPLETED
 1. ✅ Mobile layout fix in Feeds page
    - Sorting/action controls moved below metadata and "Ultimo aggiornamento"
+   - Desktop keeps controls aligned on the right side
 2. ✅ Touch drag & drop support in Feeds
    - Feed reordering works on mobile touch interactions
 3. ✅ Feed edit save refresh

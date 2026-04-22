@@ -10,6 +10,7 @@ This file logs all development sessions for the PickUpNews project.
 
 ## Changes Made
 - Fixed mobile layout in Feeds page by moving feed action controls below metadata and "Ultimo aggiornamento"
+- Refined responsive behavior: on desktop, feed action controls remain right-aligned; only mobile places them below metadata
 - Added touch-friendly drag & drop handling for feed reordering on mobile devices
 - Improved feed edit save flow: after saving title/URL changes, the edited feed is reloaded immediately
 - Updated "Ultimo aggiornamento" after successful feed reload on edit

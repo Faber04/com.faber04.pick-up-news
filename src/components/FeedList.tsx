@@ -142,9 +142,9 @@ export const FeedList = ({ feeds, onRemoveFeed, onMoveFeed, onMoveFeedToIndex, o
             onTouchStart={() => handleTouchStart(feed.id)}
             onTouchMove={handleTouchMove}
             onTouchEnd={handleTouchEnd}
-            className={`surface rounded-lg p-4 transition ${draggedFeedId === feed.id ? 'opacity-60' : ''} ${dragOverFeedId === feed.id && draggedFeedId !== feed.id ? 'ring-2 ring-[color:var(--ring)]' : ''}`}
+            className={`surface rounded-lg p-4 transition md:flex md:items-center md:justify-between ${draggedFeedId === feed.id ? 'opacity-60' : ''} ${dragOverFeedId === feed.id && draggedFeedId !== feed.id ? 'ring-2 ring-[color:var(--ring)]' : ''}`}
           >
-            <div>
+            <div className="md:flex-1">
               {isEditing(feed.id) ? (
                 <div className="space-y-2 pr-4">
                   <div>
@@ -190,7 +190,7 @@ export const FeedList = ({ feeds, onRemoveFeed, onMoveFeed, onMoveFeedToIndex, o
                 <p className="text-xs text-[var(--danger)]">Errore: {feed.error}</p>
               )}
             </div>
-            <div className="mt-3 flex flex-wrap items-center gap-2">
+            <div className="mt-3 flex flex-wrap items-center gap-2 md:mt-0 md:ml-4 md:flex-nowrap md:justify-end">
               {isEditing(feed.id) ? (
                 <>
                   <button

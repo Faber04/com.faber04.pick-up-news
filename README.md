@@ -155,6 +155,21 @@ Optimized files will be in the `dist/` folder
 ### 4. Online Deployment
 The application will be available at: `https://www.faber04.com/app/pick-up-news/`
 
+### 5. Autonomous FTP Publish Setup (One Time)
+To allow repeatable FTP deployment with a single command:
+
+1. Copy `ftp.env.example` to `INTERNAL/.ftp.env`
+2. Fill `FTP_USER`, `FTP_PASS`, `FTP_HOST`, `FTP_BASE`
+3. Run:
+
+```bash
+npm run deploy
+```
+
+Notes:
+- `INTERNAL/` is ignored by git, so local credentials are not committed.
+- `npm run deploy` performs build + FTP publish.
+
 ## 📖 How to Use PickUpNews
 
 ### Navigation
@@ -237,6 +252,8 @@ com.faber04.app.pick-up-news/
 - `npm run build` - Build for production
 - `npm run preview` - Preview production build
 - `npm run lint` - Run ESLint for code checks
+- `npm run publish:ftp` - Publish current `dist/` to FTP (requires `INTERNAL/.ftp.env`)
+- `npm run deploy` - Build and publish to FTP
 
 ## 🤝 Contributions
 

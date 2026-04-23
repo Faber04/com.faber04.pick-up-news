@@ -85,6 +85,7 @@ export const useAppState = () => {
 
     let finalFeedUrl = normalizedUrl;
     let finalKey = normalizedKey;
+    let detectedFeedUrl: string | null = null;
 
     try {
       // Try automatic detection first (JSON Feed -> RSS/Atom), then keep manual URL as fallback.
@@ -93,9 +94,24 @@ export const useAppState = () => {
         if (detected?.feedUrl) {
           finalFeedUrl = detected.feedUrl;
           finalKey = detected.feedUrl.toLowerCase();
+          detectedFeedUrl = detected.feedUrl;
         }
       } catch {
         // Keep manual URL if detection fails.
+      }
+
+      // If detection fails, validate that the user-provided URL is actually a feed.
+      if (!detectedFeedUrl) {
+        try {
+          await RSSService.fetchFeed(normalizedUrl);
+        } catch {
+          setState(prev => ({
+            ...prev,
+            loading: false,
+            error: 'Feed non rilevato automaticamente. Inserisci un URL feed RSS/Atom/JSON valido.'
+          }));
+          return;
+        }
       }
 
       const newFeed: RSSFeed = {

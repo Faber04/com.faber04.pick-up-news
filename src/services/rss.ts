@@ -387,9 +387,20 @@ export class RSSService {
   static async fetchViaRss2json(url: string): Promise<RSSItem[]> {
     const apiUrl = `${this.RSS2JSON_API}?rss_url=${encodeURIComponent(url)}`;
     const response = await this.fetchWithTimeout(apiUrl);
-    if (!response.ok) throw new Error(`rss2json HTTP error: ${response.status}`);
-    const data = await response.json();
-    if (data.status !== 'ok') throw new Error(`rss2json error: ${data.message || 'Unknown error'}`);
+    const raw = await response.text();
+
+    let data: any = null;
+    try {
+      data = JSON.parse(raw);
+    } catch {
+      throw new Error(`rss2json invalid response (HTTP ${response.status})`);
+    }
+
+    if (!response.ok || data?.status !== 'ok') {
+      const message = data?.message || `HTTP ${response.status}`;
+      throw new Error(`rss2json error: ${message}`);
+    }
+
     return this.parseRSS2JSONFeed(data);
   }
 

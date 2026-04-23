@@ -2,6 +2,28 @@
 
 This file logs all development sessions for the PickUpNews project.
 
+## Session: Open issue - autodetect RSS e UX errore add feed
+- Date: 23 April 2026
+- Start Time: 23:40
+- End Time: 23:45
+- Duration: 5 minutes
+
+## Changes Made
+- Registrata issue ad alta priorita su auto-detect RSS ancora non affidabile.
+- Registrati requisiti UX in caso di errore add feed:
+  1. pannello deve restare aperto
+  2. errore mostrato inline sotto il campo URL
+  3. nessun alert modal
+
+## Testing
+- N/A (aggiornamento documentazione/issue tracking)
+
+## Issues Encountered
+- Nessuno
+
+## Next Steps
+- Implementare fix applicativo su detection + gestione errore inline nel form Add Feed
+
 ## Session: v1.3.1 Hardening Add Feed Flow
 - Date: 23 April 2026
 - Start Time: 22:45

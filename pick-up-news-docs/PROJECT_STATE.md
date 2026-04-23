@@ -151,7 +151,8 @@
 - FTP deployment credentials setup.
 
 ## Known Issues
-- None at this time.
+- High Priority: RSS auto-detection still fails in real scenarios and often does not find a valid feed from website URLs.
+- High Priority UX: When auto-detection fails, the Add Feed panel should remain open. Error feedback must be shown inline under the URL field (no alert modal), so the user can immediately edit and retry.
 
 ## Dependencies
 - React ^18.2.0

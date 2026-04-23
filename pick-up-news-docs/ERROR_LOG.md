@@ -11,6 +11,18 @@ This file documents all errors encountered during development, their solutions, 
 
 ---
 
+## Open Issue: Auto-detect RSS non affidabile + UX errore add feed
+- Date: 23 April 2026
+- Error Description: L'auto-detect partendo da URL sito continua a non trovare correttamente un feed RSS in molti casi.
+- Cause: Strategia di detection/fallback non ancora sufficientemente robusta su siti eterogenei.
+- Solution (Required):
+	1. Migliorare il rilevamento feed in modo generico (senza regole verticali per dominio).
+	2. In caso di errore, non chiudere il pannello di aggiunta feed.
+	3. Mostrare l'errore inline sotto il campo URL, senza usare alert.
+- Prevention: Introdurre test E2E sui casi di fallimento e validare esplicitamente che il pannello resti aperto con errore inline.
+
+---
+
 ## Error: Blank page after FTP deploy — empty JS bundle on server
 - Date: 15 April 2026
 - Error Description: App shows blank white page in production with no console errors. The JS bundle `index-*.js` served by the FTP server had 0 bytes despite the local `dist/assets/` file being correct (161 KB).

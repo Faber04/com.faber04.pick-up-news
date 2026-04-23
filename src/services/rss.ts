@@ -300,6 +300,41 @@ export class RSSService {
     return null;
   }
 
+  private static async detectViaRss2json(url: string): Promise<FeedDetectionResult | null> {
+    try {
+      const apiUrl = `${this.RSS2JSON_API}?rss_url=${encodeURIComponent(url)}`;
+      const response = await this.fetchWithTimeout(apiUrl);
+      if (!response.ok) {
+        return null;
+      }
+
+      const data = await response.json();
+      if (data?.status !== 'ok') {
+        return null;
+      }
+
+      const resolvedFeedUrl = data?.feed?.url || data?.feed_url || '';
+      const normalizedFeedUrl = this.resolveUrl(url, resolvedFeedUrl) || this.normalizeUrl(url);
+
+      // Ensure the detected URL behaves like a feed before accepting it.
+      const directCheck = await this.detectDirectFeed(normalizedFeedUrl);
+      if (directCheck) {
+        return directCheck;
+      }
+
+      if (Array.isArray(data?.items) && data.items.length > 0) {
+        return {
+          feedUrl: normalizedFeedUrl,
+          format: 'rss'
+        };
+      }
+
+      return null;
+    } catch {
+      return null;
+    }
+  }
+
   static async detectFeedUrl(url: string): Promise<FeedDetectionResult | null> {
     const normalizedUrl = this.normalizeUrl(url);
 
@@ -313,7 +348,12 @@ export class RSSService {
       return htmlDetected;
     }
 
-    return this.detectFromCommonPaths(normalizedUrl);
+    const commonPathDetected = await this.detectFromCommonPaths(normalizedUrl);
+    if (commonPathDetected) {
+      return commonPathDetected;
+    }
+
+    return this.detectViaRss2json(normalizedUrl);
   }
 
   // Fetch via corsproxy.io (raw XML response)

@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { RSSFeed, AppState, ViewMode, FilterOptions } from '../types';
 import { RSSService } from '../services';
 
@@ -11,6 +11,8 @@ const STORAGE_KEYS = {
 export type ThemeMode = 'light' | 'dark';
 
 export const useAppState = () => {
+  const pendingAddUrlsRef = useRef<Set<string>>(new Set());
+
   const [state, setState] = useState<AppState>({
     feeds: [],
     news: [],
@@ -72,22 +74,58 @@ export const useAppState = () => {
     }
 
     const normalizedUrl = RSSService.normalizeUrl(url);
+    const normalizedKey = normalizedUrl.toLowerCase();
 
-    const newFeed: RSSFeed = {
-      id: Date.now().toString(),
-      url: normalizedUrl,
-      title,
-      lastFetched: new Date()
-    };
+    if (pendingAddUrlsRef.current.has(normalizedKey)) {
+      return;
+    }
 
-    setState(prev => ({
-      ...prev,
-      feeds: [...prev.feeds, newFeed],
-      error: null
-    }));
+    pendingAddUrlsRef.current.add(normalizedKey);
+    setState(prev => ({ ...prev, loading: true, error: null }));
 
-    // Refresh news after adding feed
-    await refreshNews();
+    let finalFeedUrl = normalizedUrl;
+    let finalKey = normalizedKey;
+
+    try {
+      // Try automatic detection first (JSON Feed -> RSS/Atom), then keep manual URL as fallback.
+      try {
+        const detected = await RSSService.detectFeedUrl(normalizedUrl);
+        if (detected?.feedUrl) {
+          finalFeedUrl = detected.feedUrl;
+          finalKey = detected.feedUrl.toLowerCase();
+        }
+      } catch {
+        // Keep manual URL if detection fails.
+      }
+
+      const newFeed: RSSFeed = {
+        id: Date.now().toString(),
+        url: finalFeedUrl,
+        title,
+        lastFetched: new Date()
+      };
+
+      setState(prev => {
+        const alreadyExists = prev.feeds.some(feed => feed.url.toLowerCase() === finalKey);
+        if (alreadyExists) {
+          return {
+            ...prev,
+            loading: false,
+            error: 'Feed già presente'
+          };
+        }
+
+        return {
+          ...prev,
+          feeds: [...prev.feeds, newFeed],
+          loading: false,
+          error: null
+        };
+      });
+    } finally {
+      pendingAddUrlsRef.current.delete(normalizedKey);
+      pendingAddUrlsRef.current.delete(finalKey);
+    }
   }, []);
 
   const removeFeed = useCallback((feedId: string) => {

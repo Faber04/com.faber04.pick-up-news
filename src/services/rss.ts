@@ -1,9 +1,27 @@
 import { RSSFeed, RSSItem, NewsItem } from '../types';
 
+type FeedFormat = 'json' | 'rss' | 'atom';
+
+interface FeedDetectionResult {
+  feedUrl: string;
+  format: FeedFormat;
+}
+
 export class RSSService {
   private static readonly RSS2JSON_API = 'https://api.rss2json.com/v1/api.json';
   private static readonly CORSPROXY_API = 'https://corsproxy.io/?url=';
   private static readonly FETCH_TIMEOUT_MS = 10000;
+  private static readonly COMMON_FEED_PATHS = [
+    '/.well-known/feed.json',
+    '/feed.json',
+    '/feeds/posts/default?alt=json',
+    '/feed',
+    '/rss',
+    '/rss.xml',
+    '/feed.xml',
+    '/atom.xml',
+    '/index.xml'
+  ];
 
   // Fetch with a timeout to avoid hanging on unresponsive proxies
   private static async fetchWithTimeout(url: string): Promise<Response> {
@@ -95,20 +113,234 @@ export class RSSService {
     return items;
   }
 
-  // Fetch via corsproxy.io (raw XML response)
-  static async fetchViaCorsproxy(url: string): Promise<RSSItem[]> {
+  private static parseJSONFeed(data: any): RSSItem[] {
+    if (!data || typeof data !== 'object') {
+      return [];
+    }
+
+    if (!Array.isArray(data.items)) {
+      return [];
+    }
+
+    return data.items.map((item: any) => {
+      const pubDate = item.date_published || item.date_modified || '';
+      const content = item.content_html || item.content_text || item.summary || '';
+
+      return {
+        title: item.title || '',
+        link: item.url || item.external_url || '',
+        contentSnippet: content,
+        summary: content,
+        pubDate,
+        isoDate: pubDate,
+        guid: item.id || item.url || item.external_url || '',
+        creator: item.author?.name || '',
+        categories: Array.isArray(item.tags) ? item.tags : [],
+      };
+    });
+  }
+
+  private static isLikelyJsonFeed(data: any): boolean {
+    if (!data || typeof data !== 'object') {
+      return false;
+    }
+
+    const version = typeof data.version === 'string' ? data.version.toLowerCase() : '';
+    return version.includes('jsonfeed.org/version/') || Array.isArray(data.items);
+  }
+
+  private static isLikelyAtom(xml: string): boolean {
+    return /<feed[\s>]/i.test(xml) && /xmlns\s*=\s*["'][^"']*atom/i.test(xml);
+  }
+
+  private static resolveUrl(baseUrl: string, candidate: string): string | null {
+    if (!candidate) {
+      return null;
+    }
+
+    try {
+      return new URL(candidate, baseUrl).toString();
+    } catch {
+      return null;
+    }
+  }
+
+  private static async fetchRawViaCorsproxy(url: string): Promise<string> {
     const apiUrl = `${this.CORSPROXY_API}${encodeURIComponent(url)}`;
     const response = await this.fetchWithTimeout(apiUrl);
     if (!response.ok) throw new Error(`corsproxy HTTP error: ${response.status}`);
-    const xml = await response.text();
-    if (!xml || xml.trim().length === 0) throw new Error('Empty response from corsproxy');
+    const body = await response.text();
+    if (!body || body.trim().length === 0) throw new Error('Empty response from corsproxy');
+    return body;
+  }
+
+  private static parseFeedContent(raw: string): FeedDetectionResult | null {
+    const trimmed = raw.trim();
+
+    if (trimmed.startsWith('{') || trimmed.startsWith('[')) {
+      try {
+        const json = JSON.parse(trimmed);
+        if (this.isLikelyJsonFeed(json)) {
+          return {
+            feedUrl: '',
+            format: 'json'
+          };
+        }
+      } catch {
+        return null;
+      }
+    }
+
+    const parsedItems = this.parseXML(trimmed);
+    if (parsedItems.length === 0) {
+      return null;
+    }
+
+    return {
+      feedUrl: '',
+      format: this.isLikelyAtom(trimmed) ? 'atom' : 'rss'
+    };
+  }
+
+  private static async detectDirectFeed(url: string): Promise<FeedDetectionResult | null> {
+    try {
+      const raw = await this.fetchRawViaCorsproxy(url);
+      const parsed = this.parseFeedContent(raw);
+      if (!parsed) {
+        return null;
+      }
+
+      return {
+        feedUrl: url,
+        format: parsed.format
+      };
+    } catch {
+      return null;
+    }
+  }
+
+  private static async fetchHtmlDocument(url: string): Promise<Document | null> {
+    try {
+      const raw = await this.fetchRawViaCorsproxy(url);
+      if (raw.trim().startsWith('{') || raw.trim().startsWith('[')) {
+        return null;
+      }
+
+      const parser = new DOMParser();
+      return parser.parseFromString(raw, 'text/html');
+    } catch {
+      return null;
+    }
+  }
+
+  private static async detectFromHtml(url: string): Promise<FeedDetectionResult | null> {
+    const doc = await this.fetchHtmlDocument(url);
+    if (!doc) {
+      return null;
+    }
+
+    const linkNodes = Array.from(doc.querySelectorAll('link[rel~="alternate"]'));
+    const candidates = linkNodes
+      .map((link): { href: string; format: FeedFormat | null; priority: number } | null => {
+        const href = link.getAttribute('href') || '';
+        const type = (link.getAttribute('type') || '').toLowerCase();
+
+        if (!href) {
+          return null;
+        }
+
+        if (type.includes('application/feed+json') || type.includes('application/json')) {
+          return { href, format: 'json', priority: 0 };
+        }
+
+        if (type.includes('application/rss+xml')) {
+          return { href, format: 'rss', priority: 1 };
+        }
+
+        if (type.includes('application/atom+xml')) {
+          return { href, format: 'atom', priority: 2 };
+        }
+
+        return null;
+      })
+      .filter((candidate): candidate is { href: string; format: FeedFormat; priority: number } => !!candidate)
+      .sort((a, b) => a.priority - b.priority);
+
+    for (const candidate of candidates) {
+      const resolved = this.resolveUrl(url, candidate.href);
+      if (!resolved) {
+        continue;
+      }
+
+      const detected = await this.detectDirectFeed(resolved);
+      if (detected) {
+        return detected;
+      }
+    }
+
+    return null;
+  }
+
+  private static async detectFromCommonPaths(url: string): Promise<FeedDetectionResult | null> {
+    let base: URL;
+    try {
+      base = new URL(url);
+    } catch {
+      return null;
+    }
+
+    for (const path of this.COMMON_FEED_PATHS) {
+      const candidateUrl = `${base.origin}${path}`;
+      const detected = await this.detectDirectFeed(candidateUrl);
+      if (detected) {
+        return detected;
+      }
+    }
+
+    return null;
+  }
+
+  static async detectFeedUrl(url: string): Promise<FeedDetectionResult | null> {
+    const normalizedUrl = this.normalizeUrl(url);
+
+    const direct = await this.detectDirectFeed(normalizedUrl);
+    if (direct) {
+      return direct;
+    }
+
+    const htmlDetected = await this.detectFromHtml(normalizedUrl);
+    if (htmlDetected) {
+      return htmlDetected;
+    }
+
+    return this.detectFromCommonPaths(normalizedUrl);
+  }
+
+  // Fetch via corsproxy.io (raw XML response)
+  static async fetchViaCorsproxy(url: string): Promise<RSSItem[]> {
+    const raw = await this.fetchRawViaCorsproxy(url);
+    const trimmed = raw.trim();
+
+    if (trimmed.startsWith('{') || trimmed.startsWith('[')) {
+      try {
+        const parsed = JSON.parse(trimmed);
+        if (this.isLikelyJsonFeed(parsed)) {
+          const jsonItems = this.parseJSONFeed(parsed);
+          if (jsonItems.length > 0) {
+            return jsonItems;
+          }
+        }
+      } catch {
+        throw new Error('Invalid JSON feed response');
+      }
+    }
     
     // Check if response is HTML (error page) instead of XML
-    if (xml.trim().toLowerCase().startsWith('<!doctype html') || xml.trim().toLowerCase().startsWith('<html')) {
+    if (trimmed.toLowerCase().startsWith('<!doctype html') || trimmed.toLowerCase().startsWith('<html')) {
       throw new Error('corsproxy returned HTML (likely 404 or error page)');
     }
     
-    return this.parseXML(xml);
+    return this.parseXML(trimmed);
   }
 
   // Fallback: fetch via rss2json (max 10 items, but reliable)

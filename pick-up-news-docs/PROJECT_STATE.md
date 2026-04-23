@@ -25,6 +25,8 @@
 - Desktop Feeds layout keeps action controls right-aligned ✅ COMPLETED
 - Touch drag & drop support in Feeds sorting ✅ COMPLETED
 - Feed edit now reloads feed and updates "Ultimo aggiornamento" ✅ COMPLETED
+- Auto-detection for website/feed URL with JSON Feed priority and RSS/Atom fallback ✅ COMPLETED
+- Multi-format feed support (JSON Feed, RSS, Atom) ✅ COMPLETED
 
 ## Objectives
 - Implement RSS feed management (add, remove feeds). ✅ COMPLETED
@@ -42,6 +44,8 @@
 **v1.2.1** (Commit UNRELEASED) — Feed sorting + feed editing
 **v1.2.2** (Commit UNRELEASED) — Drag & drop sorting + by-site order alignment
 **v1.2.3** (Commit UNRELEASED) — Mobile feed layout fix + touch DnD + edit refresh timestamp
+**v1.3.0** (Commit UNRELEASED) — JSON/RSS/Atom auto-detection from website URL + manual fallback
+**v1.3.1** (PLANNED) — Add-flow hardening: anti-duplicate submit + detection UX/performance improvements
 **v1.4.0** (PLANNED) — Settings page, credits, mobile modal metadata layout
 **v2.0.0** (PLANNED) — Export/Import feeds
 
@@ -101,11 +105,17 @@
    - Edited feed is reloaded after save
    - "Ultimo aggiornamento" is refreshed on successful reload
 
-### v1.3.0 JSON Feed Auto-Detection (PLANNED)
-1.  Auto-detect JSON feeds from websites
-  - Fallback to RSS/Atom if JSON unavailable
-  - Manual feed URL input if auto-detection fails
-  - Support for multiple feed format detection
+### v1.3.0 JSON Feed Auto-Detection ✅ COMPLETED
+1. ✅ Auto-detect feeds from website URLs
+   - ✅ Priority to JSON Feed detection
+   - ✅ Fallback to RSS/Atom if JSON is unavailable
+   - ✅ Manual URL fallback if auto-detection fails
+   - ✅ Support for multiple feed formats (JSON Feed, RSS, Atom)
+
+### v1.3.1 Hardening Add Flow (PLANNED)
+1. Prevent duplicate insertions when user clicks "Aggiungi Feed" multiple times during parsing
+2. Optimize detection timeout/parallelism to reduce waiting time
+3. Improve user messages when feed URL is auto-detected
 
 ### v1.4.0 (PLANNED)
 1. Settings page creation

@@ -2,6 +2,60 @@
 
 This file logs all development sessions for the PickUpNews project.
 
+## Session: v1.3.1 Hardening Add Feed Flow
+- Date: 23 April 2026
+- Start Time: 22:45
+- End Time: 23:05
+- Duration: 20 minutes
+
+## Changes Made
+- Added roadmap milestone v1.3.1 in README and PROJECT_STATE
+- Hardened add-feed flow to prevent duplicate insertions on repeated clicks during detection/parsing
+- Added in-memory pending URL guard in app state to block concurrent duplicate add requests
+- Added duplicate URL check before insert (`Feed già presente`)
+- Disabled submit path in AddFeedForm while add request is in progress
+
+## Testing
+- Verified project build (`npm run build`) completes successfully
+- Manually validated that add-feed submit now enters loading state and blocks rapid repeated submit
+
+## Issues Encountered
+- None
+
+## Next Steps
+- Implement clearer user-facing message when a feed is auto-detected
+- Optimize detection timeout/parallelism strategy in RSSService
+
+## Session: v1.3.0 JSON/RSS/Atom Feed Auto-Detection
+- Date: 23 April 2026
+- Start Time: 09:30
+- End Time: 10:05
+- Duration: 35 minutes
+
+## Changes Made
+- Implemented automatic feed detection from website or feed URL during add flow
+- Added detection priority: JSON Feed first, then RSS/Atom detection
+- Added support for multiple feed formats in RSS service (JSON Feed, RSS 2.0, Atom)
+- Added HTML `<link rel="alternate">` feed discovery from website pages
+- Added fallback detection over common feed paths (`/feed.json`, `/rss.xml`, `/atom.xml`, etc.)
+- Kept manual URL fallback behavior when auto-detection cannot find a feed
+- Updated add-feed form copy to reflect website URL support and detection behavior
+- Updated README and PROJECT_STATE for v1.3.0 completion
+
+## Testing
+- Ran production build successfully (`npm run build`)
+- Performed end-to-end UI validation in browser via local dev server
+- Verified add flow with website URL auto-detection to RSS feed (`theguardian.com` -> `https://www.theguardian.com/europe/rss`)
+- Verified add flow with website URL auto-detection to JSON Feed (`jsonfeed.org` -> `https://www.jsonfeed.org/feed.json`)
+- Verified manual fallback behavior when auto-detection fails (`example.com/no-real-feed-path` kept as entered URL)
+- Verified Home rendering with loaded news and article detail modal opening correctly
+
+## Issues Encountered
+- None
+
+## Next Steps
+- Proceed with v1.4.0 settings page and credits
+
 ## Session: v1.2.3 Mobile Feed Layout + Touch DnD + Edit Refresh
 - Date: 22 April 2026
 - Start Time: 15:35

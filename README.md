@@ -14,6 +14,8 @@ PickUpNews allows you to easily aggregate and read all your favorite RSS feeds. 
 - **📲 Touch Drag & Drop**: Feed drag & drop sorting also works on mobile touch devices
 - **✏️ Feed Editing**: Edit feed name and URL with real-time URL validation and save confirmation
 - **🔄 Instant Feed Reload on Edit**: Saving feed edits reloads the feed and updates "Last updated"
+- **🧠 Auto Feed Detection**: Enter a website URL and PickUpNews auto-detects JSON Feed first, then RSS/Atom
+- **🧩 Multi-Format Support**: Native support for JSON Feed, RSS 2.0, and Atom feeds
 - **📅 Chronological View**: See all news sorted by date (most recent first)
 - **🏷️ Site View**: Group news by source/site
 - **🧭 Consistent Source Order**: In "By Site" mode, Home follows the same order configured in Feeds
@@ -86,10 +88,17 @@ Each call is protected by a **10-second timeout** using `AbortController`: if a 
 - ✅ Feed edit save now triggers feed reload and updates "Last updated"
 
 ### v1.3.0
-- 🔍 Auto-detect JSON feeds from websites
-  - 🔄 Fallback to RSS/Atom if JSON unavailable
-  - ✏️ Manual feed URL input if auto-detection fails
-  - 📋 Support for multiple feed format detection
+- ✅ Auto-detect feeds from website URLs
+  - ✅ Priority to JSON Feed detection
+  - ✅ Fallback to RSS/Atom when JSON is unavailable
+  - ✅ Manual URL fallback if auto-detection does not find a feed
+  - ✅ Multi-format detection support (JSON Feed, RSS, Atom)
+
+### v1.3.1
+- 🛡️ Feed add flow hardening
+  - Prevent duplicate feed insertions caused by repeated clicks during parsing
+  - Improve detection timeout/parallelism strategy for better responsiveness
+  - Show clearer user feedback when a feed URL is auto-detected
 
 ### v1.4.0
 - ⚙️ Settings page creation
@@ -157,8 +166,10 @@ The app has two sections accessible from the header:
 1. Go to the **Feeds** section (header at the top right)
 2. Click on **"+ Add RSS Feed"**
 3. Enter the feed name (e.g., "The Guardian")
-4. Enter the RSS feed URL (e.g., `https://www.theguardian.com/uk/rss`)
-5. Click **"Add Feed"** — the news will automatically appear in Home
+4. Enter a website URL or feed URL (e.g., `theguardian.com` or `https://www.theguardian.com/uk/rss`)
+5. Click **"Add Feed"**
+6. PickUpNews tries automatic detection (JSON Feed first, then RSS/Atom)
+7. If no feed is detected, PickUpNews uses the URL you entered as manual feed URL
 
 ### Viewing News
 From the **Home** section, you can choose two viewing modes:

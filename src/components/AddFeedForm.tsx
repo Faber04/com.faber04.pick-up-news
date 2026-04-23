@@ -9,18 +9,22 @@ interface AddFeedFormProps {
 export const AddFeedForm = ({ onAddFeed, loading, onClose }: AddFeedFormProps) => {
   const [url, setUrl] = useState('');
   const [title, setTitle] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!url.trim() || !title.trim()) return;
+    if (!url.trim() || !title.trim() || loading || isSubmitting) return;
 
     try {
+      setIsSubmitting(true);
       await onAddFeed(url.trim(), title.trim());
       setUrl('');
       setTitle('');
       onClose?.();
     } catch (error) {
       // Error is handled in the parent component
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -56,26 +60,29 @@ export const AddFeedForm = ({ onAddFeed, loading, onClose }: AddFeedFormProps) =
 
         <div>
           <label htmlFor="feed-url" className="block text-sm font-medium text-secondary mb-1">
-            URL del Feed RSS
+            URL Sito o Feed
           </label>
           <input
             id="feed-url"
             type="text"
             value={url}
             onChange={(e) => setUrl(e.target.value)}
-            placeholder="es. example.com/rss o www.example.com/feed"
+            placeholder="es. example.com oppure example.com/rss"
             className="input-field"
             required
           />
+          <p className="text-xs text-muted mt-1">
+            Rilevamento automatico: prima JSON Feed, poi RSS/Atom. Se non trovato, usa l'URL inserito.
+          </p>
         </div>
 
         <div className="flex gap-2">
           <button
             type="submit"
-            disabled={loading}
+            disabled={loading || isSubmitting}
             className="btn-brand disabled:opacity-60 px-4 py-2 rounded-md font-medium transition"
           >
-            {loading ? 'Aggiungendo...' : 'Aggiungi Feed'}
+            {loading || isSubmitting ? 'Aggiungendo...' : 'Aggiungi Feed'}
           </button>
           {onClose && (
             <button

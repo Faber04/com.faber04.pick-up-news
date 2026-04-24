@@ -99,10 +99,10 @@ Each call is protected by a **10-second timeout** using `AbortController`: if a 
 
 ### v1.3.1 ✅
 - ✅ Feed add flow hardening
-  - Prevent duplicate feed insertions — instant inline feedback
-  - Add panel stays open on failure with inline error under URL field (no modal alerts)
-  - HTML candidate discovery + path-segment probing for broader site coverage
-  - Parallel candidate probing via `firstSuccess()` — detection worst case drops from O(n × timeout) to O(timeout)
+  - ✅ Prevent duplicate feed insertions — instant inline feedback
+  - ✅ Add panel stays open on failure with inline error under URL field (no modal alerts)
+  - ✅ HTML candidate discovery + path-segment probing for broader site coverage
+  - ✅ Parallel candidate probing via `firstSuccess()` — detection worst case drops from O(n × timeout) to O(timeout)
 
 ### v1.4.0
 - ⚙️ Settings page creation

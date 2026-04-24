@@ -2,6 +2,32 @@
 
 This file logs all development sessions for the PickUpNews project.
 
+## Session: Fix issue autodetect RSS + inline error UX (v1.3.1)
+- Date: 24 April 2026
+- Start Time: 06:55
+- End Time: 07:14
+- Duration: 19 minutes
+
+## Changes Made
+- Updated add-feed submit flow to close panel only on successful add
+- Added inline add-feed error handling under URL field and cleared error while typing
+- Kept add-feed panel open on add failure and duplicate URL attempts (no modal alert flow)
+- Suppressed global error banner in Feeds page so add errors are shown only inline in the form
+- Hardened feed auto-detection with generic HTML candidate discovery and path-segment-based common feed probing
+
+## Testing
+- Build passed (`npm run build`)
+- Manual E2E validation in browser:
+  - invalid URL/add failure -> panel remains open + inline error shown
+  - website URL detection success (`https://www.theguardian.com` -> detected RSS URL)
+  - duplicate add attempt -> inline `Feed già presente` + panel remains open
+
+## Issues Encountered
+- None
+
+## Next Steps
+- Proceed with settings page and credits roadmap (v1.4.0)
+
 ## Session: Open issue - autodetect RSS e UX errore add feed
 - Date: 23 April 2026
 - Start Time: 23:40

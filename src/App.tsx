@@ -61,7 +61,7 @@ function App() {
       />
 
       {/* Error Message */}
-      {state.error && (
+      {state.error && currentPage !== 'feeds' && (
         <div className="app-container pt-4">
           <div className="surface rounded-lg px-4 py-3 flex justify-between items-center text-secondary">
             <span className="text-[var(--danger)]">{state.error}</span>
@@ -79,7 +79,9 @@ function App() {
         <FeedsPage
           feeds={state.feeds}
           loading={state.loading}
+          addFeedError={state.error}
           onAddFeed={addFeed}
+          onClearError={clearError}
           onRemoveFeed={removeFeed}
           onMoveFeed={moveFeed}
           onMoveFeedToIndex={moveFeedToIndex}

@@ -27,6 +27,9 @@
 - Feed edit now reloads feed and updates "Ultimo aggiornamento" ✅ COMPLETED
 - Auto-detection for website/feed URL with JSON Feed priority and RSS/Atom fallback ✅ COMPLETED
 - Multi-format feed support (JSON Feed, RSS, Atom) ✅ COMPLETED
+- Add Feed failure UX: panel remains open + inline URL error (no modal alert) ✅ COMPLETED
+- Duplicate add feedback shown inline in Add Feed form ✅ COMPLETED
+- Generic auto-detection hardening (HTML discovery + path-segment probing) ✅ COMPLETED
 
 ## Objectives
 - Implement RSS feed management (add, remove feeds). ✅ COMPLETED
@@ -45,7 +48,7 @@
 **v1.2.2** (Commit UNRELEASED) — Drag & drop sorting + by-site order alignment
 **v1.2.3** (Commit UNRELEASED) — Mobile feed layout fix + touch DnD + edit refresh timestamp
 **v1.3.0** (Commit UNRELEASED) — JSON/RSS/Atom auto-detection from website URL + manual fallback
-**v1.3.1** (PLANNED) — Add-flow hardening: anti-duplicate submit + detection UX/performance improvements
+**v1.3.1** (IN PROGRESS) — Add-flow hardening: anti-duplicate submit + detection UX/performance improvements
 **v1.4.0** (PLANNED) — Settings page, credits, mobile modal metadata layout
 **v2.0.0** (PLANNED) — Export/Import feeds
 
@@ -112,10 +115,11 @@
    - ✅ Manual URL fallback if auto-detection fails
    - ✅ Support for multiple feed formats (JSON Feed, RSS, Atom)
 
-### v1.3.1 Hardening Add Flow (PLANNED)
-1. Prevent duplicate insertions when user clicks "Aggiungi Feed" multiple times during parsing
-2. Optimize detection timeout/parallelism to reduce waiting time
-3. Improve user messages when feed URL is auto-detected
+### v1.3.1 Hardening Add Flow (IN PROGRESS)
+1. ✅ Prevent duplicate insertions when user clicks "Aggiungi Feed" multiple times during parsing
+2. ✅ Keep Add Feed panel open on add failure and show inline error under URL (no alert)
+3. ✅ Improve generic feed detection coverage (HTML candidate discovery + path-segment probing)
+4. ⏳ Further optimize detection timeout/parallelism strategy
 
 ### v1.4.0 (PLANNED)
 1. Settings page creation
@@ -151,8 +155,8 @@
 - FTP deployment credentials setup.
 
 ## Known Issues
-- High Priority: RSS auto-detection still fails in real scenarios and often does not find a valid feed from website URLs.
-- High Priority UX: When auto-detection fails, the Add Feed panel should remain open. Error feedback must be shown inline under the URL field (no alert modal), so the user can immediately edit and retry.
+- No blocking issues currently tracked for Add Feed UX.
+- Residual risk: feed auto-detection can still fail on some non-standard sites; user can retry with direct feed URL.
 
 ## Dependencies
 - React ^18.2.0

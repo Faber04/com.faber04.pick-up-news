@@ -5,7 +5,9 @@ import { RSSFeed } from '../types';
 interface FeedsPageProps {
   feeds: RSSFeed[];
   loading: boolean;
-  onAddFeed: (url: string, title: string) => Promise<void>;
+  addFeedError: string | null;
+  onAddFeed: (url: string, title: string) => Promise<boolean>;
+  onClearError: () => void;
   onRemoveFeed: (feedId: string) => void;
   onMoveFeed: (feedId: string, direction: 'up' | 'down') => void;
   onMoveFeedToIndex: (feedId: string, targetIndex: number) => void;
@@ -16,7 +18,9 @@ interface FeedsPageProps {
 export const FeedsPage = ({
   feeds,
   loading,
+  addFeedError,
   onAddFeed,
+  onClearError,
   onRemoveFeed,
   onMoveFeed,
   onMoveFeedToIndex,
@@ -53,6 +57,8 @@ export const FeedsPage = ({
         <AddFeedForm 
           onAddFeed={onAddFeed} 
           loading={loading}
+          error={addFeedError}
+          onClearError={onClearError}
           onClose={() => setShowForm(false)}
         />
       )}

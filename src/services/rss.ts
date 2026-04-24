@@ -22,6 +22,7 @@ export class RSSService {
     '/atom.xml',
     '/index.xml'
   ];
+  private static readonly MAX_HTML_CANDIDATES = 24;
 
   // Fetch with a timeout to avoid hanging on unresponsive proxies
   private static async fetchWithTimeout(url: string): Promise<Response> {
@@ -165,6 +166,41 @@ export class RSSService {
     }
   }
 
+  private static inferFormatFromHint(hint: string): FeedFormat | null {
+    const normalized = hint.toLowerCase();
+
+    if (normalized.includes('application/feed+json') || normalized.includes('jsonfeed') || normalized.includes('feed.json')) {
+      return 'json';
+    }
+
+    if (normalized.includes('application/rss+xml') || normalized.endsWith('.rss') || normalized.endsWith('/rss') || normalized.includes('rss.xml')) {
+      return 'rss';
+    }
+
+    if (normalized.includes('application/atom+xml') || normalized.endsWith('/atom') || normalized.includes('atom.xml')) {
+      return 'atom';
+    }
+
+    return null;
+  }
+
+  private static looksLikeFeedHref(href: string): boolean {
+    const value = href.toLowerCase();
+    return (
+      /(^|\/)feed(\.|\/|$)/.test(value)
+      || /(^|\/)feeds(\.|\/|$)/.test(value)
+      || /(^|\/)rss(\.|\/|$)/.test(value)
+      || /(^|\/)atom(\.|\/|$)/.test(value)
+      || value.includes('feed.xml')
+      || value.includes('rss.xml')
+      || value.includes('atom.xml')
+      || value.includes('feed.json')
+      || value.includes('jsonfeed')
+      || value.includes('?format=xml')
+      || value.includes('&format=xml')
+    );
+  }
+
   private static async fetchRawViaCorsproxy(url: string): Promise<string> {
     const apiUrl = `${this.CORSPROXY_API}${encodeURIComponent(url)}`;
     const response = await this.fetchWithTimeout(apiUrl);
@@ -239,32 +275,47 @@ export class RSSService {
       return null;
     }
 
+    const candidateMap = new Map<string, { href: string; format: FeedFormat | null; priority: number }>();
+
     const linkNodes = Array.from(doc.querySelectorAll('link[rel~="alternate"]'));
-    const candidates = linkNodes
-      .map((link): { href: string; format: FeedFormat | null; priority: number } | null => {
-        const href = link.getAttribute('href') || '';
-        const type = (link.getAttribute('type') || '').toLowerCase();
+    for (const link of linkNodes) {
+      const href = link.getAttribute('href') || '';
+      const type = (link.getAttribute('type') || '').toLowerCase();
+      const format = this.inferFormatFromHint(`${type} ${href}`);
 
-        if (!href) {
-          return null;
-        }
+      if (!href) {
+        continue;
+      }
 
-        if (type.includes('application/feed+json') || type.includes('application/json')) {
-          return { href, format: 'json', priority: 0 };
-        }
+      if (!format && !this.looksLikeFeedHref(href)) {
+        continue;
+      }
 
-        if (type.includes('application/rss+xml')) {
-          return { href, format: 'rss', priority: 1 };
-        }
+      const priority = format === 'json' ? 0 : format === 'rss' ? 1 : format === 'atom' ? 2 : 3;
+      const existing = candidateMap.get(href);
+      if (!existing || priority < existing.priority) {
+        candidateMap.set(href, { href, format, priority });
+      }
+    }
 
-        if (type.includes('application/atom+xml')) {
-          return { href, format: 'atom', priority: 2 };
-        }
+    const anchorNodes = Array.from(doc.querySelectorAll('a[href]'));
+    for (const anchor of anchorNodes) {
+      const href = anchor.getAttribute('href') || '';
+      if (!href || !this.looksLikeFeedHref(href)) {
+        continue;
+      }
 
-        return null;
-      })
-      .filter((candidate): candidate is { href: string; format: FeedFormat; priority: number } => !!candidate)
-      .sort((a, b) => a.priority - b.priority);
+      const format = this.inferFormatFromHint(href);
+      const priority = format === 'json' ? 1 : format === 'rss' ? 2 : format === 'atom' ? 3 : 4;
+      const existing = candidateMap.get(href);
+      if (!existing || priority < existing.priority) {
+        candidateMap.set(href, { href, format, priority });
+      }
+    }
+
+    const candidates = Array.from(candidateMap.values())
+      .sort((a, b) => a.priority - b.priority)
+      .slice(0, this.MAX_HTML_CANDIDATES);
 
     for (const candidate of candidates) {
       const resolved = this.resolveUrl(url, candidate.href);
@@ -281,16 +332,41 @@ export class RSSService {
     return null;
   }
 
-  private static async detectFromCommonPaths(url: string): Promise<FeedDetectionResult | null> {
+  private static buildCommonPathCandidates(url: string): string[] {
     let base: URL;
     try {
       base = new URL(url);
     } catch {
-      return null;
+      return [];
     }
 
-    for (const path of this.COMMON_FEED_PATHS) {
-      const candidateUrl = `${base.origin}${path}`;
+    const prefixes = ['/'];
+    const segments = base.pathname.split('/').filter(Boolean);
+    for (let depth = segments.length; depth > 0; depth--) {
+      prefixes.push(`/${segments.slice(0, depth).join('/')}`);
+    }
+
+    const candidates: string[] = [];
+    const seen = new Set<string>();
+
+    for (const prefix of prefixes) {
+      const prefixWithoutTrailingSlash = prefix === '/' ? '' : prefix;
+      for (const path of this.COMMON_FEED_PATHS) {
+        const candidateUrl = `${base.origin}${prefixWithoutTrailingSlash}${path}`;
+        if (seen.has(candidateUrl)) {
+          continue;
+        }
+        seen.add(candidateUrl);
+        candidates.push(candidateUrl);
+      }
+    }
+
+    return candidates;
+  }
+
+  private static async detectFromCommonPaths(url: string): Promise<FeedDetectionResult | null> {
+    const candidates = this.buildCommonPathCandidates(url);
+    for (const candidateUrl of candidates) {
       const detected = await this.detectDirectFeed(candidateUrl);
       if (detected) {
         return detected;

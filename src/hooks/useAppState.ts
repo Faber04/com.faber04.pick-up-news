@@ -67,17 +67,17 @@ export const useAppState = () => {
     document.documentElement.setAttribute('data-theme', themeMode);
   }, [themeMode]);
 
-  const addFeed = useCallback(async (url: string, title: string) => {
+  const addFeed = useCallback(async (url: string, title: string): Promise<boolean> => {
     if (!RSSService.validateFeedUrl(url)) {
       setState(prev => ({ ...prev, error: 'Invalid RSS feed URL' }));
-      return;
+      return false;
     }
 
     const normalizedUrl = RSSService.normalizeUrl(url);
     const normalizedKey = normalizedUrl.toLowerCase();
 
     if (pendingAddUrlsRef.current.has(normalizedKey)) {
-      return;
+      return false;
     }
 
     pendingAddUrlsRef.current.add(normalizedKey);
@@ -110,7 +110,7 @@ export const useAppState = () => {
             loading: false,
             error: 'Feed non rilevato automaticamente. Inserisci un URL feed RSS/Atom/JSON valido.'
           }));
-          return;
+          return false;
         }
       }
 
@@ -121,16 +121,17 @@ export const useAppState = () => {
         lastFetched: new Date()
       };
 
-      setState(prev => {
-        const alreadyExists = prev.feeds.some(feed => feed.url.toLowerCase() === finalKey);
-        if (alreadyExists) {
-          return {
-            ...prev,
-            loading: false,
-            error: 'Feed già presente'
-          };
-        }
+      const alreadyExists = state.feeds.some(feed => feed.url.toLowerCase() === finalKey);
+      if (alreadyExists) {
+        setState(prev => ({
+          ...prev,
+          loading: false,
+          error: 'Feed già presente'
+        }));
+        return false;
+      }
 
+      setState(prev => {
         return {
           ...prev,
           feeds: [...prev.feeds, newFeed],
@@ -138,11 +139,13 @@ export const useAppState = () => {
           error: null
         };
       });
+
+      return true;
     } finally {
       pendingAddUrlsRef.current.delete(normalizedKey);
       pendingAddUrlsRef.current.delete(finalKey);
     }
-  }, []);
+  }, [state.feeds]);
 
   const removeFeed = useCallback((feedId: string) => {
     setState(prev => ({

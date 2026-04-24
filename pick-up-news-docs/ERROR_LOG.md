@@ -11,15 +11,16 @@ This file documents all errors encountered during development, their solutions, 
 
 ---
 
-## Open Issue: Auto-detect RSS non affidabile + UX errore add feed
+## Resolved: Auto-detect RSS non affidabile + UX errore add feed
 - Date: 23 April 2026
 - Error Description: L'auto-detect partendo da URL sito continua a non trovare correttamente un feed RSS in molti casi.
 - Cause: Strategia di detection/fallback non ancora sufficientemente robusta su siti eterogenei.
-- Solution (Required):
-	1. Migliorare il rilevamento feed in modo generico (senza regole verticali per dominio).
-	2. In caso di errore, non chiudere il pannello di aggiunta feed.
-	3. Mostrare l'errore inline sotto il campo URL, senza usare alert.
-- Prevention: Introdurre test E2E sui casi di fallimento e validare esplicitamente che il pannello resti aperto con errore inline.
+- Solution (Applied on 24 April 2026):
+	1. Rilevamento feed migliorato in modo generico con discovery HTML piu ampio (link/anchor candidati) e probing su path comuni anche sui segmenti URL.
+	2. In caso di errore add feed, il pannello resta aperto.
+	3. Errore mostrato inline sotto il campo URL, senza alert modal.
+	4. Tentativi duplicati mostrano errore inline `Feed già presente`.
+- Prevention: Mantenere test E2E sui casi chiave (failure inline/pannello aperto, success detection, duplicate add).
 
 ---
 

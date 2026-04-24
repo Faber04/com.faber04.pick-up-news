@@ -1,12 +1,14 @@
 import { useState } from 'react';
 
 interface AddFeedFormProps {
-  onAddFeed: (url: string, title: string) => Promise<void>;
+  onAddFeed: (url: string, title: string) => Promise<boolean>;
   loading: boolean;
+  error?: string | null;
+  onClearError?: () => void;
   onClose?: () => void;
 }
 
-export const AddFeedForm = ({ onAddFeed, loading, onClose }: AddFeedFormProps) => {
+export const AddFeedForm = ({ onAddFeed, loading, error, onClearError, onClose }: AddFeedFormProps) => {
   const [url, setUrl] = useState('');
   const [title, setTitle] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -17,10 +19,12 @@ export const AddFeedForm = ({ onAddFeed, loading, onClose }: AddFeedFormProps) =
 
     try {
       setIsSubmitting(true);
-      await onAddFeed(url.trim(), title.trim());
-      setUrl('');
-      setTitle('');
-      onClose?.();
+      const added = await onAddFeed(url.trim(), title.trim());
+      if (added) {
+        setUrl('');
+        setTitle('');
+        onClose?.();
+      }
     } catch (error) {
       // Error is handled in the parent component
     } finally {
@@ -66,11 +70,19 @@ export const AddFeedForm = ({ onAddFeed, loading, onClose }: AddFeedFormProps) =
             id="feed-url"
             type="text"
             value={url}
-            onChange={(e) => setUrl(e.target.value)}
+            onChange={(e) => {
+              setUrl(e.target.value);
+              if (error) {
+                onClearError?.();
+              }
+            }}
             placeholder="es. example.com oppure example.com/rss"
-            className="input-field"
+            className={`input-field ${error ? 'border-[var(--danger)] focus:border-[var(--danger)]' : ''}`}
             required
           />
+          {error && (
+            <p className="text-xs text-[var(--danger)] mt-1">{error}</p>
+          )}
           <p className="text-xs text-muted mt-1">
             Rilevamento automatico: prima JSON Feed, poi RSS/Atom. Se non trovato, usa l'URL inserito.
           </p>

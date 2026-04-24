@@ -15,6 +15,8 @@ PickUpNews allows you to easily aggregate and read all your favorite RSS feeds. 
 - **✏️ Feed Editing**: Edit feed name and URL with real-time URL validation and save confirmation
 - **🔄 Instant Feed Reload on Edit**: Saving feed edits reloads the feed and updates "Last updated"
 - **🧠 Auto Feed Detection**: Enter a website URL and PickUpNews auto-detects JSON Feed first, then RSS/Atom
+- **🧯 Inline Add Feed Errors**: If detection fails, the add panel stays open and shows an inline URL error (no modal alerts)
+- **🛑 Duplicate Protection**: Duplicate feed URLs are blocked with immediate inline feedback
 - **🧩 Multi-Format Support**: Native support for JSON Feed, RSS 2.0, and Atom feeds
 - **📅 Chronological View**: See all news sorted by date (most recent first)
 - **🏷️ Site View**: Group news by source/site
@@ -184,7 +186,8 @@ The app has two sections accessible from the header:
 4. Enter a website URL or feed URL (e.g., `theguardian.com` or `https://www.theguardian.com/uk/rss`)
 5. Click **"Add Feed"**
 6. PickUpNews tries automatic detection (JSON Feed first, then RSS/Atom)
-7. If no feed is detected, PickUpNews uses the URL you entered as manual feed URL
+7. If no valid feed is detected, the panel stays open and an inline error appears under the URL field
+8. Correct the URL and retry without reopening the add panel
 
 ### Viewing News
 From the **Home** section, you can choose two viewing modes:

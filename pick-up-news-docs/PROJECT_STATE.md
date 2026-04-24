@@ -29,7 +29,8 @@
 - Multi-format feed support (JSON Feed, RSS, Atom) ✅ COMPLETED
 - Add Feed failure UX: panel remains open + inline URL error (no modal alert) ✅ COMPLETED
 - Duplicate add feedback shown inline in Add Feed form ✅ COMPLETED
-- Generic auto-detection hardening (HTML discovery + path-segment probing) ✅ COMPLETED
+- Parallel candidate detection probes via `firstSuccess()` — worst case O(timeout) ✅ COMPLETED
+- add-feed error no longer leaks to global banner on Home page (clearError on navigation) ✅ COMPLETED
 
 ## Objectives
 - Implement RSS feed management (add, remove feeds). ✅ COMPLETED
@@ -48,7 +49,7 @@
 **v1.2.2** (Commit UNRELEASED) — Drag & drop sorting + by-site order alignment
 **v1.2.3** (Commit UNRELEASED) — Mobile feed layout fix + touch DnD + edit refresh timestamp
 **v1.3.0** (Commit UNRELEASED) — JSON/RSS/Atom auto-detection from website URL + manual fallback
-**v1.3.1** (Commit UNRELEASED) — Add-flow hardening: anti-duplicate submit + detection UX/performance improvements ✅ COMPLETED
+**v1.3.1** (Commit 888c3f8) — Add-flow hardening: anti-duplicate submit + detection UX/performance improvements ✅ COMPLETED
 **v1.4.0** (PLANNED) — Settings page, credits, mobile modal metadata layout
 **v2.0.0** (PLANNED) — Export/Import feeds
 **v3.0.0** (PLANNED) — Replace corsproxy.io with Cloudflare Workers (self-hosted CORS proxy)

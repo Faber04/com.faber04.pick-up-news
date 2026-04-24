@@ -25,6 +25,7 @@ PickUpNews allows you to easily aggregate and read all your favorite RSS feeds. 
 - **💾 Local Persistence**: Your feeds are automatically saved in the browser
 - **🔍 Smart Preview**: Descriptions truncated to 120 characters for quick reading
 - **📖 Full Reading**: Modal with full article and original link
+- **⚡ Parallel Feed Detection**: Candidate probes run concurrently — detection worst case is O(timeout) regardless of candidate count
 - **⚡ Performance**: Fast loading thanks to Vite and React optimizations
 
 ## 🛠️ Technologies Used
@@ -89,22 +90,22 @@ Each call is protected by a **10-second timeout** using `AbortController`: if a 
 - ✅ Touch drag & drop support for feed ordering on mobile
 - ✅ Feed edit save now triggers feed reload and updates "Last updated"
 
-### v1.3.0
+### v1.3.0 ✅
 - ✅ Auto-detect feeds from website URLs
   - ✅ Priority to JSON Feed detection
   - ✅ Fallback to RSS/Atom when JSON is unavailable
   - ✅ Manual URL fallback if auto-detection does not find a feed
   - ✅ Multi-format detection support (JSON Feed, RSS, Atom)
 
-### v1.3.1
-- 🛡️ Feed add flow hardening
-  - Prevent duplicate feed insertions caused by repeated clicks during parsing
-  - Improve detection timeout/parallelism strategy for better responsiveness
-  - Show clearer user feedback when a feed URL is auto-detected
+### v1.3.1 ✅
+- ✅ Feed add flow hardening
+  - Prevent duplicate feed insertions — instant inline feedback
+  - Add panel stays open on failure with inline error under URL field (no modal alerts)
+  - HTML candidate discovery + path-segment probing for broader site coverage
+  - Parallel candidate probing via `firstSuccess()` — detection worst case drops from O(n × timeout) to O(timeout)
 
 ### v1.4.0
 - ⚙️ Settings page creation
-  - "Carica Feed" button placed in the "Gestione Feed RSS" section between "Aggiungi Feed" and "Aggiorna"
 - 🙌 Credits in the settings page
   - App created by Faber04 with link to the GitHub profile
   - Version number
@@ -112,15 +113,24 @@ Each call is protected by a **10-second timeout** using `AbortController`: if a 
 - 📱 Mobile layout adjustment
   - In the selected article modal, metadata (source, date) wraps onto multiple lines
   - Compact date format: `DD/MM/YY (HH:MM)`
+- 📲 Mobile navigation drawer
+  - On mobile, nav menu slides in from the right instead of dropping down from the top
 
 ### v2.0.0
-- � Export feeds to JSON file
+- 📥 Export feeds to JSON file
   - Download all feeds with title and URL as a JSON file
 - 📤 Import feeds from JSON file
   - Load previously exported feeds
   - Feeds added to the end of existing feeds list
   - Duplicate detection by feed URL
   - Feeds with duplicate URL are skipped
+
+### v3.0.0
+- 🔧 Replace `corsproxy.io` with a self-hosted Cloudflare Worker
+  - `corsproxy.io` free tier is limited to localhost; production requests may be blocked
+  - Cloudflare Worker proxies RSS/HTML fetch requests with CORS headers
+  - `rss2json.com` remains as secondary fallback
+  - Worker script in `workers/` folder, deployed on Cloudflare free plan (100k req/day)
 
 ## Prerequisites
 

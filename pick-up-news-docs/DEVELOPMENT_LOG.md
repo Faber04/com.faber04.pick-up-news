@@ -2,6 +2,26 @@
 
 This file logs all development sessions for the PickUpNews project.
 
+## Session: Parallelise feed detection — complete v1.3.1 (v1.3.1 FINAL)
+- Date: 24 April 2026
+
+## Changes Made
+- Added `firstSuccess<T>()` helper in `rss.ts` that runs all candidate probes in parallel and returns the first non-null result
+- Replaced sequential `for` loops in `detectFromHtml()` and `detectFromCommonPaths()` with parallel `firstSuccess()` calls
+- Detection worst case drops from O(n × timeout) to O(1 × timeout) regardless of candidate count
+
+## Testing
+- Build passed (`tsc && vite build`, 42 modules, `index-9eb81af0.js`)
+- TypeScript: no errors
+- Manual E2E: feed detection via website URL, direct feed URL, and invalid URL all behave correctly
+
+## Issues Encountered
+- None
+
+## Next Steps
+- v1.4.0: Settings page, credits, mobile modal metadata layout, mobile navigation drawer
+
+---
 ## Session: Fix banner globale errore add feed su Home (v1.3.2)
 - Date: 24 April 2026
 

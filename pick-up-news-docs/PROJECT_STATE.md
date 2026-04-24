@@ -48,7 +48,7 @@
 **v1.2.2** (Commit UNRELEASED) — Drag & drop sorting + by-site order alignment
 **v1.2.3** (Commit UNRELEASED) — Mobile feed layout fix + touch DnD + edit refresh timestamp
 **v1.3.0** (Commit UNRELEASED) — JSON/RSS/Atom auto-detection from website URL + manual fallback
-**v1.3.1** (IN PROGRESS) — Add-flow hardening: anti-duplicate submit + detection UX/performance improvements
+**v1.3.1** (Commit UNRELEASED) — Add-flow hardening: anti-duplicate submit + detection UX/performance improvements ✅ COMPLETED
 **v1.4.0** (PLANNED) — Settings page, credits, mobile modal metadata layout
 **v2.0.0** (PLANNED) — Export/Import feeds
 **v3.0.0** (PLANNED) — Replace corsproxy.io with Cloudflare Workers (self-hosted CORS proxy)
@@ -116,11 +116,11 @@
    - ✅ Manual URL fallback if auto-detection fails
    - ✅ Support for multiple feed formats (JSON Feed, RSS, Atom)
 
-### v1.3.1 Hardening Add Flow (IN PROGRESS)
+### v1.3.1 Hardening Add Flow ✅ COMPLETED
 1. ✅ Prevent duplicate insertions when user clicks "Aggiungi Feed" multiple times during parsing
 2. ✅ Keep Add Feed panel open on add failure and show inline error under URL (no alert)
 3. ✅ Improve generic feed detection coverage (HTML candidate discovery + path-segment probing)
-4. ⏳ Further optimize detection timeout/parallelism strategy
+4. ✅ Parallelise candidate detection probes — `firstSuccess()` helper runs all candidates concurrently; worst case drops from O(n × timeout) to O(timeout)
 
 ### v1.4.0 (PLANNED)
 1. Settings page creation

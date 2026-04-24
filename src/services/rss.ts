@@ -238,6 +238,31 @@ export class RSSService {
     };
   }
 
+  // Run all promises concurrently and resolve with the first non-null result.
+  // All other pending promises continue but their results are ignored.
+  private static firstSuccess<T>(promises: Promise<T | null>[]): Promise<T | null> {
+    return new Promise((resolve) => {
+      if (promises.length === 0) {
+        resolve(null);
+        return;
+      }
+      let remaining = promises.length;
+      for (const p of promises) {
+        p.then((result) => {
+          if (result !== null) {
+            resolve(result);
+          } else {
+            remaining--;
+            if (remaining === 0) resolve(null);
+          }
+        }).catch(() => {
+          remaining--;
+          if (remaining === 0) resolve(null);
+        });
+      }
+    });
+  }
+
   private static async detectDirectFeed(url: string): Promise<FeedDetectionResult | null> {
     try {
       const raw = await this.fetchRawViaCorsproxy(url);
@@ -317,19 +342,12 @@ export class RSSService {
       .sort((a, b) => a.priority - b.priority)
       .slice(0, this.MAX_HTML_CANDIDATES);
 
-    for (const candidate of candidates) {
-      const resolved = this.resolveUrl(url, candidate.href);
-      if (!resolved) {
-        continue;
-      }
+    const probes = candidates
+      .map(candidate => this.resolveUrl(url, candidate.href))
+      .filter((resolved): resolved is string => resolved !== null)
+      .map(resolved => this.detectDirectFeed(resolved));
 
-      const detected = await this.detectDirectFeed(resolved);
-      if (detected) {
-        return detected;
-      }
-    }
-
-    return null;
+    return this.firstSuccess(probes);
   }
 
   private static buildCommonPathCandidates(url: string): string[] {
@@ -366,14 +384,8 @@ export class RSSService {
 
   private static async detectFromCommonPaths(url: string): Promise<FeedDetectionResult | null> {
     const candidates = this.buildCommonPathCandidates(url);
-    for (const candidateUrl of candidates) {
-      const detected = await this.detectDirectFeed(candidateUrl);
-      if (detected) {
-        return detected;
-      }
-    }
-
-    return null;
+    const probes = candidates.map(candidateUrl => this.detectDirectFeed(candidateUrl));
+    return this.firstSuccess(probes);
   }
 
   private static async detectViaRss2json(url: string): Promise<FeedDetectionResult | null> {

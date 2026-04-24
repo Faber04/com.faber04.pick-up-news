@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { createPortal } from 'react-dom';
 import type { ThemeMode } from '../hooks/useAppState';
 
 interface HeaderProps {
@@ -30,9 +31,65 @@ export const Header = ({ currentPage, onNavigate, themeMode, onToggleTheme }: He
     { page: 'settings', label: 'Settings' },
   ];
 
+  const mobileDrawer = menuOpen ? createPortal(
+    <div className="sm:hidden fixed inset-0 z-[60]">
+      <button
+        type="button"
+        aria-label="Chiudi menu"
+        className="absolute inset-0 bg-slate-950/45"
+        onClick={() => setMenuOpen(false)}
+      />
+      <aside className="mobile-drawer surface-strong fixed inset-y-0 right-0 z-10 h-dvh w-[min(82vw,22rem)] overflow-y-auto border-l border-[color:var(--border)] px-5 py-5 shadow-2xl">
+        <div className="flex items-center justify-between border-b border-[color:var(--border)] pb-4">
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-[0.16em] text-muted">Navigazione</p>
+            <p className="mt-1 text-lg font-bold text-primary">PickUpNews</p>
+          </div>
+          <button
+            className="rounded-lg p-2 text-secondary hover:bg-[color:var(--surface-muted)] transition-colors"
+            onClick={() => setMenuOpen(false)}
+            aria-label="Chiudi menu"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+
+        <nav className="mt-5 space-y-2">
+          {navItems.map(({ page, label }) => (
+            <button
+              key={page}
+              onClick={() => handleNavigate(page)}
+              className={`w-full text-left px-4 py-3 rounded-xl font-medium text-sm transition-colors border ${
+                currentPage === page
+                  ? 'badge-brand'
+                  : 'text-secondary border-transparent hover:border-[color:var(--border)] hover:bg-[color:var(--surface-muted)]'
+              }`}
+            >
+              {label}
+            </button>
+          ))}
+        </nav>
+
+        <div className="mt-6 rounded-xl border border-[color:var(--border)] bg-[color:var(--surface-muted)] p-4">
+          <p className="text-xs font-semibold uppercase tracking-[0.16em] text-muted">Tema</p>
+          <button
+            className="mt-3 btn-neutral w-full rounded-lg px-3 py-2 text-sm font-medium transition"
+            onClick={onToggleTheme}
+          >
+            {themeMode === 'dark' ? '☀️ Passa a Light' : '🌙 Passa a Dark'}
+          </button>
+        </div>
+      </aside>
+    </div>,
+    document.body,
+  ) : null;
+
   return (
-    <header className="sticky top-0 z-50 border-b backdrop-blur border-[color:var(--border)] bg-[color:var(--surface)]/95">
-      <div className="app-container h-16 flex items-center justify-between">
+    <>
+      <header className="sticky top-0 z-50 border-b backdrop-blur border-[color:var(--border)] bg-[color:var(--surface)]/95">
+        <div className="app-container h-16 flex items-center justify-between">
         {/* Logo + Title */}
         <button
           onClick={() => handleNavigate('home')}
@@ -100,62 +157,9 @@ export const Header = ({ currentPage, onNavigate, themeMode, onToggleTheme }: He
             )}
           </button>
         </div>
-      </div>
-
-      {/* Mobile Drawer */}
-      {menuOpen && (
-        <div className="sm:hidden fixed inset-0 z-[60]">
-          <button
-            type="button"
-            aria-label="Chiudi menu"
-            className="absolute inset-0 bg-slate-950/45"
-            onClick={() => setMenuOpen(false)}
-          />
-          <aside className="mobile-drawer absolute right-0 top-0 h-full w-[min(82vw,22rem)] border-l border-[color:var(--border)] bg-[color:var(--surface-strong)] px-5 py-5 shadow-2xl">
-            <div className="flex items-center justify-between border-b border-[color:var(--border)] pb-4">
-              <div>
-                <p className="text-xs font-semibold uppercase tracking-[0.16em] text-muted">Navigazione</p>
-                <p className="mt-1 text-lg font-bold text-primary">PickUpNews</p>
-              </div>
-              <button
-                className="rounded-lg p-2 text-secondary hover:bg-[color:var(--surface-muted)] transition-colors"
-                onClick={() => setMenuOpen(false)}
-                aria-label="Chiudi menu"
-              >
-                <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-                </svg>
-              </button>
-            </div>
-
-            <nav className="mt-5 space-y-2">
-              {navItems.map(({ page, label }) => (
-                <button
-                  key={page}
-                  onClick={() => handleNavigate(page)}
-                  className={`w-full text-left px-4 py-3 rounded-xl font-medium text-sm transition-colors border ${
-                    currentPage === page
-                      ? 'badge-brand'
-                      : 'text-secondary border-transparent hover:border-[color:var(--border)] hover:bg-[color:var(--surface-muted)]'
-                  }`}
-                >
-                  {label}
-                </button>
-              ))}
-            </nav>
-
-            <div className="mt-6 rounded-xl border border-[color:var(--border)] bg-[color:var(--surface-muted)] p-4">
-              <p className="text-xs font-semibold uppercase tracking-[0.16em] text-muted">Tema</p>
-              <button
-                className="mt-3 btn-neutral w-full rounded-lg px-3 py-2 text-sm font-medium transition"
-                onClick={onToggleTheme}
-              >
-                {themeMode === 'dark' ? '☀️ Passa a Light' : '🌙 Passa a Dark'}
-              </button>
-            </div>
-          </aside>
         </div>
-      )}
-    </header>
+      </header>
+      {mobileDrawer}
+    </>
   );
 };

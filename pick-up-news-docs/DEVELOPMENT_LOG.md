@@ -2,6 +2,27 @@
 
 This file logs all development sessions for the PickUpNews project.
 
+## Session: Fix mobile drawer viewport layering after v1.4.0
+- Date: 24 April 2026
+
+## Changes Made
+- Fixed the mobile right-side navigation drawer so it no longer renders inside the sticky header containing block
+- Moved the mobile drawer rendering to a portal mounted on `document.body`
+- Kept the drawer as a fixed viewport-level layer with overlay, preserving the v1.4.0 interaction model
+
+## Testing
+- Build passed (`npm run build`)
+- Local browser validation:
+  - mobile menu opens from the right as expected
+  - drawer background remains opaque
+  - overlay and close actions still work correctly
+
+## Issues Encountered
+- The drawer was visually leaking the page behind it because it was rendered inside the sticky header context, which constrained the fixed panel unexpectedly
+
+## Next Steps
+- Monitor the drawer behavior on physical mobile devices after deploy
+
 ## Session: Complete v1.4.0 settings + mobile navigation + modal metadata
 - Date: 24 April 2026
 

@@ -34,6 +34,7 @@
 - Settings page with credits, version, and copyright ✅ COMPLETED
 - Mobile navigation now uses a right-side drawer with overlay ✅ COMPLETED
 - Article modal metadata wraps better on mobile and uses compact `DD/MM/YY (HH:MM)` date format ✅ COMPLETED
+- Mobile drawer layering fixed so the panel renders as a true viewport overlay ✅ COMPLETED
 
 ## Objectives
 - Implement RSS feed management (add, remove feeds). ✅ COMPLETED

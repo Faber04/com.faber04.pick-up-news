@@ -2,6 +2,13 @@
 
 This file documents all errors encountered during development, their solutions, and how to prevent them in the future.
 
+## Resolved: Mobile drawer appeared transparent over app content
+- Date: 24 April 2026
+- Error Description: In mobile layout, the lateral navigation drawer appeared visually transparent because app content was still visible through the panel area.
+- Cause: The drawer was rendered inside the sticky header tree. That containing block interfered with the fixed positioning of the panel, so the drawer did not behave as a true viewport-level layer.
+- Solution: Moved the mobile drawer to a React portal mounted on `document.body`, keeping the panel fixed to the viewport with overlay separation.
+- Prevention: Full-screen overlays and drawers should be mounted outside sticky or transformed ancestors to avoid containing-block issues with `position: fixed`.
+
 ## Error Format
 - Date: [Date]
 - Error Description: [What happened]

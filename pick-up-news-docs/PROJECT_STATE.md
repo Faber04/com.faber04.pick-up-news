@@ -51,6 +51,7 @@
 **v1.3.1** (IN PROGRESS) — Add-flow hardening: anti-duplicate submit + detection UX/performance improvements
 **v1.4.0** (PLANNED) — Settings page, credits, mobile modal metadata layout
 **v2.0.0** (PLANNED) — Export/Import feeds
+**v3.0.0** (PLANNED) — Replace corsproxy.io with Cloudflare Workers (self-hosted CORS proxy)
 
 ## Next Steps (Roadmap)
 
@@ -141,7 +142,14 @@
    - Duplicate detection by feed URL
    - Feeds with duplicate URL are skipped (not added)
    - "Carica Feed" button in "Gestione Feed RSS" between "Aggiungi Feed" and "Aggiorna"
-
+### v3.0.0 (PLANNED) — Migrate CORS proxy to Cloudflare Workers
+1. Replace `corsproxy.io` with a self-hosted Cloudflare Worker
+   - `corsproxy.io` free tier is limited to localhost; production requests fail or are blocked
+   - Deploy a minimal Cloudflare Worker that proxies RSS/HTML fetch requests and sets CORS headers
+   - Update `rss.ts` to call the Worker URL instead of `corsproxy.io`
+   - Keep `rss2json.com` as secondary fallback (still free for low-traffic use)
+   - Worker script lives in a new `workers/` folder in the repo
+   - Worker is deployed on the free Cloudflare Workers plan (100k req/day)
 ## Completed Features
 - Project scaffolding.
 - Documentation structure.
@@ -156,6 +164,7 @@
 
 ## Known Issues
 - ~~Medium Priority: Errore add feed persisteva come banner su Home~~ → Resolved (clearError on page change).
+- High Priority: `corsproxy.io` free tier only works on localhost; in production CORS requests may be blocked or rate-limited. Planned fix: migrate to self-hosted Cloudflare Worker (v3.0.0).
 - Residual risk: feed auto-detection can still fail on some non-standard sites; user can retry with direct feed URL.
 
 ## Dependencies

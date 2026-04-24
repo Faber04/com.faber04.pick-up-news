@@ -7,9 +7,12 @@ import {
   NewsDetailModal
 } from './components';
 import { FeedsPage } from './pages/FeedsPage';
+import { SettingsPage } from './pages/SettingsPage';
 import { NewsItem } from './types';
 
-type Page = 'home' | 'feeds';
+type Page = 'home' | 'feeds' | 'settings';
+
+const APP_VERSION = '1.4.0';
 
 function App() {
   const {
@@ -95,6 +98,8 @@ function App() {
           onEditFeed={updateFeed}
           onRefresh={refreshNews}
         />
+      ) : currentPage === 'settings' ? (
+        <SettingsPage version={APP_VERSION} />
       ) : (
         <div className="app-container py-8 stagger-in">
           {state.feeds.length === 0 ? (

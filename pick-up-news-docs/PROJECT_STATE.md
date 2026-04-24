@@ -31,6 +31,9 @@
 - Duplicate add feedback shown inline in Add Feed form ✅ COMPLETED
 - Parallel candidate detection probes via `firstSuccess()` — worst case O(timeout) ✅ COMPLETED
 - add-feed error no longer leaks to global banner on Home page (clearError on navigation) ✅ COMPLETED
+- Settings page with credits, version, and copyright ✅ COMPLETED
+- Mobile navigation now uses a right-side drawer with overlay ✅ COMPLETED
+- Article modal metadata wraps better on mobile and uses compact `DD/MM/YY (HH:MM)` date format ✅ COMPLETED
 
 ## Objectives
 - Implement RSS feed management (add, remove feeds). ✅ COMPLETED
@@ -50,7 +53,7 @@
 **v1.2.3** (Commit UNRELEASED) — Mobile feed layout fix + touch DnD + edit refresh timestamp
 **v1.3.0** (Commit UNRELEASED) — JSON/RSS/Atom auto-detection from website URL + manual fallback
 **v1.3.1** (Commit 888c3f8) — Add-flow hardening: anti-duplicate submit + detection UX/performance improvements ✅ COMPLETED
-**v1.4.0** (PLANNED) — Settings page, credits, mobile modal metadata layout
+**v1.4.0** (Commit UNRELEASED) — Settings page, credits, mobile modal metadata layout, mobile navigation drawer ✅ COMPLETED
 **v2.0.0** (PLANNED) — Export/Import feeds
 **v3.0.0** (PLANNED) — Replace corsproxy.io with Cloudflare Workers (self-hosted CORS proxy)
 
@@ -123,19 +126,19 @@
 3. ✅ Improve generic feed detection coverage (HTML candidate discovery + path-segment probing)
 4. ✅ Parallelise candidate detection probes — `firstSuccess()` helper runs all candidates concurrently; worst case drops from O(n × timeout) to O(timeout)
 
-### v1.4.0 (PLANNED)
-1. Settings page creation
-2. Credits in the settings page
-   - App created by Faber04 with link to the GitHub profile
-   - Version number
-   - Copyright and year
-3. Mobile layout adjustment
-   - In the selected article modal, metadata (source, date) wraps onto multiple lines
-   - Replace the date format with `DD/MM/YY (HH:MM)`
-4. Mobile navigation: slide-in menu from the right
-   - On mobile, the nav menu no longer drops down from the top
-   - Instead it slides in as a lateral drawer from the right side of the screen
-   - Overlay/backdrop closes the drawer on tap outside
+### v1.4.0 ✅ COMPLETED
+1. ✅ Settings page creation
+2. ✅ Credits in the settings page
+   - ✅ App created by Faber04 with link to the GitHub profile
+   - ✅ Version number
+   - ✅ Copyright and year
+3. ✅ Mobile layout adjustment
+   - ✅ In the selected article modal, metadata (source, date, author) wraps onto multiple lines
+   - ✅ Date format updated to `DD/MM/YY (HH:MM)`
+4. ✅ Mobile navigation: slide-in menu from the right
+   - ✅ On mobile, the nav menu no longer drops down from the top
+   - ✅ It opens as a lateral drawer from the right side of the screen
+   - ✅ Overlay/backdrop closes the drawer on tap outside
 
 ### v2.0.0 (PLANNED)
 1. Export feeds to JSON file

@@ -18,9 +18,12 @@ PickUpNews allows you to easily aggregate and read all your favorite RSS feeds. 
 - **🧯 Inline Add Feed Errors**: If detection fails, the add panel stays open and shows an inline URL error (no modal alerts)
 - **🛑 Duplicate Protection**: Duplicate feed URLs are blocked with immediate inline feedback
 - **🧩 Multi-Format Support**: Native support for JSON Feed, RSS 2.0, and Atom feeds
+- **⚙️ Settings & Credits**: Dedicated Settings page with release info, author credits, and project metadata
 - **📅 Chronological View**: See all news sorted by date (most recent first)
 - **🏷️ Site View**: Group news by source/site
 - **🧭 Consistent Source Order**: In "By Site" mode, Home follows the same order configured in Feeds
+- **🧱 Mobile Navigation Drawer**: On mobile, navigation opens as a right-side drawer with overlay
+- **🗓️ Compact Article Metadata**: Article modal uses compact `DD/MM/YY (HH:MM)` date format and wraps metadata cleanly on mobile
 - **📱 Responsive Design**: Perfect on desktop, tablet, and mobile
 - **💾 Local Persistence**: Your feeds are automatically saved in the browser
 - **🔍 Smart Preview**: Descriptions truncated to 120 characters for quick reading
@@ -104,17 +107,17 @@ Each call is protected by a **10-second timeout** using `AbortController`: if a 
   - ✅ HTML candidate discovery + path-segment probing for broader site coverage
   - ✅ Parallel candidate probing via `firstSuccess()` — detection worst case drops from O(n × timeout) to O(timeout)
 
-### v1.4.0
-- ⚙️ Settings page creation
-- 🙌 Credits in the settings page
-  - App created by Faber04 with link to the GitHub profile
-  - Version number
-  - Copyright and year
-- 📱 Mobile layout adjustment
-  - In the selected article modal, metadata (source, date) wraps onto multiple lines
-  - Compact date format: `DD/MM/YY (HH:MM)`
-- 📲 Mobile navigation drawer
-  - On mobile, nav menu slides in from the right instead of dropping down from the top
+### v1.4.0 ✅
+- ✅ Settings page creation
+- ✅ Credits in the settings page
+  - ✅ App created by Faber04 with link to the GitHub profile
+  - ✅ Version number
+  - ✅ Copyright and year
+- ✅ Mobile layout adjustment
+  - ✅ In the selected article modal, metadata wraps onto multiple lines
+  - ✅ Compact date format: `DD/MM/YY (HH:MM)`
+- ✅ Mobile navigation drawer
+  - ✅ On mobile, nav menu slides in from the right instead of dropping down from the top
 
 ### v2.0.0
 - 📥 Export feeds to JSON file
@@ -185,9 +188,10 @@ Notes:
 ## 📖 How to Use PickUpNews
 
 ### Navigation
-The app has two sections accessible from the header:
+The app has three sections accessible from the header:
 - **🏠 Home** — the list of news from your feeds
 - **📡 Feeds** — RSS feed management (add, reorder, edit, remove)
+- **⚙️ Settings** — app info, version, and credits
 
 ### Adding an RSS Feed
 1. Go to the **Feeds** section (header at the top right)
@@ -206,7 +210,13 @@ From the **Home** section, you can choose two viewing modes:
 
 ### Reading Articles
 - Click on any news item to open the full detail
+- In the modal, source/date/author metadata stays readable on smaller screens
 - Use the **"Read full article"** button to open the original site
+
+### Settings and Credits
+1. Open **Settings** from the header
+2. Review current app version and release metadata
+3. Use the GitHub link to reach the Faber04 profile
 
 ### Removing a Feed
 1. Go to the **Feeds** section

@@ -12,13 +12,13 @@ export const NewsDetailModal = ({ newsItem, isOpen, onClose }: NewsDetailModalPr
   const formatDate = (dateString?: string) => {
     if (!dateString) return '';
     try {
-      return new Date(dateString).toLocaleDateString('it-IT', {
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric',
-        hour: '2-digit',
-        minute: '2-digit'
-      });
+      const date = new Date(dateString);
+      const day = String(date.getDate()).padStart(2, '0');
+      const month = String(date.getMonth() + 1).padStart(2, '0');
+      const year = String(date.getFullYear()).slice(-2);
+      const hours = String(date.getHours()).padStart(2, '0');
+      const minutes = String(date.getMinutes()).padStart(2, '0');
+      return `${day}/${month}/${year} (${hours}:${minutes})`;
     } catch {
       return '';
     }
@@ -32,32 +32,32 @@ export const NewsDetailModal = ({ newsItem, isOpen, onClose }: NewsDetailModalPr
 
   return (
     <div
-      className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 p-3 sm:p-4"
       onClick={handleBackdropClick}
     >
-      <div className="surface-strong rounded-lg max-w-4xl w-full max-h-[90vh] overflow-hidden shadow-xl border border-[color:var(--border)]">
-        <div className="flex justify-between items-center p-6 border-b border-[color:var(--border)]">
-          <h2 className="text-2xl font-bold text-primary line-clamp-2">
+      <div className="surface-strong max-h-[90vh] w-full max-w-4xl overflow-hidden rounded-2xl border border-[color:var(--border)] shadow-xl">
+        <div className="flex items-start justify-between gap-4 border-b border-[color:var(--border)] p-4 sm:items-center sm:p-6">
+          <h2 className="line-clamp-3 text-xl font-bold text-primary sm:text-2xl">
             {newsItem.title}
           </h2>
           <button
             onClick={onClose}
-            className="text-muted hover:text-primary text-2xl leading-none"
+            className="text-2xl leading-none text-muted hover:text-primary"
           >
             ✕
           </button>
         </div>
 
-        <div className="p-6 overflow-y-auto max-h-[calc(90vh-120px)]">
-          <div className="flex items-center gap-4 mb-4 text-sm text-secondary">
-            <span className="badge-brand px-2 py-1 rounded-full">
+        <div className="max-h-[calc(90vh-104px)] overflow-y-auto p-4 sm:max-h-[calc(90vh-120px)] sm:p-6">
+          <div className="mb-4 flex flex-wrap items-start gap-2 text-sm text-secondary sm:gap-4">
+            <span className="badge-brand rounded-full px-2 py-1">
               {newsItem.feedTitle}
             </span>
-            <span>
+            <span className="min-w-0 break-words">
               {formatDate(newsItem.isoDate || newsItem.pubDate)}
             </span>
             {newsItem.creator && (
-              <span>di {newsItem.creator}</span>
+              <span className="min-w-0 break-words">di {newsItem.creator}</span>
             )}
           </div>
 

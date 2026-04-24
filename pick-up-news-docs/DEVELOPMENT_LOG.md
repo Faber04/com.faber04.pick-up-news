@@ -2,6 +2,29 @@
 
 This file logs all development sessions for the PickUpNews project.
 
+## Session: Complete v1.4.0 settings + mobile navigation + modal metadata
+- Date: 24 April 2026
+
+## Changes Made
+- Added a dedicated Settings page with app credits, GitHub link, release version, and copyright year
+- Extended app navigation with a new Settings section
+- Replaced the mobile top dropdown with a right-side drawer plus overlay and in-drawer theme action
+- Updated article detail modal metadata layout to wrap cleanly and switched to compact date format `DD/MM/YY (HH:MM)`
+- Aligned app release version to `1.4.0` in `package.json`
+
+## Testing
+- Build passed (`npm run build`)
+- Browser validation completed on local dev server:
+  - Settings page renders correctly and is reachable from header navigation
+  - Article detail modal shows compact date format and wrapped metadata
+  - Mobile drawer behavior validated functionally in browser; viewport-specific emulation in the integrated browser remained limited
+
+## Issues Encountered
+- Integrated browser viewport emulation did not reduce `window.innerWidth` below desktop width, so mobile drawer was validated functionally rather than through full device emulation
+
+## Next Steps
+- Proceed with v2.0.0 import/export feeds roadmap
+
 ## Session: Parallelise feed detection — complete v1.3.1 (v1.3.1 FINAL)
 - Date: 24 April 2026
 

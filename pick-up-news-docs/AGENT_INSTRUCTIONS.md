@@ -20,11 +20,13 @@ At the end of each development session, the AI must perform the following steps:
 3. Commit with a conventional commit message describing the changes.
 4. Push to GitHub: `git push`
 5. Build and deploy via FTP: `npm run deploy`
+6. Clean `/app/pick-up-news/` on FTP by removing files no longer used by the current release (especially old hashed files in `assets/`).
 
 **Notes**:
 - Never skip the DEVELOPMENT_LOG update before committing.
 - The commit message must follow the format: `type(scope): short description` (e.g. `fix(home): clear error on navigation`, `feat(feeds): add swipe drawer`).
 - `npm run deploy` already runs `npm run build` internally — no separate build step needed for RCP.
+- During FTP cleanup, keep only files required by the current `dist/` output and `dist/index.html` references.
 
 ## Coding Standards
 - Use TypeScript for all components and logic.

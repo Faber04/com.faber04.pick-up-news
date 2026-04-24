@@ -9,8 +9,22 @@ At the end of each development session, the AI must perform the following steps:
 2. Perform edge-to-edge UI testing in the browser to ensure all functionalities work correctly.
 3. If there are any technological changes (libraries, frameworks, tools, etc.), update the README.md and AGENT_INSTRUCTIONS.md accordingly.
 4. If any feature is added, modified, or removed, update the README.md (sections: Caratteristiche Principali, Come Usare PickUpNews) to reflect the current state of the app.
-4. Commit changes to GitHub repository `com.faber04.app.pick-up-news`.
-5. Publish the built application online via FTP.
+5. Execute **RCP** (see below).
+
+## RCP — Release Candidate Publish
+**Trigger**: execute RCP at the end of every session, OR immediately when the user says "fai una RCP" / "RCP".
+
+**Steps** (always in this order):
+1. Update `pick-up-news-docs/DEVELOPMENT_LOG.md` with a session entry summarising changes made.
+2. Stage all changes: `git add -A`
+3. Commit with a conventional commit message describing the changes.
+4. Push to GitHub: `git push`
+5. Build and deploy via FTP: `npm run deploy`
+
+**Notes**:
+- Never skip the DEVELOPMENT_LOG update before committing.
+- The commit message must follow the format: `type(scope): short description` (e.g. `fix(home): clear error on navigation`, `feat(feeds): add swipe drawer`).
+- `npm run deploy` already runs `npm run build` internally — no separate build step needed for RCP.
 
 ## Coding Standards
 - Use TypeScript for all components and logic.

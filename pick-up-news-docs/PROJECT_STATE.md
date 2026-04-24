@@ -131,6 +131,10 @@
 3. Mobile layout adjustment
    - In the selected article modal, metadata (source, date) wraps onto multiple lines
    - Replace the date format with `DD/MM/YY (HH:MM)`
+4. Mobile navigation: slide-in menu from the right
+   - On mobile, the nav menu no longer drops down from the top
+   - Instead it slides in as a lateral drawer from the right side of the screen
+   - Overlay/backdrop closes the drawer on tap outside
 
 ### v2.0.0 (PLANNED)
 1. Export feeds to JSON file

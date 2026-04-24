@@ -39,6 +39,13 @@ function App() {
     }
   }, [state.feeds.length]);
 
+  // Clear feed-related errors when leaving the Feeds page
+  useEffect(() => {
+    if (currentPage !== 'feeds' && state.error) {
+      clearError();
+    }
+  }, [currentPage]);
+
   const handleNewsClick = (newsItem: NewsItem) => {
     setSelectedNews(newsItem);
     setIsModalOpen(true);

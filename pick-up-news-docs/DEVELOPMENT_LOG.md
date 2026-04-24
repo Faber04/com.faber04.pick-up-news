@@ -2,6 +2,24 @@
 
 This file logs all development sessions for the PickUpNews project.
 
+## Session: Fix banner globale errore add feed su Home (v1.3.2)
+- Date: 24 April 2026
+
+## Changes Made
+- Added `useEffect` on `currentPage` in `App.tsx` that calls `clearError()` when navigating away from Feeds page — prevents add-feed errors from leaking to the global error banner on Home
+
+## Testing
+- Build passed (`npm run build`)
+- Manual: add duplicate feed → navigate to Home → banner no longer appears
+
+## Issues Encountered
+- None
+
+## Next Steps
+- Settings page and credits roadmap (v1.4.0)
+
+---
+
 ## Session: Fix issue autodetect RSS + inline error UX (v1.3.1)
 - Date: 24 April 2026
 - Start Time: 06:55

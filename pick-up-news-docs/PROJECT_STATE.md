@@ -155,7 +155,7 @@
 - FTP deployment credentials setup.
 
 ## Known Issues
-- No blocking issues currently tracked for Add Feed UX.
+- ~~Medium Priority: Errore add feed persisteva come banner su Home~~ → Resolved (clearError on page change).
 - Residual risk: feed auto-detection can still fail on some non-standard sites; user can retry with direct feed URL.
 
 ## Dependencies

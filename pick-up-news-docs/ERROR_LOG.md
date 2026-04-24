@@ -24,6 +24,15 @@ This file documents all errors encountered during development, their solutions, 
 
 ---
 
+## Resolved: Errore add feed persiste come banner globale su Home
+- Date: 24 April 2026
+- Error Description: Se si aggiunge un feed duplicato (o si incontra un errore add feed) nella pagina Feeds, l'errore viene mostrato inline nel form (corretto). Tuttavia, navigando su Home, lo stesso errore appare come banner globale in cima alla pagina.
+- Cause: `state.error` viene svuotato solo quando si fa click ✕ sul banner o si re-esegue un'azione che lo sovrascrive. La navigazione verso Home non lo pulisce.
+- Solution Applied: Aggiunto `useEffect` su `currentPage` in `App.tsx` che chiama `clearError()` quando `currentPage !== 'feeds'` e `state.error` è presente.
+- Prevention: Gli errori legati al form add-feed non devono mai raggiungere la UI globale fuori dal contesto Feeds.
+
+---
+
 ## Error: Blank page after FTP deploy — empty JS bundle on server
 - Date: 15 April 2026
 - Error Description: App shows blank white page in production with no console errors. The JS bundle `index-*.js` served by the FTP server had 0 bytes despite the local `dist/assets/` file being correct (161 KB).

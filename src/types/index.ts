@@ -50,3 +50,59 @@ export interface FilterOptions {
   feedId?: string;
   searchTerm?: string;
 }
+
+// Feed detection type
+export type FeedFormat = 'json' | 'rss' | 'atom';
+
+export interface FeedDetectionResult {
+  feedUrl: string;
+  format: FeedFormat;
+}
+
+// JSON Feed Format (https://jsonfeed.org/version/1.1)
+export interface JSONFeedAuthor {
+  name?: string;
+  url?: string;
+  avatar?: string;
+}
+
+export interface JSONFeedItem {
+  id: string;
+  content_html?: string;
+  content_text?: string;
+  summary?: string;
+  title?: string;
+  url?: string;
+  external_url?: string;
+  date_published?: string;
+  date_modified?: string;
+  author?: JSONFeedAuthor;
+  tags?: string[];
+}
+
+export interface JSONFeedData {
+  version?: string;
+  title?: string;
+  items?: JSONFeedItem[];
+}
+
+// RSS2JSON API Response (https://rss2json.com/api-spec)
+export interface RSS2JSONItem {
+  title?: string;
+  description?: string;
+  link?: string;
+  author?: string;
+  pubDate?: string;
+  guid?: string;
+  categories?: string[];
+}
+
+export interface RSS2JSONResponse {
+  status: string;
+  feed?: {
+    url?: string;
+  };
+  feed_url?: string;
+  message?: string;
+  items?: RSS2JSONItem[];
+}

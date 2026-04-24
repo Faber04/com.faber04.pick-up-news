@@ -1,11 +1,14 @@
-import { RSSFeed, RSSItem, NewsItem } from '../types';
-
-type FeedFormat = 'json' | 'rss' | 'atom';
-
-interface FeedDetectionResult {
-  feedUrl: string;
-  format: FeedFormat;
-}
+import {
+  RSSFeed,
+  RSSItem,
+  NewsItem,
+  FeedFormat,
+  FeedDetectionResult,
+  JSONFeedData,
+  JSONFeedItem,
+  RSS2JSONResponse,
+  RSS2JSONItem,
+} from '../types';
 
 export class RSSService {
   private static readonly RSS2JSON_API = 'https://api.rss2json.com/v1/api.json';
@@ -114,7 +117,7 @@ export class RSSService {
     return items;
   }
 
-  private static parseJSONFeed(data: any): RSSItem[] {
+  private static parseJSONFeed(data: JSONFeedData): RSSItem[] {
     if (!data || typeof data !== 'object') {
       return [];
     }
@@ -123,7 +126,7 @@ export class RSSService {
       return [];
     }
 
-    return data.items.map((item: any) => {
+    return data.items.map((item: JSONFeedItem) => {
       const pubDate = item.date_published || item.date_modified || '';
       const content = item.content_html || item.content_text || item.summary || '';
 
@@ -141,7 +144,7 @@ export class RSSService {
     });
   }
 
-  private static isLikelyJsonFeed(data: any): boolean {
+  private static isLikelyJsonFeed(data: JSONFeedData): boolean {
     if (!data || typeof data !== 'object') {
       return false;
     }
@@ -477,9 +480,9 @@ export class RSSService {
     const response = await this.fetchWithTimeout(apiUrl);
     const raw = await response.text();
 
-    let data: any = null;
+    let data: RSS2JSONResponse | null = null;
     try {
-      data = JSON.parse(raw);
+      data = JSON.parse(raw) as RSS2JSONResponse;
     } catch {
       throw new Error(`rss2json invalid response (HTTP ${response.status})`);
     }
@@ -507,12 +510,12 @@ export class RSSService {
     }
   }
 
-  static parseRSS2JSONFeed(data: any): RSSItem[] {
+  static parseRSS2JSONFeed(data: RSS2JSONResponse): RSSItem[] {
     if (!data.items || !Array.isArray(data.items)) {
       return [];
     }
 
-    return data.items.map((item: any) => ({
+    return data.items.map((item: RSS2JSONItem) => ({
       title: item.title || '',
       link: item.link || '',
       contentSnippet: item.description || '',

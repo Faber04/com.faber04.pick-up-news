@@ -39,14 +39,14 @@ function App() {
   useEffect(() => {
     if (state.feeds.length > 0) {
       refreshNews();
-    }
+    } // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state.feeds.length]);
 
   // Clear feed-related errors when leaving the Feeds page
   useEffect(() => {
     if (currentPage !== 'feeds' && state.error) {
       clearError();
-    }
+    } // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentPage]);
 
   const handleNewsClick = (newsItem: NewsItem) => {

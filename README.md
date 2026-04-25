@@ -119,6 +119,13 @@ Each call is protected by a **10-second timeout** using `AbortController`: if a 
 - ✅ Mobile navigation drawer
   - ✅ On mobile, nav menu slides in from the right instead of dropping down from the top
 
+### v1.4.1
+- 🗑️ Removed "Tema" (dark/light toggle) from the mobile lateral drawer
+- 🧹 Removed "Versione" and "Autore" fields from the "Informazioni app e crediti" panel in Settings
+- 🔀 Merged the two Settings boxes into a single "Informazioni app e crediti" panel
+- 📂 Moved the main "Feed" menu item into the Settings page (no longer a top-level nav entry)
+- 🌙 Moved dark/light theme toggle to Settings; removed all other occurrences from the UI
+
 ### v2.0.0
 - 📥 Export feeds to JSON file
   - Download all feeds with title and URL as a JSON file

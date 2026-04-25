@@ -12,7 +12,7 @@ import { NewsItem } from './types';
 
 type Page = 'home' | 'feeds' | 'settings';
 
-const APP_VERSION = '1.4.0';
+const APP_VERSION = '1.4.1';
 
 function App() {
   const {
@@ -39,15 +39,15 @@ function App() {
   useEffect(() => {
     if (state.feeds.length > 0) {
       refreshNews();
-    } // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [state.feeds.length]);
+    }
+  }, [state.feeds.length, refreshNews]);
 
   // Clear feed-related errors when leaving the Feeds page
   useEffect(() => {
     if (currentPage !== 'feeds' && state.error) {
       clearError();
-    } // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentPage]);
+    }
+  }, [currentPage, state.error, clearError]);
 
   const handleNewsClick = (newsItem: NewsItem) => {
     setSelectedNews(newsItem);
@@ -66,8 +66,6 @@ function App() {
       <Header
         currentPage={currentPage}
         onNavigate={setCurrentPage}
-        themeMode={themeMode}
-        onToggleTheme={toggleTheme}
       />
 
       {/* Error Message */}
@@ -99,7 +97,12 @@ function App() {
           onRefresh={refreshNews}
         />
       ) : currentPage === 'settings' ? (
-        <SettingsPage version={APP_VERSION} />
+        <SettingsPage
+          version={APP_VERSION}
+          themeMode={themeMode}
+          onToggleTheme={toggleTheme}
+          onOpenFeeds={() => setCurrentPage('feeds')}
+        />
       ) : (
         <div className="app-container py-8 stagger-in">
           {state.feeds.length === 0 ? (
@@ -110,12 +113,12 @@ function App() {
                 className="w-16 h-16 mx-auto mb-4 opacity-80"
               />
               <p className="text-lg font-semibold mb-2 text-primary">Nessun feed RSS aggiunto</p>
-              <p className="text-sm mb-4">Vai nella sezione Feeds per aggiungere le tue fonti preferite.</p>
+              <p className="text-sm mb-4">Vai in Settings per aprire la gestione dei feed.</p>
               <button
-                onClick={() => setCurrentPage('feeds')}
+                onClick={() => setCurrentPage('settings')}
                 className="btn-brand px-6 py-2 rounded-lg font-medium transition"
               >
-                📡 Gestisci Feed
+                ⚙️ Vai a Settings
               </button>
             </div>
           ) : (

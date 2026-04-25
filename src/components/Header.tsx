@@ -1,15 +1,12 @@
 import { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
-import type { ThemeMode } from '../hooks/useAppState';
 
 interface HeaderProps {
   currentPage: 'home' | 'feeds' | 'settings';
   onNavigate: (page: 'home' | 'feeds' | 'settings') => void;
-  themeMode: ThemeMode;
-  onToggleTheme: () => void;
 }
 
-export const Header = ({ currentPage, onNavigate, themeMode, onToggleTheme }: HeaderProps) => {
+export const Header = ({ currentPage, onNavigate }: HeaderProps) => {
   const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
@@ -25,9 +22,8 @@ export const Header = ({ currentPage, onNavigate, themeMode, onToggleTheme }: He
     setMenuOpen(false);
   };
 
-  const navItems: { page: 'home' | 'feeds' | 'settings'; label: string }[] = [
+  const navItems: { page: 'home' | 'settings'; label: string }[] = [
     { page: 'home', label: 'Home' },
-    { page: 'feeds', label: 'Feeds' },
     { page: 'settings', label: 'Settings' },
   ];
 
@@ -72,15 +68,6 @@ export const Header = ({ currentPage, onNavigate, themeMode, onToggleTheme }: He
           ))}
         </nav>
 
-        <div className="mt-6 rounded-xl border border-[color:var(--border)] bg-[color:var(--surface-muted)] p-4">
-          <p className="text-xs font-semibold uppercase tracking-[0.16em] text-muted">Tema</p>
-          <button
-            className="mt-3 btn-neutral w-full rounded-lg px-3 py-2 text-sm font-medium transition"
-            onClick={onToggleTheme}
-          >
-            {themeMode === 'dark' ? '☀️ Passa a Light' : '🌙 Passa a Dark'}
-          </button>
-        </div>
       </aside>
     </div>,
     document.body,
@@ -120,27 +107,8 @@ export const Header = ({ currentPage, onNavigate, themeMode, onToggleTheme }: He
           ))}
         </nav>
 
-        <div className="hidden sm:flex items-center gap-3">
-          <button
-            className="btn-neutral px-3 py-2 rounded-lg text-sm font-medium transition"
-            onClick={onToggleTheme}
-            aria-label="Cambia tema"
-            title="Cambia tema"
-          >
-            {themeMode === 'dark' ? '☀️ Light' : '🌙 Dark'}
-          </button>
-        </div>
-
         {/* Mobile Hamburger Button */}
         <div className="sm:hidden flex items-center gap-2">
-          <button
-            className="btn-neutral px-2.5 py-2 rounded-lg text-xs font-semibold"
-            onClick={onToggleTheme}
-            aria-label="Cambia tema"
-            title="Cambia tema"
-          >
-            {themeMode === 'dark' ? '☀️' : '🌙'}
-          </button>
           <button
             className="p-2 rounded-lg text-secondary hover:bg-[color:var(--surface-muted)] transition-colors"
             onClick={() => setMenuOpen(prev => !prev)}

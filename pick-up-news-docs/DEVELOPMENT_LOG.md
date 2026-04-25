@@ -2,6 +2,34 @@
 
 This file logs all development sessions for the PickUpNews project.
 
+## Session: Implement v1.4.1 mobile/settings UX cleanup
+- Date: 25 April 2026
+
+## Changes Made
+- Removed dark/light toggle controls from desktop header and mobile drawer
+- Moved dark/light toggle into Settings as the only theme control entry point
+- Removed top-level "Feeds" item from header navigation (desktop + mobile)
+- Added "Apri Gestione Feed" action inside Settings to open feed management
+- Refactored Settings layout into a single "Informazioni app e crediti" panel
+- Removed "Versione" and "Autore" blocks from Settings panel and kept consolidated project info
+- Bumped app version to `1.4.1`
+- Updated README navigation and usage steps to reflect the new Settings-first flow
+
+## Testing
+- Build passed (`npm run build`)
+- Lint passed (`npm run lint`)
+- Browser validation on local dev server:
+  - header now shows only Home + Settings
+  - Settings contains theme toggle and "Apri Gestione Feed"
+  - theme toggle works from Settings
+  - feed management opens from Settings and remains fully operational
+
+## Issues Encountered
+- Integrated browser viewport emulation did not expose a true phone width, so mobile drawer validation remained code-backed plus functional navigation validation
+
+## Next Steps
+- Run RCP sequence for v1.4.1 when requested
+
 ## Session: Fix mobile drawer viewport layering after v1.4.0
 - Date: 24 April 2026
 

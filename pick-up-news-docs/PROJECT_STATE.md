@@ -31,10 +31,12 @@
 - Duplicate add feedback shown inline in Add Feed form ✅ COMPLETED
 - Parallel candidate detection probes via `firstSuccess()` — worst case O(timeout) ✅ COMPLETED
 - add-feed error no longer leaks to global banner on Home page (clearError on navigation) ✅ COMPLETED
-- Settings page with credits, version, and copyright ✅ COMPLETED
+- Settings page consolidated into a single info panel with credits and controls ✅ COMPLETED
 - Mobile navigation now uses a right-side drawer with overlay ✅ COMPLETED
 - Article modal metadata wraps better on mobile and uses compact `DD/MM/YY (HH:MM)` date format ✅ COMPLETED
 - Mobile drawer layering fixed so the panel renders as a true viewport overlay ✅ COMPLETED
+- Theme toggle moved to Settings only; removed from header and mobile drawer ✅ COMPLETED
+- Main "Feeds" top-level menu removed; feed management is now opened from Settings ✅ COMPLETED
 
 ## Objectives
 - Implement RSS feed management (add, remove feeds). ✅ COMPLETED
@@ -55,7 +57,7 @@
 **v1.3.0** (Commit UNRELEASED) — JSON/RSS/Atom auto-detection from website URL + manual fallback
 **v1.3.1** (Commit 888c3f8) — Add-flow hardening: anti-duplicate submit + detection UX/performance improvements ✅ COMPLETED
 **v1.4.0** (Commit UNRELEASED) — Settings page, credits, mobile modal metadata layout, mobile navigation drawer ✅ COMPLETED
-**v1.4.1** (PLANNED) — Mobile drawer cleanup, Settings UX consolidation, Feed menu moved to Settings
+**v1.4.1** (Commit UNRELEASED) — Mobile drawer cleanup, Settings UX consolidation, Feed menu moved to Settings ✅ COMPLETED
 **v2.0.0** (PLANNED) — Export/Import feeds
 **v3.0.0** (PLANNED) — Replace corsproxy.io with Cloudflare Workers (self-hosted CORS proxy)
 
@@ -142,18 +144,15 @@
    - ✅ It opens as a lateral drawer from the right side of the screen
    - ✅ Overlay/backdrop closes the drawer on tap outside
 
-### v1.4.1 (PLANNED) — Mobile & Settings UX cleanup
-1. Remove "Tema" (dark/light toggle) from mobile lateral drawer
-   - Theme toggle remains accessible elsewhere (e.g. header desktop)
-2. Remove "Versione" and "Autore" fields from the "Informazioni app e crediti" panel in Settings
-3. Merge the two boxes in Settings into a single "Informazioni app e crediti" panel
-   - Move content of the second box into the first box
-4. Move the main "Feed" menu item into the Settings page
-   - "Feed" is no longer a top-level navigation entry
-   - Feed management is accessible from Settings
-5. Move dark/light theme toggle to Settings
-   - Remove toggle from mobile lateral drawer, desktop header, and any other location
-   - Single authoritative toggle lives in the Settings page only
+### v1.4.1 ✅ COMPLETED — Mobile & Settings UX cleanup
+1. ✅ Removed "Tema" (dark/light toggle) from mobile lateral drawer
+2. ✅ Removed "Versione" and "Autore" fields from the "Informazioni app e crediti" panel in Settings
+3. ✅ Merged previous two Settings boxes into a single "Informazioni app e crediti" panel
+4. ✅ Moved the main "Feed" entry into Settings
+   - ✅ "Feed" is no longer a top-level navigation entry
+   - ✅ Feed management is accessible from Settings
+5. ✅ Moved dark/light theme toggle to Settings as the single authoritative location
+   - ✅ Removed toggle from mobile lateral drawer and desktop header
 
 ### v2.0.0 (PLANNED)
 1. Export feeds to JSON file

@@ -18,7 +18,7 @@ PickUpNews allows you to easily aggregate and read all your favorite RSS feeds. 
 - **🧯 Inline Add Feed Errors**: If detection fails, the add panel stays open and shows an inline URL error (no modal alerts)
 - **🛑 Duplicate Protection**: Duplicate feed URLs are blocked with immediate inline feedback
 - **🧩 Multi-Format Support**: Native support for JSON Feed, RSS 2.0, and Atom feeds
-- **⚙️ Settings & Credits**: Dedicated Settings page with release info, author credits, and project metadata
+- **⚙️ Settings Hub**: Single Settings panel for credits, theme toggle, and entry point to feed management
 - **📅 Chronological View**: See all news sorted by date (most recent first)
 - **🏷️ Site View**: Group news by source/site
 - **🧭 Consistent Source Order**: In "By Site" mode, Home follows the same order configured in Feeds
@@ -119,7 +119,7 @@ Each call is protected by a **10-second timeout** using `AbortController`: if a 
 - ✅ Mobile navigation drawer
   - ✅ On mobile, nav menu slides in from the right instead of dropping down from the top
 
-### v1.4.1
+### v1.4.1 ✅
 - 🗑️ Removed "Tema" (dark/light toggle) from the mobile lateral drawer
 - 🧹 Removed "Versione" and "Autore" fields from the "Informazioni app e crediti" panel in Settings
 - 🔀 Merged the two Settings boxes into a single "Informazioni app e crediti" panel
@@ -195,13 +195,13 @@ Notes:
 ## 📖 How to Use PickUpNews
 
 ### Navigation
-The app has three sections accessible from the header:
+The app has two top-level sections accessible from the header:
 - **🏠 Home** — the list of news from your feeds
-- **📡 Feeds** — RSS feed management (add, reorder, edit, remove)
-- **⚙️ Settings** — app info, version, and credits
+- **⚙️ Settings** — app info, credits, theme toggle, and access to feed management
 
 ### Adding an RSS Feed
-1. Go to the **Feeds** section (header at the top right)
+1. Open **Settings** from the header
+2. Click **"Apri Gestione Feed"**
 2. Click on **"+ Add RSS Feed"**
 3. Enter the feed name (e.g., "The Guardian")
 4. Enter a website URL or feed URL (e.g., `theguardian.com` or `https://www.theguardian.com/uk/rss`)
@@ -222,15 +222,18 @@ From the **Home** section, you can choose two viewing modes:
 
 ### Settings and Credits
 1. Open **Settings** from the header
-2. Review current app version and release metadata
-3. Use the GitHub link to reach the Faber04 profile
+2. Use the dark/light toggle directly in Settings
+3. Use **"Apri Gestione Feed"** to access feed add/reorder/edit/remove
+4. Use the GitHub link to reach the Faber04 profile
 
 ### Removing a Feed
-1. Go to the **Feeds** section
+1. Open **Settings** from the header
+2. Click **"Apri Gestione Feed"**
 2. Click on the 🗑️ icon next to the feed to remove
 
 ### Reordering Feeds
-1. Go to the **Feeds** section
+1. Open **Settings** from the header
+2. Click **"Apri Gestione Feed"**
 2. Use **↑** or **↓** next to a feed to move it up or down
 3. Or drag a feed using the **⋮⋮** handle and drop it in the desired position
 4. The new order is saved automatically
@@ -241,7 +244,8 @@ From the **Home** section, you can choose two viewing modes:
 3. Feed groups will follow the same order configured in Feeds
 
 ### Editing a Feed
-1. Go to the **Feeds** section
+1. Open **Settings** from the header
+2. Click **"Apri Gestione Feed"**
 2. Click the **✏️** icon next to the feed
 3. Update name and/or URL
 4. Verify the URL status in real time

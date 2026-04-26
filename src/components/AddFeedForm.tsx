@@ -1,7 +1,9 @@
 import { useState } from 'react';
 import type { AddFeedFormProps } from '../types/component-props';
+import { useI18n } from '../i18n/useI18n';
 
 export const AddFeedForm = ({ onAddFeed, loading, error, onClearError, onClose }: AddFeedFormProps) => {
+  const { messages } = useI18n();
   const [url, setUrl] = useState('');
   const [title, setTitle] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -28,7 +30,7 @@ export const AddFeedForm = ({ onAddFeed, loading, error, onClearError, onClose }
   return (
     <div className="surface rounded-lg p-4 mb-6">
       <div className="flex justify-between items-center mb-4">
-        <h3 className="text-lg font-semibold text-primary">Aggiungi Feed RSS</h3>
+        <h3 className="text-lg font-semibold text-primary">{messages.feeds.addFeedTitle}</h3>
         {onClose && (
           <button
             onClick={onClose}
@@ -42,14 +44,14 @@ export const AddFeedForm = ({ onAddFeed, loading, error, onClearError, onClose }
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
           <label htmlFor="feed-title" className="block text-sm font-medium text-secondary mb-1">
-            Nome del Feed
+            {messages.feeds.feedName}
           </label>
           <input
             id="feed-title"
             type="text"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
-            placeholder="es. Corriere della Sera"
+            placeholder={messages.feeds.feedNamePlaceholder}
             className="input-field"
             required
           />
@@ -57,7 +59,7 @@ export const AddFeedForm = ({ onAddFeed, loading, error, onClearError, onClose }
 
         <div>
           <label htmlFor="feed-url" className="block text-sm font-medium text-secondary mb-1">
-            URL Sito o Feed
+            {messages.feeds.feedUrl}
           </label>
           <input
             id="feed-url"
@@ -69,7 +71,7 @@ export const AddFeedForm = ({ onAddFeed, loading, error, onClearError, onClose }
                 onClearError?.();
               }
             }}
-            placeholder="es. example.com oppure example.com/rss"
+            placeholder={messages.feeds.feedUrlPlaceholder}
             className={`input-field ${error ? 'border-[var(--danger)] focus:border-[var(--danger)]' : ''}`}
             required
           />
@@ -77,7 +79,7 @@ export const AddFeedForm = ({ onAddFeed, loading, error, onClearError, onClose }
             <p className="text-xs text-[var(--danger)] mt-1">{error}</p>
           )}
           <p className="text-xs text-muted mt-1">
-            Rilevamento automatico: prima JSON Feed, poi RSS/Atom. Se non trovato, usa l'URL inserito.
+            {messages.feeds.detectionHint}
           </p>
         </div>
 
@@ -87,7 +89,7 @@ export const AddFeedForm = ({ onAddFeed, loading, error, onClearError, onClose }
             disabled={loading || isSubmitting}
             className="btn-brand disabled:opacity-60 px-4 py-2 rounded-md font-medium transition"
           >
-            {loading || isSubmitting ? 'Aggiungendo...' : 'Aggiungi Feed'}
+            {loading || isSubmitting ? messages.feeds.addFeedSubmitting : messages.feeds.addFeedButton}
           </button>
           {onClose && (
             <button
@@ -95,7 +97,7 @@ export const AddFeedForm = ({ onAddFeed, loading, error, onClearError, onClose }
               onClick={onClose}
               className="btn-neutral px-4 py-2 rounded-md font-medium transition"
             >
-              Annulla
+              {messages.feeds.cancel}
             </button>
           )}
         </div>

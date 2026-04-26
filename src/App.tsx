@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useAppState } from './hooks/useAppState';
+import { getNavigationLabel } from './i18n';
+import { useI18n } from './i18n/useI18n';
 import {
   Header,
   NewsList,
@@ -13,9 +15,10 @@ import { SettingsPage } from './pages/SettingsPage';
 import { NewsItem } from './types';
 import type { NavigationState, BreadcrumbNode, NavigationActions } from './types/navigation';
 
-const APP_VERSION = '1.4.7';
+const APP_VERSION = '1.4.8';
 
 function App() {
+  const { messages, supportedLanguages, language, setLanguage } = useI18n();
   const {
     state,
     viewMode,
@@ -30,10 +33,16 @@ function App() {
     refreshNews,
     getFilteredNews,
     clearError,
-  } = useAppState();
+  } = useAppState(messages.errors);
+
+  const createNode = (id: string, params?: Record<string, unknown>): BreadcrumbNode => ({
+    id,
+    label: getNavigationLabel(id, messages),
+    params,
+  });
 
   const [navigation, setNavigation] = useState<NavigationState>({
-    trail: [{ id: 'home', label: 'Home' }],
+    trail: [createNode('home')],
   });
 
   const [selectedNews, setSelectedNews] = useState<NewsItem | null>(null);
@@ -60,10 +69,19 @@ function App() {
     },
     reset: () => {
       setNavigation({
-        trail: [{ id: 'home', label: 'Home' }],
+        trail: [createNode('home')],
       });
     },
   };
+
+  useEffect(() => {
+    setNavigation((prev) => ({
+      trail: prev.trail.map((node) => ({
+        ...node,
+        label: getNavigationLabel(node.id, messages),
+      })),
+    }));
+  }, [messages]);
 
   // Auto-refresh news when feeds change
   useEffect(() => {
@@ -102,7 +120,7 @@ function App() {
             navigationActions.reset();
           } else if (page === 'settings') {
             navigationActions.reset();
-            navigationActions.push({ id: 'settings', label: 'Settings' });
+            navigationActions.push(createNode('settings'));
           }
         }}
       />
@@ -135,17 +153,17 @@ function App() {
                 alt="PN"
                 className="w-16 h-16 mx-auto mb-4 opacity-80"
               />
-              <p className="text-lg font-semibold mb-2 text-primary">Nessun feed RSS aggiunto</p>
-              <p className="text-sm mb-4">Aggiungi un feed RSS per iniziare a leggere le news.</p>
+              <p className="text-lg font-semibold mb-2 text-primary">{messages.home.emptyTitle}</p>
+              <p className="text-sm mb-4">{messages.home.emptyDescription}</p>
               <button
                 onClick={() => {
                   navigationActions.reset();
-                  navigationActions.push({ id: 'settings', label: 'Settings' });
-                  navigationActions.push({ id: 'feeds', label: 'Gestisci Feed' });
+                  navigationActions.push(createNode('settings'));
+                  navigationActions.push(createNode('feeds'));
                 }}
                 className="btn-brand px-6 py-2 rounded-lg font-medium transition"
               >
-                ➕ Aggiungi un feed RSS
+                {messages.home.emptyAction}
               </button>
             </div>
           ) : (
@@ -167,13 +185,51 @@ function App() {
       ) : currentPageNode.id === 'settings' ? (
         <SettingsPage
           version={APP_VERSION}
+          onOpenLanguage={() => {
+            navigationActions.push(createNode('language'));
+          }}
           onOpenFeeds={() => {
-            navigationActions.push({ id: 'feeds', label: 'Gestisci Feed' });
+            navigationActions.push(createNode('feeds'));
           }}
         />
+      ) : currentPageNode.id === 'language' ? (
+        <SubpageContainer
+          title={messages.common.language}
+          onBack={() => navigationActions.pop()}
+        >
+          <div className="space-y-3">
+            <p className="text-sm text-secondary">{messages.settings.languageDescription}</p>
+            <p className="text-xs text-muted">{messages.settings.languageHelp}</p>
+            <div className="space-y-3 pt-2">
+              {supportedLanguages.map((option) => {
+                const isActive = option.code === language;
+
+                return (
+                  <button
+                    key={option.code}
+                    type="button"
+                    onClick={() => setLanguage(option.code)}
+                    className={`surface w-full rounded-xl border px-4 py-3 text-left transition ${
+                      isActive
+                        ? 'border-[color:var(--ring)] ring-2 ring-[color:var(--ring)]'
+                        : 'border-[color:var(--border)] hover:bg-[color:var(--surface-muted)]'
+                    }`}
+                  >
+                    <div className="flex items-center justify-between gap-3">
+                      <span className="text-base font-medium text-primary">
+                        {option.flag} {option.label}
+                      </span>
+                      {isActive && <span className="text-xs badge-brand rounded-full px-2 py-1">{messages.settings.currentLanguage}</span>}
+                    </div>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        </SubpageContainer>
       ) : currentPageNode.id === 'feeds' ? (
         <SubpageContainer
-          title="Gestisci Feed"
+          title={messages.common.manageFeeds}
           onBack={() => navigationActions.pop()}
         >
           <FeedsContent
@@ -191,7 +247,7 @@ function App() {
         </SubpageContainer>
       ) : (
         <div className="app-container py-8 stagger-in">
-          <p className="text-center text-muted">Pagina non trovata</p>
+          <p className="text-center text-muted">{messages.common.pageNotFound}</p>
         </div>
       )}
 

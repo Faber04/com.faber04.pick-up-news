@@ -2,8 +2,10 @@ import { useState } from 'react';
 import { RSSService } from '../services';
 import type { FeedListProps } from '../types/component-props';
 import type { RSSFeed } from '../types';
+import { useI18n } from '../i18n/useI18n';
 
 export const FeedList = ({ feeds, onRemoveFeed, onMoveFeed, onMoveFeedToIndex, onEditFeed }: FeedListProps) => {
+  const { messages, locale, formatMessage } = useI18n();
   const [editingFeedId, setEditingFeedId] = useState<string | null>(null);
   const [editTitle, setEditTitle] = useState('');
   const [editUrl, setEditUrl] = useState('');
@@ -33,7 +35,7 @@ export const FeedList = ({ feeds, onRemoveFeed, onMoveFeed, onMoveFeedToIndex, o
       return;
     }
 
-    if (!window.confirm('Confermi il salvataggio delle modifiche al feed?')) {
+    if (!window.confirm(messages.feeds.saveConfirm)) {
       return;
     }
 
@@ -113,8 +115,8 @@ export const FeedList = ({ feeds, onRemoveFeed, onMoveFeed, onMoveFeedToIndex, o
   if (feeds.length === 0) {
     return (
       <div className="text-center py-8 text-muted">
-        <p>Nessun feed RSS aggiunto ancora.</p>
-        <p className="text-sm mt-2">Usa il pulsante "Aggiungi Feed RSS" per iniziare.</p>
+        <p>{messages.feeds.emptyTitle}</p>
+        <p className="text-sm mt-2">{messages.feeds.emptyDescription}</p>
       </div>
     );
   }
@@ -142,7 +144,7 @@ export const FeedList = ({ feeds, onRemoveFeed, onMoveFeed, onMoveFeedToIndex, o
                 <div className="space-y-2 pr-4">
                   <div>
                     <label htmlFor={`feed-title-${feed.id}`} className="block text-xs font-medium text-secondary mb-1">
-                      Nome feed
+                      {messages.feeds.feedNameShort}
                     </label>
                     <input
                       id={`feed-title-${feed.id}`}
@@ -154,7 +156,7 @@ export const FeedList = ({ feeds, onRemoveFeed, onMoveFeed, onMoveFeedToIndex, o
                   </div>
                   <div>
                     <label htmlFor={`feed-url-${feed.id}`} className="block text-xs font-medium text-secondary mb-1">
-                      URL feed
+                      {messages.feeds.feedUrlShort}
                     </label>
                     <input
                       id={`feed-url-${feed.id}`}
@@ -164,7 +166,7 @@ export const FeedList = ({ feeds, onRemoveFeed, onMoveFeed, onMoveFeedToIndex, o
                       className="input-field"
                     />
                     <p className={`text-xs mt-1 ${isUrlValid ? 'text-emerald-600' : 'text-[var(--danger)]'}`}>
-                      {isUrlValid ? 'URL valido' : 'URL non valido'}
+                      {isUrlValid ? messages.feeds.validUrl : messages.feeds.invalidUrl}
                     </p>
                   </div>
                 </div>
@@ -176,11 +178,11 @@ export const FeedList = ({ feeds, onRemoveFeed, onMoveFeed, onMoveFeedToIndex, o
               )}
               {feed.lastFetched && (
                 <p className="text-xs text-muted">
-                  Ultimo aggiornamento: {new Date(feed.lastFetched).toLocaleString('it-IT')}
+                  {formatMessage(messages.feeds.lastUpdated, { date: new Date(feed.lastFetched).toLocaleString(locale) })}
                 </p>
               )}
               {feed.error && (
-                <p className="text-xs text-[var(--danger)]">Errore: {feed.error}</p>
+                <p className="text-xs text-[var(--danger)]">{formatMessage(messages.feeds.errorLabel, { error: feed.error })}</p>
               )}
             </div>
             <div className="mt-3 flex flex-wrap items-center gap-2 md:mt-0 md:ml-4 md:flex-nowrap md:justify-end">
@@ -190,24 +192,24 @@ export const FeedList = ({ feeds, onRemoveFeed, onMoveFeed, onMoveFeedToIndex, o
                     onClick={() => saveEditing(feed.id)}
                     disabled={!editTitle.trim() || !isUrlValid || savingFeedId === feed.id}
                     className="btn-brand disabled:opacity-50 px-3 py-2 rounded-md text-sm font-medium"
-                    title="Salva modifiche"
+                    title={messages.feeds.saveTitle}
                   >
-                    {savingFeedId === feed.id ? 'Salvataggio...' : 'Salva'}
+                    {savingFeedId === feed.id ? messages.feeds.saving : messages.feeds.save}
                   </button>
                   <button
                     onClick={cancelEditing}
                     className="btn-neutral px-3 py-2 rounded-md text-sm font-medium"
-                    title="Annulla modifica"
+                    title={messages.feeds.cancelEditTitle}
                   >
-                    Annulla
+                    {messages.feeds.cancel}
                   </button>
                 </>
               ) : (
                 <>
                   <span
                     className="text-muted px-2 py-1 select-none cursor-grab"
-                    title="Trascina per riordinare (desktop e touch)"
-                    aria-label="Trascina per riordinare"
+                    title={messages.feeds.dragReorderHint}
+                    aria-label={messages.feeds.dragReorder}
                   >
                     ⋮⋮
                   </span>
@@ -215,7 +217,7 @@ export const FeedList = ({ feeds, onRemoveFeed, onMoveFeed, onMoveFeedToIndex, o
                     onClick={() => onMoveFeed(feed.id, 'up')}
                     disabled={index === 0}
                     className="btn-neutral disabled:opacity-40 px-2 py-1 rounded-md"
-                    title="Sposta su"
+                    title={messages.feeds.moveUp}
                   >
                     ↑
                   </button>
@@ -223,21 +225,21 @@ export const FeedList = ({ feeds, onRemoveFeed, onMoveFeed, onMoveFeedToIndex, o
                     onClick={() => onMoveFeed(feed.id, 'down')}
                     disabled={index === feeds.length - 1}
                     className="btn-neutral disabled:opacity-40 px-2 py-1 rounded-md"
-                    title="Sposta giu"
+                    title={messages.feeds.moveDown}
                   >
                     ↓
                   </button>
                   <button
                     onClick={() => startEditing(feed)}
                     className="btn-neutral px-2 py-1 rounded-md"
-                    title="Modifica feed"
+                    title={messages.feeds.editFeed}
                   >
                     ✏️
                   </button>
                   <button
                     onClick={() => onRemoveFeed(feed.id)}
                     className="text-[var(--danger)] hover:opacity-80 p-2 rounded-full hover:bg-[color:var(--surface-muted)] transition-colors"
-                    title="Rimuovi feed"
+                    title={messages.feeds.removeFeed}
                   >
                     🗑️
                   </button>

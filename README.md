@@ -9,6 +9,8 @@ PickUpNews allows you to easily aggregate and read all your favorite RSS feeds. 
 ## ✨ Key Features
 
 - **📡 RSS Feed Management**: Easily add and remove RSS feeds manually
+- **🌍 Bilingual UI Foundation**: Interface available in Italian and English with persistent language preference
+- **🏳️ Language Settings**: Dedicated Settings subpage for language selection with flag + native label
 - **↕️ Feed Ordering**: Reorder feeds in the Feeds page and keep order persisted in localStorage
 - **🖱️ Drag & Drop Ordering**: Reorder feeds by dragging directly in the Feeds page
 - **📲 Touch Drag & Drop**: Feed drag & drop sorting also works on mobile touch devices
@@ -164,11 +166,11 @@ Each call is protected by a **10-second timeout** using `AbortController`: if a 
 - ✅ Tightened navigation param typing from `any` to `unknown`
 - ✅ Kept runtime behavior unchanged; structural TypeScript refactor only
 
-### v1.4.8
-- 🌍 Planned app localization in Italian and English, with scalable support for future languages
-- ⚙️ Planned language entry in Settings leading to a dedicated language-selection subpage
-- 🧩 Planned centralized JSON translation grammar for all visible UI labels
-- 🏳️ Planned language picker with flag + language name written in its native form (for example: `Italiano`, `English (UK)`, `English (US)`)
+### v1.4.8 ✅
+- ✅ Added app localization foundation for Italian and English with persistent language selection
+- ✅ Added a Settings > Language nested subpage using the existing breadcrumb stack
+- ✅ Introduced centralized JSON locale dictionaries for visible UI labels
+- ✅ Added language picker with flag + native language label, ready for future variants such as `English (UK)` and `English (US)`
 
 ### v2.0.0
 - 📥 Export feeds to JSON file

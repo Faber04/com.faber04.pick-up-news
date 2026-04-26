@@ -1,0 +1,91 @@
+{
+  "language": {
+    "code": "it",
+    "label": "Italiano",
+    "flag": "🇮🇹",
+    "locale": "it-IT"
+  },
+  "common": {
+    "home": "Home",
+    "settings": "Impostazioni",
+    "manageFeeds": "Gestisci Feed",
+    "language": "Lingua",
+    "navigation": "Navigazione",
+    "closeMenu": "Chiudi menu",
+    "toggleMenu": "Apri menu",
+    "changeTheme": "Cambia tema",
+    "pageNotFound": "Pagina non trovata",
+    "back": "Indietro"
+  },
+  "viewModes": {
+    "chronological": "Cronologico",
+    "byFeed": "Per Sito"
+  },
+  "home": {
+    "emptyTitle": "Nessun feed RSS aggiunto",
+    "emptyDescription": "Aggiungi un feed RSS per iniziare a leggere le news.",
+    "emptyAction": "➕ Aggiungi un feed RSS",
+    "noNewsTitle": "Nessuna news disponibile.",
+    "noNewsDescription": "Aggiungi dei feed RSS e aggiorna per vedere le news.",
+    "loadingNews": "Caricamento news...",
+    "expandAll": "Espandi tutti",
+    "collapseAll": "Comprimi tutti",
+    "openCount": "{openCount} aperti su {totalCount}"
+  },
+  "settings": {
+    "manageFeedsAction": "📡 Gestisci Feed",
+    "languageAction": "🌐 Lingua",
+    "appInfo": "Informazioni app",
+    "copyright": "Copyright",
+    "repository": "Repository",
+    "version": "Versione",
+    "currentLanguage": "Lingua corrente",
+    "languageDescription": "Scegli la lingua dell'interfaccia.",
+    "languageHelp": "La struttura resta pronta per future varianti come English (UK) e English (US)."
+  },
+  "feeds": {
+    "addFeedTitle": "Aggiungi Feed RSS",
+    "addFeedButton": "Aggiungi Feed",
+    "addFeedSubmitting": "Aggiungendo...",
+    "addFeedToggle": "+ Aggiungi Feed RSS",
+    "refresh": "🔄 Aggiorna",
+    "refreshing": "Aggiornando...",
+    "cancel": "Annulla",
+    "feedName": "Nome del Feed",
+    "feedNameShort": "Nome feed",
+    "feedNamePlaceholder": "es. Corriere della Sera",
+    "feedUrl": "URL Sito o Feed",
+    "feedUrlShort": "URL feed",
+    "feedUrlPlaceholder": "es. example.com oppure example.com/rss",
+    "detectionHint": "Rilevamento automatico: prima JSON Feed, poi RSS/Atom. Se non trovato, usa l'URL inserito.",
+    "emptyTitle": "Nessun feed RSS aggiunto ancora.",
+    "emptyDescription": "Usa il pulsante \"Aggiungi Feed RSS\" per iniziare.",
+    "lastUpdated": "Ultimo aggiornamento: {date}",
+    "errorLabel": "Errore: {error}",
+    "validUrl": "URL valido",
+    "invalidUrl": "URL non valido",
+    "save": "Salva",
+    "saving": "Salvataggio...",
+    "saveConfirm": "Confermi il salvataggio delle modifiche al feed?",
+    "saveTitle": "Salva modifiche",
+    "cancelEditTitle": "Annulla modifica",
+    "dragReorder": "Trascina per riordinare",
+    "dragReorderHint": "Trascina per riordinare (desktop e touch)",
+    "moveUp": "Sposta su",
+    "moveDown": "Sposta giu",
+    "editFeed": "Modifica feed",
+    "removeFeed": "Rimuovi feed"
+  },
+  "article": {
+    "noContent": "Nessun contenuto disponibile",
+    "readFullArticle": "Leggi l'articolo completo →",
+    "authorBy": "di {author}"
+  },
+  "errors": {
+    "invalidFeedUrl": "URL feed RSS non valido",
+    "autoDetectFailed": "Feed non rilevato automaticamente. Inserisci un URL feed RSS/Atom/JSON valido.",
+    "duplicateFeed": "Feed già presente",
+    "refreshFeedFailed": "Impossibile aggiornare il feed dopo la modifica",
+    "fetchNewsFailed": "Impossibile recuperare le news"
+  }
+}

@@ -1,18 +1,21 @@
 import type { NewsDetailModalProps } from '../types/component-props';
+import { useI18n } from '../i18n/useI18n';
 
 export const NewsDetailModal = ({ newsItem, isOpen, onClose }: NewsDetailModalProps) => {
+  const { messages, locale, formatMessage } = useI18n();
+
   if (!isOpen || !newsItem) return null;
 
   const formatDate = (dateString?: string) => {
     if (!dateString) return '';
     try {
-      const date = new Date(dateString);
-      const day = String(date.getDate()).padStart(2, '0');
-      const month = String(date.getMonth() + 1).padStart(2, '0');
-      const year = String(date.getFullYear()).slice(-2);
-      const hours = String(date.getHours()).padStart(2, '0');
-      const minutes = String(date.getMinutes()).padStart(2, '0');
-      return `${day}/${month}/${year} (${hours}:${minutes})`;
+      return new Intl.DateTimeFormat(locale, {
+        day: '2-digit',
+        month: '2-digit',
+        year: '2-digit',
+        hour: '2-digit',
+        minute: '2-digit'
+      }).format(new Date(dateString));
     } catch {
       return '';
     }
@@ -51,7 +54,7 @@ export const NewsDetailModal = ({ newsItem, isOpen, onClose }: NewsDetailModalPr
               {formatDate(newsItem.isoDate || newsItem.pubDate)}
             </span>
             {newsItem.creator && (
-              <span className="min-w-0 break-words">di {newsItem.creator}</span>
+              <span className="min-w-0 break-words">{formatMessage(messages.article.authorBy, { author: newsItem.creator })}</span>
             )}
           </div>
 
@@ -71,7 +74,7 @@ export const NewsDetailModal = ({ newsItem, isOpen, onClose }: NewsDetailModalPr
               dangerouslySetInnerHTML={{ __html: newsItem.summary }}
             />
           ) : (
-            <p className="text-muted italic">Nessun contenuto disponibile</p>
+            <p className="text-muted italic">{messages.article.noContent}</p>
           )}
 
           {newsItem.link && (
@@ -82,7 +85,7 @@ export const NewsDetailModal = ({ newsItem, isOpen, onClose }: NewsDetailModalPr
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 btn-brand px-4 py-2 rounded-lg font-medium transition"
               >
-                Leggi l'articolo completo →
+                {messages.article.readFullArticle}
               </a>
             </div>
           )}

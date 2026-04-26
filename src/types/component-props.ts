@@ -64,12 +64,14 @@ export interface FeedAccordionProps {
   isOpen: boolean;
   onToggle: (feedId: string) => void;
   onNewsClick: (newsItem: NewsItem) => void;
+  locale: string;
 }
 
 export interface NewsCardProps {
   newsItem: NewsItem;
   onClick: (newsItem: NewsItem) => void;
   showFeedTitle?: boolean;
+  locale: string;
 }
 
 export interface SubpageContainerProps {

@@ -1,10 +1,12 @@
 import { useEffect, useMemo, useState } from 'react';
 import { NewsItem } from '../types';
 import type { FeedAccordionProps, NewsCardProps, NewsListProps } from '../types/component-props';
+import { useI18n } from '../i18n/useI18n';
 
 const ACCORDION_STORAGE_KEY = 'pickUpNews_byFeed_openAccordions';
 
 export const NewsList = ({ news, viewMode, feedOrder, loading, onNewsClick }: NewsListProps) => {
+  const { messages, locale, formatMessage } = useI18n();
   const [openFeedIds, setOpenFeedIds] = useState<Set<string>>(() => {
     try {
       const rawValue = localStorage.getItem(ACCORDION_STORAGE_KEY);
@@ -110,7 +112,7 @@ export const NewsList = ({ news, viewMode, feedOrder, loading, onNewsClick }: Ne
     return (
       <div className="text-center py-8">
         <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-[color:var(--brand)]"></div>
-        <p className="mt-2 text-secondary">Caricamento news...</p>
+        <p className="mt-2 text-secondary">{messages.home.loadingNews}</p>
       </div>
     );
   }
@@ -118,8 +120,8 @@ export const NewsList = ({ news, viewMode, feedOrder, loading, onNewsClick }: Ne
   if (news.length === 0) {
     return (
       <div className="text-center py-8 text-muted surface rounded-xl">
-        <p>Nessuna news disponibile.</p>
-        <p className="text-sm mt-2">Aggiungi dei feed RSS e aggiorna per vedere le news.</p>
+        <p>{messages.home.noNewsTitle}</p>
+        <p className="text-sm mt-2">{messages.home.noNewsDescription}</p>
       </div>
     );
   }
@@ -129,7 +131,7 @@ export const NewsList = ({ news, viewMode, feedOrder, loading, onNewsClick }: Ne
       {viewMode === 'chronological' ? (
         <div className="space-y-4">
           {news.map((item, index) => (
-            <NewsCard key={`${item.feedId}-${index}`} newsItem={item} onClick={onNewsClick} />
+            <NewsCard key={`${item.feedId}-${index}`} newsItem={item} onClick={onNewsClick} locale={locale} />
           ))}
         </div>
       ) : (
@@ -140,17 +142,17 @@ export const NewsList = ({ news, viewMode, feedOrder, loading, onNewsClick }: Ne
               onClick={handleExpandAll}
               className="btn-neutral rounded-lg px-3 py-2 text-xs font-semibold"
             >
-              Espandi tutti
+                {messages.home.expandAll}
             </button>
             <button
               type="button"
               onClick={handleCollapseAll}
               className="btn-neutral rounded-lg px-3 py-2 text-xs font-semibold"
             >
-              Comprimi tutti
+                {messages.home.collapseAll}
             </button>
             <span className="ml-auto text-xs text-muted">
-              {openCount} aperti su {totalCount}
+                {formatMessage(messages.home.openCount, { openCount, totalCount })}
             </span>
           </div>
 
@@ -163,6 +165,7 @@ export const NewsList = ({ news, viewMode, feedOrder, loading, onNewsClick }: Ne
               isOpen={openFeedIds.has(feedId)}
               onToggle={handleToggleAccordion}
               onNewsClick={onNewsClick}
+              locale={locale}
             />
           ))}
         </div>
@@ -171,7 +174,7 @@ export const NewsList = ({ news, viewMode, feedOrder, loading, onNewsClick }: Ne
   );
 };
 
-const FeedAccordion = ({ feedId, feedTitle, feedNews, isOpen, onToggle, onNewsClick }: FeedAccordionProps) => {
+const FeedAccordion = ({ feedId, feedTitle, feedNews, isOpen, onToggle, onNewsClick, locale }: FeedAccordionProps) => {
   return (
     <div className="surface rounded-lg overflow-hidden">
       {/* Accordion Header */}
@@ -201,7 +204,7 @@ const FeedAccordion = ({ feedId, feedTitle, feedNews, isOpen, onToggle, onNewsCl
       {isOpen && (
         <div className="divide-y divide-[color:var(--border)]">
           {feedNews.map((item, index) => (
-            <NewsCard key={`${item.feedId}-${index}`} newsItem={item} onClick={onNewsClick} showFeedTitle={false} />
+            <NewsCard key={`${item.feedId}-${index}`} newsItem={item} onClick={onNewsClick} showFeedTitle={false} locale={locale} />
           ))}
         </div>
       )}
@@ -209,11 +212,11 @@ const FeedAccordion = ({ feedId, feedTitle, feedNews, isOpen, onToggle, onNewsCl
   );
 };
 
-const NewsCard = ({ newsItem, onClick, showFeedTitle = true }: NewsCardProps) => {
+const NewsCard = ({ newsItem, onClick, showFeedTitle = true, locale }: NewsCardProps) => {
   const formatDate = (dateString?: string) => {
     if (!dateString) return '';
     try {
-      return new Date(dateString).toLocaleDateString('it-IT', {
+      return new Date(dateString).toLocaleDateString(locale, {
         year: 'numeric',
         month: 'short',
         day: 'numeric',

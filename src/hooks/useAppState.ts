@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { RSSFeed, AppState, ViewMode, FilterOptions, ThemeMode } from '../types';
 import { RSSService } from '../services';
+import type { LocaleDictionary } from '../i18n';
 
 const STORAGE_KEYS = {
   FEEDS: 'pickUpNews_feeds',
@@ -8,7 +9,7 @@ const STORAGE_KEYS = {
   THEME: 'pickUpNews_theme'
 };
 
-export const useAppState = () => {
+export const useAppState = (messages: LocaleDictionary['errors']) => {
   const pendingAddUrlsRef = useRef<Set<string>>(new Set());
 
   const [state, setState] = useState<AppState>({
@@ -67,7 +68,7 @@ export const useAppState = () => {
 
   const addFeed = useCallback(async (url: string, title: string): Promise<boolean> => {
     if (!RSSService.validateFeedUrl(url)) {
-      setState(prev => ({ ...prev, error: 'Invalid RSS feed URL' }));
+      setState(prev => ({ ...prev, error: messages.invalidFeedUrl }));
       return false;
     }
 
@@ -106,7 +107,7 @@ export const useAppState = () => {
           setState(prev => ({
             ...prev,
             loading: false,
-            error: 'Feed non rilevato automaticamente. Inserisci un URL feed RSS/Atom/JSON valido.'
+            error: messages.autoDetectFailed
           }));
           return false;
         }
@@ -124,7 +125,7 @@ export const useAppState = () => {
         setState(prev => ({
           ...prev,
           loading: false,
-          error: 'Feed già presente'
+          error: messages.duplicateFeed
         }));
         return false;
       }
@@ -143,7 +144,7 @@ export const useAppState = () => {
       pendingAddUrlsRef.current.delete(normalizedKey);
       pendingAddUrlsRef.current.delete(finalKey);
     }
-  }, [state.feeds]);
+  }, [messages, state.feeds]);
 
   const removeFeed = useCallback((feedId: string) => {
     setState(prev => ({
@@ -196,7 +197,7 @@ export const useAppState = () => {
 
   const updateFeed = useCallback(async (feedId: string, updates: { title: string; url: string }) => {
     if (!RSSService.validateFeedUrl(updates.url)) {
-      setState(prev => ({ ...prev, error: 'Invalid RSS feed URL' }));
+      setState(prev => ({ ...prev, error: messages.invalidFeedUrl }));
       return false;
     }
 
@@ -246,7 +247,7 @@ export const useAppState = () => {
 
       return true;
     } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : 'Failed to refresh feed after update';
+      const errorMessage = error instanceof Error ? error.message : messages.refreshFeedFailed;
 
       setState(prev => ({
         ...prev,
@@ -268,7 +269,7 @@ export const useAppState = () => {
 
       return false;
     }
-  }, []);
+  }, [messages.invalidFeedUrl, messages.refreshFeedFailed]);
 
   const refreshNews = useCallback(async () => {
     if (state.feeds.length === 0) return;
@@ -282,10 +283,10 @@ export const useAppState = () => {
       setState(prev => ({
         ...prev,
         loading: false,
-        error: error instanceof Error ? error.message : 'Failed to fetch news'
+        error: error instanceof Error ? error.message : messages.fetchNewsFailed
       }));
     }
-  }, [state.feeds]);
+  }, [messages.fetchNewsFailed, state.feeds]);
 
   const getFilteredNews = useCallback(() => {
     let filtered = state.news;

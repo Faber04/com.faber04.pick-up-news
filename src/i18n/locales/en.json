@@ -1,0 +1,91 @@
+{
+  "language": {
+    "code": "en",
+    "label": "English",
+    "flag": "🇬🇧",
+    "locale": "en-GB"
+  },
+  "common": {
+    "home": "Home",
+    "settings": "Settings",
+    "manageFeeds": "Manage Feeds",
+    "language": "Language",
+    "navigation": "Navigation",
+    "closeMenu": "Close menu",
+    "toggleMenu": "Open menu",
+    "changeTheme": "Change theme",
+    "pageNotFound": "Page not found",
+    "back": "Back"
+  },
+  "viewModes": {
+    "chronological": "Chronological",
+    "byFeed": "By Site"
+  },
+  "home": {
+    "emptyTitle": "No RSS feeds added",
+    "emptyDescription": "Add an RSS feed to start reading the news.",
+    "emptyAction": "➕ Add an RSS feed",
+    "noNewsTitle": "No news available.",
+    "noNewsDescription": "Add some RSS feeds and refresh to view the news.",
+    "loadingNews": "Loading news...",
+    "expandAll": "Expand all",
+    "collapseAll": "Collapse all",
+    "openCount": "{openCount} open of {totalCount}"
+  },
+  "settings": {
+    "manageFeedsAction": "📡 Manage Feeds",
+    "languageAction": "🌐 Language",
+    "appInfo": "App information",
+    "copyright": "Copyright",
+    "repository": "Repository",
+    "version": "Version",
+    "currentLanguage": "Current language",
+    "languageDescription": "Choose the interface language.",
+    "languageHelp": "The structure remains ready for future variants such as English (UK) and English (US)."
+  },
+  "feeds": {
+    "addFeedTitle": "Add RSS Feed",
+    "addFeedButton": "Add Feed",
+    "addFeedSubmitting": "Adding...",
+    "addFeedToggle": "+ Add RSS Feed",
+    "refresh": "🔄 Refresh",
+    "refreshing": "Refreshing...",
+    "cancel": "Cancel",
+    "feedName": "Feed Name",
+    "feedNameShort": "Feed name",
+    "feedNamePlaceholder": "e.g. The Guardian",
+    "feedUrl": "Site or Feed URL",
+    "feedUrlShort": "Feed URL",
+    "feedUrlPlaceholder": "e.g. example.com or example.com/rss",
+    "detectionHint": "Automatic detection: JSON Feed first, then RSS/Atom. If none is found, the typed URL is used.",
+    "emptyTitle": "No RSS feeds added yet.",
+    "emptyDescription": "Use the \"Add RSS Feed\" button to get started.",
+    "lastUpdated": "Last updated: {date}",
+    "errorLabel": "Error: {error}",
+    "validUrl": "Valid URL",
+    "invalidUrl": "Invalid URL",
+    "save": "Save",
+    "saving": "Saving...",
+    "saveConfirm": "Confirm saving the changes to this feed?",
+    "saveTitle": "Save changes",
+    "cancelEditTitle": "Cancel edit",
+    "dragReorder": "Drag to reorder",
+    "dragReorderHint": "Drag to reorder (desktop and touch)",
+    "moveUp": "Move up",
+    "moveDown": "Move down",
+    "editFeed": "Edit feed",
+    "removeFeed": "Remove feed"
+  },
+  "article": {
+    "noContent": "No content available",
+    "readFullArticle": "Read the full article →",
+    "authorBy": "by {author}"
+  },
+  "errors": {
+    "invalidFeedUrl": "Invalid RSS feed URL",
+    "autoDetectFailed": "Feed was not detected automatically. Enter a valid RSS/Atom/JSON feed URL.",
+    "duplicateFeed": "Feed already added",
+    "refreshFeedFailed": "Unable to refresh the feed after editing",
+    "fetchNewsFailed": "Unable to fetch news"
+  }
+}

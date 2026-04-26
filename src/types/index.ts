@@ -48,6 +48,9 @@ export type ViewMode = 'chronological' | 'by-feed';
 // Theme mode
 export type ThemeMode = 'light' | 'dark';
 
+// UI language
+export type LanguageCode = 'it' | 'en';
+
 // Filter options
 export interface FilterOptions {
   feedId?: string;

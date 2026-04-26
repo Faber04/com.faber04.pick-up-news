@@ -16,4 +16,5 @@ export interface FeedsPageProps {
 export interface SettingsPageProps {
   version: string;
   onOpenFeeds: () => void;
+  onOpenLanguage: () => void;
 }

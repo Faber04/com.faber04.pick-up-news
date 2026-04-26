@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { AddFeedForm, FeedList } from './index';
 import type { FeedsContentProps } from '../types/component-props';
+import { useI18n } from '../i18n/useI18n';
 
 export const FeedsContent = ({
   feeds,
@@ -15,6 +16,7 @@ export const FeedsContent = ({
   onRefresh,
 }: FeedsContentProps) => {
   const [showForm, setShowForm] = useState(false);
+  const { messages } = useI18n();
 
   return (
     <div>
@@ -24,7 +26,7 @@ export const FeedsContent = ({
           onClick={() => setShowForm(!showForm)}
           className="btn-brand w-full rounded-lg px-4 py-3 font-medium transition sm:w-auto"
         >
-          + Aggiungi Feed RSS
+          {messages.feeds.addFeedToggle}
         </button>
         {feeds.length > 0 && (
           <button
@@ -32,7 +34,7 @@ export const FeedsContent = ({
             disabled={loading}
             className="btn-success w-full rounded-lg px-4 py-3 font-medium text-white transition disabled:opacity-60 sm:w-auto"
           >
-            {loading ? 'Aggiornando...' : '🔄 Aggiorna'}
+            {loading ? messages.feeds.refreshing : messages.feeds.refresh}
           </button>
         )}
       </div>

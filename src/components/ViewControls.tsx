@@ -1,6 +1,9 @@
 import type { ViewControlsProps } from '../types/component-props';
+import { useI18n } from '../i18n/useI18n';
 
 export const ViewControls = ({ viewMode, onViewModeChange }: ViewControlsProps) => {
+  const { messages } = useI18n();
+
   return (
     <div className="flex justify-end mb-6">
       <div className="flex surface-muted rounded-lg p-1">
@@ -12,7 +15,7 @@ export const ViewControls = ({ viewMode, onViewModeChange }: ViewControlsProps) 
               : 'text-secondary border-transparent hover:text-primary'
           }`}
         >
-          Cronologico
+          {messages.viewModes.chronological}
         </button>
         <button
           onClick={() => onViewModeChange('by-feed')}
@@ -22,7 +25,7 @@ export const ViewControls = ({ viewMode, onViewModeChange }: ViewControlsProps) 
               : 'text-secondary border-transparent hover:text-primary'
           }`}
         >
-          Per Sito
+          {messages.viewModes.byFeed}
         </button>
       </div>
     </div>

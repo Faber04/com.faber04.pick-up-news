@@ -32,3 +32,6 @@ dist-ssr
 
 # Internal/Sensitive files
 INTERNAL/
+
+# Local project docs
+pick-up-news-docs/

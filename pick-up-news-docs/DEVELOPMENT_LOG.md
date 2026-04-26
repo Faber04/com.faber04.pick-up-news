@@ -2,6 +2,24 @@
 
 This file logs all development sessions for the PickUpNews project.
 
+## Session: Fix orderedGroups warning with memoization (v1.4.6)
+- Date: 26 April 2026
+
+## Changes Made
+- Refactored `NewsList` to memoize `groupedNews` and `orderedGroups` using `useMemo`
+- Stabilized by-site derived collections to prevent dependency warnings tied to recreated arrays/objects
+- Kept existing by-site UX behavior unchanged (collapsed default, expand/collapse all, counter, persistence)
+- Bumped app version to `1.4.6`
+
+## Testing
+- Build passed (`npm run build`)
+
+## Issues Encountered
+- None
+
+## Next Steps
+- Continue v2.0.0 export/import feeds roadmap
+
 ## Session: Fix production React #310 crash in NewsList (v1.4.5)
 - Date: 26 April 2026
 

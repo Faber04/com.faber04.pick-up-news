@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { NewsItem, ViewMode } from '../types';
 
 const ACCORDION_STORAGE_KEY = 'pickUpNews_byFeed_openAccordions';
@@ -30,29 +30,37 @@ export const NewsList = ({ news, viewMode, feedOrder, loading, onNewsClick }: Ne
     }
   });
 
-  const groupedNews = viewMode === 'by-feed'
-    ? news.reduce((acc, item) => {
-        if (!acc[item.feedId]) {
-          acc[item.feedId] = {
-            feedTitle: item.feedTitle,
-            items: []
-          };
-        }
+  const groupedNews = useMemo(() => {
+    if (viewMode !== 'by-feed') {
+      return null;
+    }
 
-        acc[item.feedId].items.push(item);
-        return acc;
-      }, {} as Record<string, { feedTitle: string; items: NewsItem[] }> )
-    : null;
+    return news.reduce((acc, item) => {
+      if (!acc[item.feedId]) {
+        acc[item.feedId] = {
+          feedTitle: item.feedTitle,
+          items: []
+        };
+      }
 
-  const orderedGroups = groupedNews
-    ? Object.entries(groupedNews).sort(([feedIdA], [feedIdB]) => {
-        const indexA = feedOrder.indexOf(feedIdA);
-        const indexB = feedOrder.indexOf(feedIdB);
-        const safeIndexA = indexA === -1 ? Number.MAX_SAFE_INTEGER : indexA;
-        const safeIndexB = indexB === -1 ? Number.MAX_SAFE_INTEGER : indexB;
-        return safeIndexA - safeIndexB;
-      })
-    : [];
+      acc[item.feedId].items.push(item);
+      return acc;
+    }, {} as Record<string, { feedTitle: string; items: NewsItem[] }>);
+  }, [news, viewMode]);
+
+  const orderedGroups = useMemo(() => {
+    if (!groupedNews) {
+      return [] as [string, { feedTitle: string; items: NewsItem[] }][];
+    }
+
+    return Object.entries(groupedNews).sort(([feedIdA], [feedIdB]) => {
+      const indexA = feedOrder.indexOf(feedIdA);
+      const indexB = feedOrder.indexOf(feedIdB);
+      const safeIndexA = indexA === -1 ? Number.MAX_SAFE_INTEGER : indexA;
+      const safeIndexB = indexB === -1 ? Number.MAX_SAFE_INTEGER : indexB;
+      return safeIndexA - safeIndexB;
+    });
+  }, [feedOrder, groupedNews]);
 
   useEffect(() => {
     try {

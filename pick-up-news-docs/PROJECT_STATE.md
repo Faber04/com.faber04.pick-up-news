@@ -74,6 +74,7 @@
 **v1.4.5** (Commit UNRELEASED) — Production React #310 fix in NewsList hook ordering ✅ COMPLETED
 **v1.4.6** (Commit UNRELEASED) — NewsList memoization fix for orderedGroups dependency warning ✅ COMPLETED
 **v1.4.7** (Commit UNRELEASED) — Centralized component/page interfaces into `types/*` modules ✅ COMPLETED
+**v1.4.8** (PLANNED) — English localization foundation and scalable language selector
 **v2.0.0** (PLANNED) — Export/Import feeds
 **v3.0.0** (PLANNED) — Replace corsproxy.io with Cloudflare Workers (self-hosted CORS proxy)
 
@@ -194,6 +195,21 @@
 2. ✅ Added global quick actions: `Espandi tutti` and `Comprimi tutti`
 3. ✅ Added live status counter: `X aperti su Y`
 4. ✅ Persisted accordion open/closed state in localStorage by feed id
+
+### v1.4.8 (PLANNED) — Localization and language selection
+1. Add app localization support with English as the first additional language
+   - App becomes available in Italian and English
+   - Architecture must remain scalable for future languages beyond Italian/English
+2. Add a language entry in Settings
+   - Entry opens a dedicated nested Settings page for language selection
+   - Navigation must remain mobile-first and compatible with the existing breadcrumb stack
+3. Create a JSON translation grammar for all UI labels
+   - Centralized key-based dictionary covering all visible UI copy
+   - Separate locale files per language
+4. Language picker requirements
+   - Show flag + localized language name for each option
+   - Examples for future-ready format: `Italiano`, `English (UK)`, `English (US)`
+   - Use UK flag for British English and US flag for American English when those variants are introduced
 
 ### v2.0.0 (PLANNED)
 1. Export feeds to JSON file

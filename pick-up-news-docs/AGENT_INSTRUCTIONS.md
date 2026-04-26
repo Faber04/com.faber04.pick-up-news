@@ -34,6 +34,7 @@ At the end of each development session, the AI must perform the following steps:
 - Maintain clean, readable, and well-documented code.
 - Use consistent naming conventions (camelCase for variables, PascalCase for components).
 - Implement proper error handling and loading states.
+- Treat every UI change as mobile-first by default; design the small-screen interaction first, then scale up to tablet and desktop.
 - Ensure responsive design for mobile and desktop.
 
 ## Project Structure

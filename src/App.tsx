@@ -199,7 +199,6 @@ function App() {
         >
           <div className="space-y-3">
             <p className="text-sm text-secondary">{messages.settings.languageDescription}</p>
-            <p className="text-xs text-muted">{messages.settings.languageHelp}</p>
             <div className="space-y-3 pt-2">
               {supportedLanguages.map((option) => {
                 const isActive = option.code === language;

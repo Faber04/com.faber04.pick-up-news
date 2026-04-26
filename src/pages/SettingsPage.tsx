@@ -11,13 +11,13 @@ export const SettingsPage = ({ version, onOpenFeeds, onOpenLanguage }: SettingsP
       {/* Menu top - full-width buttons */}
       <div className="space-y-3 mb-8">
         <button
-          className="btn-brand w-full rounded-lg px-4 py-3 text-sm font-medium transition"
+          className="btn-settings-action w-full rounded-lg px-4 py-3 text-sm font-medium transition"
           onClick={onOpenLanguage}
         >
           {messages.settings.languageAction}
         </button>
         <button
-          className="btn-brand w-full rounded-lg px-4 py-3 text-sm font-medium transition"
+          className="btn-settings-action w-full rounded-lg px-4 py-3 text-sm font-medium transition"
           onClick={onOpenFeeds}
         >
           {messages.settings.manageFeedsAction}
@@ -32,12 +32,6 @@ export const SettingsPage = ({ version, onOpenFeeds, onOpenLanguage }: SettingsP
             <div className="flex items-start justify-between gap-4 border-b border-[color:var(--border)] pb-3">
               <dt className="text-muted">{messages.settings.copyright}</dt>
               <dd className="font-medium text-primary">© {currentYear}</dd>
-            </div>
-            <div className="flex items-start justify-between gap-4 border-b border-[color:var(--border)] pb-3">
-              <dt className="text-muted">{messages.settings.currentLanguage}</dt>
-              <dd className="font-medium text-primary">
-                {messages.language.flag} {messages.language.label}
-              </dd>
             </div>
             <div className="flex items-start justify-between gap-4">
               <dt className="text-muted">{messages.settings.repository}</dt>

@@ -111,6 +111,19 @@ h4 {
 	filter: saturate(1.08) brightness(1.03);
 }
 
+.btn-settings-action {
+	background: color-mix(in srgb, var(--brand) 14%, var(--surface-strong) 86%);
+	color: var(--brand-strong);
+	border: 1px solid color-mix(in srgb, var(--brand) 22%, var(--border) 78%);
+	box-shadow: 0 10px 24px -20px rgba(2, 8, 23, 0.45);
+}
+
+.btn-settings-action:hover {
+	background: color-mix(in srgb, var(--brand) 18%, var(--surface-muted) 82%);
+	border-color: color-mix(in srgb, var(--brand) 30%, var(--border) 70%);
+	filter: brightness(1.01);
+}
+
 .btn-success {
 	background: linear-gradient(120deg, #059669 0%, #0284c7 100%);
 	color: #f8fafc;

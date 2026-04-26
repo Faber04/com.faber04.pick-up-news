@@ -30,24 +30,6 @@ export const NewsList = ({ news, viewMode, feedOrder, loading, onNewsClick }: Ne
     }
   });
 
-  if (loading) {
-    return (
-      <div className="text-center py-8">
-        <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-[color:var(--brand)]"></div>
-        <p className="mt-2 text-secondary">Caricamento news...</p>
-      </div>
-    );
-  }
-
-  if (news.length === 0) {
-    return (
-      <div className="text-center py-8 text-muted surface rounded-xl">
-        <p>Nessuna news disponibile.</p>
-        <p className="text-sm mt-2">Aggiungi dei feed RSS e aggiorna per vedere le news.</p>
-      </div>
-    );
-  }
-
   const groupedNews = viewMode === 'by-feed'
     ? news.reduce((acc, item) => {
         if (!acc[item.feedId]) {
@@ -122,6 +104,24 @@ export const NewsList = ({ news, viewMode, feedOrder, loading, onNewsClick }: Ne
     return openFeedIds.has(feedId) ? count + 1 : count;
   }, 0);
   const totalCount = orderedGroups.length;
+
+  if (loading) {
+    return (
+      <div className="text-center py-8">
+        <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-[color:var(--brand)]"></div>
+        <p className="mt-2 text-secondary">Caricamento news...</p>
+      </div>
+    );
+  }
+
+  if (news.length === 0) {
+    return (
+      <div className="text-center py-8 text-muted surface rounded-xl">
+        <p>Nessuna news disponibile.</p>
+        <p className="text-sm mt-2">Aggiungi dei feed RSS e aggiorna per vedere le news.</p>
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-6">

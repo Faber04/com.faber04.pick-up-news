@@ -2,6 +2,13 @@
 
 This file documents all errors encountered during development, their solutions, and how to prevent them in the future.
 
+## Resolved: Production crash `Minified React error #310` in Home NewsList
+- Date: 26 April 2026
+- Error Description: In production, Home view crashed with `Minified React error #310` from the bundled `index-*.js`.
+- Cause: In `NewsList`, some hooks (`useEffect`) were placed after conditional early returns (`loading` and empty news). This caused hook-order mismatch between renders.
+- Solution: Refactored `NewsList` so all hooks and derived state are declared before any conditional return.
+- Prevention: Never place React hooks after conditional returns; keep hook declarations at top-level of component body and gate only JSX/render branches.
+
 ## Resolved: Mobile drawer appeared transparent over app content
 - Date: 24 April 2026
 - Error Description: In mobile layout, the lateral navigation drawer appeared visually transparent because app content was still visible through the panel area.

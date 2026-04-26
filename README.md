@@ -149,6 +149,10 @@ Each call is protected by a **10-second timeout** using `AbortController`: if a 
 - ✅ Added live counter: `X aperti su Y`
 - ✅ Persisted accordion open/closed state by feed via localStorage
 
+### v1.4.5 ✅
+- ✅ Fixed production crash (`Minified React error #310`) caused by hook-order mismatch in `NewsList`
+- ✅ Kept by-site accordion UX behavior unchanged after fix
+
 ### v2.0.0
 - 📥 Export feeds to JSON file
   - Download all feeds with title and URL as a JSON file

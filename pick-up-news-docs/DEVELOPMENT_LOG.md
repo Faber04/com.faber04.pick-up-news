@@ -2,6 +2,25 @@
 
 This file logs all development sessions for the PickUpNews project.
 
+## Session: Fix production React #310 crash in NewsList (v1.4.5)
+- Date: 26 April 2026
+
+## Changes Made
+- Fixed hook-order bug in `NewsList` that caused production crash `Minified React error #310`
+- Moved conditional early returns (`loading` / `news.length === 0`) below all hooks and derived state
+- Preserved by-site accordion UX features (collapsed default, expand/collapse all, counter, persistence)
+- Bumped app version to `1.4.5`
+
+## Testing
+- Build passed (`npm run build`)
+- Confirmed production bundle generation succeeds after hook-order fix
+
+## Issues Encountered
+- Root cause identified in hook execution order after recent by-site UX update
+
+## Next Steps
+- Continue v2.0.0 export/import feeds roadmap
+
 ## Session: Implement v1.4.4 by-site accordion controls + persistence
 - Date: 26 April 2026
 

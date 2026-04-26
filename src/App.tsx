@@ -13,7 +13,7 @@ import { SettingsPage } from './pages/SettingsPage';
 import { NewsItem } from './types';
 import type { NavigationState, BreadcrumbNode, NavigationActions } from './types/navigation';
 
-const APP_VERSION = '1.4.4';
+const APP_VERSION = '1.4.5';
 
 function App() {
   const {

@@ -71,6 +71,7 @@
 **v1.4.2** (Commit UNRELEASED) — Settings/feed nested navigation with sticky breadcrumb and mobile-first settings flattening ✅ COMPLETED
 **v1.4.3** (Commit UNRELEASED) — Theme control moved to main/hamburger menu with dedicated visual style ✅ COMPLETED
 **v1.4.4** (Commit UNRELEASED) — By-site accordion UX controls and persistence ✅ COMPLETED
+**v1.4.5** (Commit UNRELEASED) — Production React #310 fix in NewsList hook ordering ✅ COMPLETED
 **v2.0.0** (PLANNED) — Export/Import feeds
 **v3.0.0** (PLANNED) — Replace corsproxy.io with Cloudflare Workers (self-hosted CORS proxy)
 

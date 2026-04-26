@@ -171,12 +171,13 @@ h4 {
 
 .nav-theme-action {
 	height: 2.25rem;
-	padding: 0 0.8rem;
+	width: 2.25rem;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
 	border-radius: 999px;
-	font-size: 0.78rem;
+	font-size: 1rem;
 	font-weight: 700;
-	letter-spacing: 0.04em;
-	text-transform: uppercase;
 	color: var(--brand-strong);
 	background: color-mix(in srgb, var(--brand) 18%, transparent 82%);
 	border: 1px solid color-mix(in srgb, var(--brand) 44%, transparent 56%);
@@ -191,11 +192,10 @@ h4 {
 .nav-theme-action-mobile {
 	display: flex;
 	align-items: center;
-	justify-content: space-between;
-	gap: 0.6rem;
+	justify-content: center;
 	padding: 0.82rem 0.95rem;
 	border-radius: 0.85rem;
-	font-size: 0.88rem;
+	font-size: 1.2rem;
 	font-weight: 700;
 	color: var(--brand-strong);
 	background: color-mix(in srgb, var(--brand) 14%, var(--surface) 86%);

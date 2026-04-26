@@ -74,8 +74,7 @@ export const Header = ({ currentPage, themeMode, onToggleTheme, onNavigate }: He
             className="nav-theme-action-mobile w-full"
             aria-label="Cambia tema"
           >
-            <span>{themeMode === 'dark' ? '☀️ Passa a Light' : '🌙 Passa a Dark'}</span>
-            <span className="text-xs uppercase tracking-[0.14em] opacity-85">Tema</span>
+            <span aria-hidden="true">{themeMode === 'dark' ? '☀️' : '🌙'}</span>
           </button>
         </nav>
 
@@ -121,7 +120,7 @@ export const Header = ({ currentPage, themeMode, onToggleTheme, onNavigate }: He
             className="nav-theme-action"
             aria-label="Cambia tema"
           >
-            {themeMode === 'dark' ? '☀️ Light' : '🌙 Dark'}
+            <span aria-hidden="true">{themeMode === 'dark' ? '☀️' : '🌙'}</span>
           </button>
         </nav>
 

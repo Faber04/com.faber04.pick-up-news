@@ -2,6 +2,27 @@
 
 This file logs all development sessions for the PickUpNews project.
 
+## Session: v1.4.3 UX polish - icon-only theme action in navigation
+- Date: 26 April 2026
+
+## Changes Made
+- Removed `Dark/Light` text from theme toggle controls in both desktop header and mobile hamburger drawer
+- Kept theme controls as icon-only actions (`☀️` / `🌙`) with existing distinct visual style
+- Adjusted menu theme-action styles for centered icon-only layout on desktop and mobile
+
+## Testing
+- Build passed (`npm run build`)
+- Functional validation:
+  - theme action in desktop navigation shows icon only
+  - theme action in mobile drawer shows icon only
+  - theme switching still works correctly
+
+## Issues Encountered
+- None
+
+## Next Steps
+- Proceed with v2.0.0 export/import feeds roadmap
+
 ## Session: Implement v1.4.3 theme toggle relocation to navigation
 - Date: 26 April 2026
 

@@ -33,8 +33,6 @@ dist-ssr
 # Internal/Sensitive files
 INTERNAL/
 
-# Local project docs
-pick-up-news-docs/
 
 # Cross-project safety (root-level only)
 /com.faber04.app.finance-analyzer/

@@ -2,6 +2,33 @@
 
 This file logs all development sessions for the PickUpNews project.
 
+## Session: Implement v1.4.4 by-site accordion controls + persistence
+- Date: 26 April 2026
+
+## Changes Made
+- Updated Home > By Site behavior so all feed accordions are collapsed by default
+- Added global quick controls in by-site toolbar: `Espandi tutti` and `Comprimi tutti`
+- Added a live status counter `X aperti su Y` to track accordion state
+- Added localStorage persistence for accordion open/closed state per feed id
+- Kept feed order and rendering unchanged while improving long-list navigation usability
+- Bumped app version to `1.4.4` (`package.json` + app constant)
+- Updated README and PROJECT_STATE to document v1.4.4 UX behavior
+
+## Testing
+- Build passed (`npm run build`)
+- Functional validation:
+  - By-site view loads with all accordions collapsed
+  - `Espandi tutti` opens all feed groups
+  - `Comprimi tutti` closes all feed groups
+  - counter reflects current open groups correctly
+  - accordion state persists after view/page revisit
+
+## Issues Encountered
+- None
+
+## Next Steps
+- Proceed with v2.0.0 export/import feeds roadmap
+
 ## Session: v1.4.3 UX polish - icon-only theme action in navigation
 - Date: 26 April 2026
 

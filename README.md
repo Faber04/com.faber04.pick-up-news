@@ -22,6 +22,9 @@ PickUpNews allows you to easily aggregate and read all your favorite RSS feeds. 
 - **🧭 Breadcrumb Navigation**: Sticky breadcrumb for fast movement between pages and nested subpages
 - **📅 Chronological View**: See all news sorted by date (most recent first)
 - **🏷️ Site View**: Group news by source/site
+- **🗂️ Collapsed By-Site Start**: In "By Site" view, all accordions start collapsed to improve navigation with many feeds
+- **🧰 By-Site Controls**: "Espandi tutti" / "Comprimi tutti" quick actions and open/total counter
+- **💾 Accordion State Persistence**: Open/closed state per feed is remembered in localStorage
 - **🧭 Consistent Source Order**: In "By Site" mode, Home follows the same order configured in Feeds
 - **🧱 Mobile Navigation Drawer**: On mobile, navigation opens as a right-side drawer with overlay
 - **🗓️ Compact Article Metadata**: Article modal uses compact `DD/MM/YY (HH:MM)` date format and wraps metadata cleanly on mobile
@@ -140,6 +143,12 @@ Each call is protected by a **10-second timeout** using `AbortController`: if a 
 - ✅ Added dark/light toggle to main header navigation and mobile hamburger drawer
 - ✅ Styled theme action as a distinct menu control to visually separate it from regular navigation items
 
+### v1.4.4 ✅
+- ✅ In **By Site** view, feed accordions now start collapsed by default
+- ✅ Added global controls: **Espandi tutti** and **Comprimi tutti**
+- ✅ Added live counter: `X aperti su Y`
+- ✅ Persisted accordion open/closed state by feed via localStorage
+
 ### v2.0.0
 - 📥 Export feeds to JSON file
   - Download all feeds with title and URL as a JSON file
@@ -228,6 +237,11 @@ The app has two top-level sections accessible from the header:
 From the **Home** section, you can choose two viewing modes:
 - **Chronological**: all news from all feeds sorted by the most recent
 - **By Site**: news grouped by source/site
+
+In **By Site** mode:
+- Accordions start collapsed by default
+- Use **Espandi tutti** / **Comprimi tutti** to quickly control all groups
+- Use the `X aperti su Y` counter to keep track of navigation state
 
 ### Reading Articles
 - Click on any news item to open the full detail

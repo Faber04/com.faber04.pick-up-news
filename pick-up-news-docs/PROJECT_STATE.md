@@ -44,6 +44,9 @@
 - Navigation architecture migrated to scalable breadcrumb stack (`trail`) for future nested sections ✅ COMPLETED
 - Theme toggle removed from Settings and moved to main header + mobile hamburger menu ✅ COMPLETED
 - Theme menu action now has distinct visual treatment from regular navigation entries ✅ COMPLETED
+- By-site accordions now start collapsed by default for better long-list navigation ✅ COMPLETED
+- Added by-site global controls (`Espandi tutti`, `Comprimi tutti`) + open/total counter ✅ COMPLETED
+- Added localStorage persistence for by-site accordion open/closed state per feed ✅ COMPLETED
 
 ## Objectives
 - Implement RSS feed management (add, remove feeds). ✅ COMPLETED
@@ -67,6 +70,7 @@
 **v1.4.1** (Commit UNRELEASED) — Mobile drawer cleanup, Settings UX consolidation, Feed menu moved to Settings ✅ COMPLETED
 **v1.4.2** (Commit UNRELEASED) — Settings/feed nested navigation with sticky breadcrumb and mobile-first settings flattening ✅ COMPLETED
 **v1.4.3** (Commit UNRELEASED) — Theme control moved to main/hamburger menu with dedicated visual style ✅ COMPLETED
+**v1.4.4** (Commit UNRELEASED) — By-site accordion UX controls and persistence ✅ COMPLETED
 **v2.0.0** (PLANNED) — Export/Import feeds
 **v3.0.0** (PLANNED) — Replace corsproxy.io with Cloudflare Workers (self-hosted CORS proxy)
 
@@ -181,6 +185,12 @@
 2. ✅ Added theme switch action to desktop main navigation
 3. ✅ Added theme switch action to mobile hamburger drawer
 4. ✅ Applied distinct visual style to theme action (separate from standard nav entries)
+
+### v1.4.4 ✅ COMPLETED — By-site accordion usability
+1. ✅ In Home > By Site, all feed accordions start collapsed by default
+2. ✅ Added global quick actions: `Espandi tutti` and `Comprimi tutti`
+3. ✅ Added live status counter: `X aperti su Y`
+4. ✅ Persisted accordion open/closed state in localStorage by feed id
 
 ### v2.0.0 (PLANNED)
 1. Export feeds to JSON file

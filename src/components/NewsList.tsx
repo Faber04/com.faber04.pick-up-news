@@ -1,5 +1,7 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { NewsItem, ViewMode } from '../types';
+
+const ACCORDION_STORAGE_KEY = 'pickUpNews_byFeed_openAccordions';
 
 interface NewsListProps {
   news: NewsItem[];
@@ -10,6 +12,24 @@ interface NewsListProps {
 }
 
 export const NewsList = ({ news, viewMode, feedOrder, loading, onNewsClick }: NewsListProps) => {
+  const [openFeedIds, setOpenFeedIds] = useState<Set<string>>(() => {
+    try {
+      const rawValue = localStorage.getItem(ACCORDION_STORAGE_KEY);
+      if (!rawValue) {
+        return new Set<string>();
+      }
+
+      const parsed = JSON.parse(rawValue);
+      if (!Array.isArray(parsed)) {
+        return new Set<string>();
+      }
+
+      return new Set<string>(parsed.filter((value) => typeof value === 'string'));
+    } catch {
+      return new Set<string>();
+    }
+  });
+
   if (loading) {
     return (
       <div className="text-center py-8">
@@ -52,6 +72,57 @@ export const NewsList = ({ news, viewMode, feedOrder, loading, onNewsClick }: Ne
       })
     : [];
 
+  useEffect(() => {
+    try {
+      localStorage.setItem(ACCORDION_STORAGE_KEY, JSON.stringify(Array.from(openFeedIds)));
+    } catch {
+      // Ignore persistence errors to avoid impacting rendering.
+    }
+  }, [openFeedIds]);
+
+  useEffect(() => {
+    if (orderedGroups.length === 0) {
+      return;
+    }
+
+    const validFeedIds = new Set(orderedGroups.map(([feedId]) => feedId));
+
+    setOpenFeedIds((prev) => {
+      const filtered = new Set(Array.from(prev).filter((feedId) => validFeedIds.has(feedId)));
+
+      if (filtered.size === prev.size) {
+        return prev;
+      }
+
+      return filtered;
+    });
+  }, [orderedGroups]);
+
+  const handleToggleAccordion = (feedId: string) => {
+    setOpenFeedIds((prev) => {
+      const next = new Set(prev);
+      if (next.has(feedId)) {
+        next.delete(feedId);
+      } else {
+        next.add(feedId);
+      }
+      return next;
+    });
+  };
+
+  const handleExpandAll = () => {
+    setOpenFeedIds(new Set(orderedGroups.map(([feedId]) => feedId)));
+  };
+
+  const handleCollapseAll = () => {
+    setOpenFeedIds(new Set<string>());
+  };
+
+  const openCount = orderedGroups.reduce((count, [feedId]) => {
+    return openFeedIds.has(feedId) ? count + 1 : count;
+  }, 0);
+  const totalCount = orderedGroups.length;
+
   return (
     <div className="space-y-6">
       {viewMode === 'chronological' ? (
@@ -62,11 +133,34 @@ export const NewsList = ({ news, viewMode, feedOrder, loading, onNewsClick }: Ne
         </div>
       ) : (
         <div className="space-y-3">
+          <div className="flex flex-wrap items-center gap-2">
+            <button
+              type="button"
+              onClick={handleExpandAll}
+              className="btn-neutral rounded-lg px-3 py-2 text-xs font-semibold"
+            >
+              Espandi tutti
+            </button>
+            <button
+              type="button"
+              onClick={handleCollapseAll}
+              className="btn-neutral rounded-lg px-3 py-2 text-xs font-semibold"
+            >
+              Comprimi tutti
+            </button>
+            <span className="ml-auto text-xs text-muted">
+              {openCount} aperti su {totalCount}
+            </span>
+          </div>
+
           {orderedGroups.map(([feedId, group]) => (
             <FeedAccordion
               key={feedId}
+              feedId={feedId}
               feedTitle={group.feedTitle}
               feedNews={group.items}
+              isOpen={openFeedIds.has(feedId)}
+              onToggle={handleToggleAccordion}
               onNewsClick={onNewsClick}
             />
           ))}
@@ -77,19 +171,20 @@ export const NewsList = ({ news, viewMode, feedOrder, loading, onNewsClick }: Ne
 };
 
 interface FeedAccordionProps {
+  feedId: string;
   feedTitle: string;
   feedNews: NewsItem[];
+  isOpen: boolean;
+  onToggle: (feedId: string) => void;
   onNewsClick: (newsItem: NewsItem) => void;
 }
 
-const FeedAccordion = ({ feedTitle, feedNews, onNewsClick }: FeedAccordionProps) => {
-  const [isOpen, setIsOpen] = useState(true);
-
+const FeedAccordion = ({ feedId, feedTitle, feedNews, isOpen, onToggle, onNewsClick }: FeedAccordionProps) => {
   return (
     <div className="surface rounded-lg overflow-hidden">
       {/* Accordion Header */}
       <button
-        onClick={() => setIsOpen(prev => !prev)}
+        onClick={() => onToggle(feedId)}
         className="w-full flex items-center justify-between px-4 py-3 surface-muted hover:brightness-95 transition-colors text-left"
       >
         <div className="flex items-center gap-2">

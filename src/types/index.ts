@@ -59,6 +59,9 @@ export interface FeedDetectionResult {
   format: FeedFormat;
 }
 
+// Navigation types
+export type { BreadcrumbNode, NavigationState, NavigationActions } from './navigation';
+
 // JSON Feed Format (https://jsonfeed.org/version/1.1)
 export interface JSONFeedAuthor {
   name?: string;

@@ -2,6 +2,37 @@
 
 This file logs all development sessions for the PickUpNews project.
 
+## Session: Implement v1.4.2 settings/feed nested navigation + mobile-first flattening
+- Date: 26 April 2026
+
+## Changes Made
+- Introduced a scalable stack-based navigation model (`trail`) for nested pages/subpages
+- Added sticky breadcrumb navigation to move between Home, Settings, and nested sections
+- Updated Home empty-state CTA text to `Aggiungi un feed RSS` and linked it directly to `Settings > Gestisci Feed`
+- Refactored Settings page to a flat layout: removed nested PickUpNews logo/title/subtitle block and removed boxed content area
+- Moved Settings actions to top as full-width mobile-first menu buttons
+- Renamed `Apri Gestione Feed` to `Gestisci Feed`
+- Converted feed management into a nested Settings subpage (`Settings > Gestisci Feed`) using a reusable subpage container
+- Improved mobile-first behavior in feed actions (`+ Aggiungi Feed RSS`, `Aggiorna`) with stacked full-width controls on small screens
+- Bumped app version to `1.4.2` in `package.json` and app constant
+- Updated README and PROJECT_STATE to reflect v1.4.2 behavior and navigation flow
+
+## Testing
+- Build passed (`npm run build`)
+- Browser E2E validation on local dev server (`http://127.0.0.1:4173/app/pick-up-news/`):
+  - Home empty-state shows `Aggiungi un feed RSS`
+  - CTA opens directly `Settings > Gestisci Feed`
+  - Sticky breadcrumb works for backward/section navigation
+  - Settings shows top full-width actions (`Passa a Dark/Light`, `Gestisci Feed`)
+  - Settings info content renders without boxed containers
+  - Feed management remains fully functional as nested subpage
+
+## Issues Encountered
+- Initial patch attempt corrupted `App.tsx` and `SettingsPage.tsx` structure; both files were recreated cleanly and build revalidated
+
+## Next Steps
+- Proceed with v2.0.0 export/import feeds roadmap
+
 ## Session: Implement v1.4.1 mobile/settings UX cleanup
 - Date: 25 April 2026
 

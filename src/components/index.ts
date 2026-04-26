@@ -4,3 +4,6 @@ export { Header } from './Header';
 export { NewsList } from './NewsList';
 export { ViewControls } from './ViewControls';
 export { NewsDetailModal } from './NewsDetailModal';
+export { Breadcrumb } from './Breadcrumb';
+export { SubpageContainer } from './SubpageContainer';
+export { FeedsContent } from './FeedsContent';

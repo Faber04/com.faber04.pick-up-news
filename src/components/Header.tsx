@@ -2,8 +2,8 @@ import { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 
 interface HeaderProps {
-  currentPage: 'home' | 'feeds' | 'settings';
-  onNavigate: (page: 'home' | 'feeds' | 'settings') => void;
+  currentPage: 'home' | 'settings';
+  onNavigate: (page: 'home' | 'settings') => void;
 }
 
 export const Header = ({ currentPage, onNavigate }: HeaderProps) => {
@@ -17,7 +17,7 @@ export const Header = ({ currentPage, onNavigate }: HeaderProps) => {
     };
   }, [menuOpen]);
 
-  const handleNavigate = (page: 'home' | 'feeds' | 'settings') => {
+  const handleNavigate = (page: 'home' | 'settings') => {
     onNavigate(page);
     setMenuOpen(false);
   };

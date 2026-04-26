@@ -37,6 +37,11 @@
 - Mobile drawer layering fixed so the panel renders as a true viewport overlay ✅ COMPLETED
 - Theme toggle moved to Settings only; removed from header and mobile drawer ✅ COMPLETED
 - Main "Feeds" top-level menu removed; feed management is now opened from Settings ✅ COMPLETED
+- Home empty-state CTA now jumps directly to `Settings > Gestisci Feed` ✅ COMPLETED
+- Settings page flattened: no nested cards/boxes, no PickUpNews logo-title-subtitle block ✅ COMPLETED
+- Settings top menu actions are now full-width and mobile-first (`Passa a Light/Dark`, `Gestisci Feed`) ✅ COMPLETED
+- Feed management is now a nested Settings subpage with sticky breadcrumb navigation ✅ COMPLETED
+- Navigation architecture migrated to scalable breadcrumb stack (`trail`) for future nested sections ✅ COMPLETED
 
 ## Objectives
 - Implement RSS feed management (add, remove feeds). ✅ COMPLETED
@@ -58,6 +63,7 @@
 **v1.3.1** (Commit 888c3f8) — Add-flow hardening: anti-duplicate submit + detection UX/performance improvements ✅ COMPLETED
 **v1.4.0** (Commit UNRELEASED) — Settings page, credits, mobile modal metadata layout, mobile navigation drawer ✅ COMPLETED
 **v1.4.1** (Commit UNRELEASED) — Mobile drawer cleanup, Settings UX consolidation, Feed menu moved to Settings ✅ COMPLETED
+**v1.4.2** (Commit UNRELEASED) — Settings/feed nested navigation with sticky breadcrumb and mobile-first settings flattening ✅ COMPLETED
 **v2.0.0** (PLANNED) — Export/Import feeds
 **v3.0.0** (PLANNED) — Replace corsproxy.io with Cloudflare Workers (self-hosted CORS proxy)
 
@@ -153,6 +159,19 @@
    - ✅ Feed management is accessible from Settings
 5. ✅ Moved dark/light theme toggle to Settings as the single authoritative location
    - ✅ Removed toggle from mobile lateral drawer and desktop header
+
+### v1.4.2 ✅ COMPLETED — Settings nested navigation + breadcrumb
+1. ✅ Home empty-state action changed from "Vai a Settings" to "Aggiungi un feed RSS"
+   - ✅ Action now opens directly `Settings > Gestisci Feed`
+2. ✅ Settings content flattened
+   - ✅ Removed nested PickUpNews block and removed logo/title/subtitle section
+   - ✅ Removed container-box layout from Settings content area
+3. ✅ Settings actions redesigned as top menu entries
+   - ✅ Full-width mobile-first buttons at top of Settings
+   - ✅ "Apri Gestione Feed" renamed to "Gestisci Feed"
+4. ✅ "Gestione Feed" converted into a Settings nested subpage
+5. ✅ Added sticky breadcrumb navigation for section/subsection movement
+   - ✅ Implemented scalable stack-based navigation (`trail`) to support future deep nesting
 
 ### v2.0.0 (PLANNED)
 1. Export feeds to JSON file

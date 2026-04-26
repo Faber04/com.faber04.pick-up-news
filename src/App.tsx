@@ -4,15 +4,16 @@ import {
   Header,
   NewsList,
   ViewControls,
-  NewsDetailModal
+  NewsDetailModal,
+  Breadcrumb,
+  SubpageContainer,
+  FeedsContent,
 } from './components';
-import { FeedsPage } from './pages/FeedsPage';
 import { SettingsPage } from './pages/SettingsPage';
 import { NewsItem } from './types';
+import type { NavigationState, BreadcrumbNode, NavigationActions } from './types/navigation';
 
-type Page = 'home' | 'feeds' | 'settings';
-
-const APP_VERSION = '1.4.1';
+const APP_VERSION = '1.4.2';
 
 function App() {
   const {
@@ -28,12 +29,41 @@ function App() {
     updateFeed,
     refreshNews,
     getFilteredNews,
-    clearError
+    clearError,
   } = useAppState();
 
-  const [currentPage, setCurrentPage] = useState<Page>('home');
+  const [navigation, setNavigation] = useState<NavigationState>({
+    trail: [{ id: 'home', label: 'Home' }],
+  });
+
   const [selectedNews, setSelectedNews] = useState<NewsItem | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const currentPageNode = navigation.trail[navigation.trail.length - 1];
+  const headerPage: 'home' | 'settings' = currentPageNode.id === 'home' ? 'home' : 'settings';
+
+  const navigationActions: NavigationActions = {
+    push: (node: BreadcrumbNode) => {
+      setNavigation((prev) => ({
+        trail: [...prev.trail, node],
+      }));
+    },
+    pop: () => {
+      setNavigation((prev) => ({
+        trail: prev.trail.length > 1 ? prev.trail.slice(0, -1) : prev.trail,
+      }));
+    },
+    goToIndex: (index: number) => {
+      setNavigation((prev) => ({
+        trail: prev.trail.slice(0, index + 1),
+      }));
+    },
+    reset: () => {
+      setNavigation({
+        trail: [{ id: 'home', label: 'Home' }],
+      });
+    },
+  };
 
   // Auto-refresh news when feeds change
   useEffect(() => {
@@ -44,10 +74,10 @@ function App() {
 
   // Clear feed-related errors when leaving the Feeds page
   useEffect(() => {
-    if (currentPage !== 'feeds' && state.error) {
+    if (currentPageNode.id !== 'feeds' && state.error) {
       clearError();
     }
-  }, [currentPage, state.error, clearError]);
+  }, [currentPageNode.id, state.error, clearError]);
 
   const handleNewsClick = (newsItem: NewsItem) => {
     setSelectedNews(newsItem);
@@ -64,12 +94,22 @@ function App() {
   return (
     <div className="app-shell">
       <Header
-        currentPage={currentPage}
-        onNavigate={setCurrentPage}
+        currentPage={headerPage}
+        onNavigate={(page) => {
+          if (page === 'home') {
+            navigationActions.reset();
+          } else if (page === 'settings') {
+            navigationActions.reset();
+            navigationActions.push({ id: 'settings', label: 'Settings' });
+          }
+        }}
       />
 
+      {/* Breadcrumb Navigation */}
+      <Breadcrumb trail={navigation.trail} onNavigate={navigationActions} />
+
       {/* Error Message */}
-      {state.error && currentPage !== 'feeds' && (
+      {state.error && currentPageNode.id !== 'feeds' && (
         <div className="app-container pt-4">
           <div className="surface rounded-lg px-4 py-3 flex justify-between items-center text-secondary">
             <span className="text-[var(--danger)]">{state.error}</span>
@@ -83,27 +123,8 @@ function App() {
         </div>
       )}
 
-      {currentPage === 'feeds' ? (
-        <FeedsPage
-          feeds={state.feeds}
-          loading={state.loading}
-          addFeedError={state.error}
-          onAddFeed={addFeed}
-          onClearError={clearError}
-          onRemoveFeed={removeFeed}
-          onMoveFeed={moveFeed}
-          onMoveFeedToIndex={moveFeedToIndex}
-          onEditFeed={updateFeed}
-          onRefresh={refreshNews}
-        />
-      ) : currentPage === 'settings' ? (
-        <SettingsPage
-          version={APP_VERSION}
-          themeMode={themeMode}
-          onToggleTheme={toggleTheme}
-          onOpenFeeds={() => setCurrentPage('feeds')}
-        />
-      ) : (
+      {/* Page Routing */}
+      {currentPageNode.id === 'home' ? (
         <div className="app-container py-8 stagger-in">
           {state.feeds.length === 0 ? (
             <div className="text-center py-16 text-muted surface rounded-2xl">
@@ -113,12 +134,16 @@ function App() {
                 className="w-16 h-16 mx-auto mb-4 opacity-80"
               />
               <p className="text-lg font-semibold mb-2 text-primary">Nessun feed RSS aggiunto</p>
-              <p className="text-sm mb-4">Vai in Settings per aprire la gestione dei feed.</p>
+              <p className="text-sm mb-4">Aggiungi un feed RSS per iniziare a leggere le news.</p>
               <button
-                onClick={() => setCurrentPage('settings')}
+                onClick={() => {
+                  navigationActions.reset();
+                  navigationActions.push({ id: 'settings', label: 'Settings' });
+                  navigationActions.push({ id: 'feeds', label: 'Gestisci Feed' });
+                }}
                 className="btn-brand px-6 py-2 rounded-lg font-medium transition"
               >
-                ⚙️ Vai a Settings
+                ➕ Aggiungi un feed RSS
               </button>
             </div>
           ) : (
@@ -130,12 +155,43 @@ function App() {
               <NewsList
                 news={filteredNews}
                 viewMode={viewMode}
-                feedOrder={state.feeds.map(feed => feed.id)}
+                feedOrder={state.feeds.map((feed) => feed.id)}
                 loading={state.loading}
                 onNewsClick={handleNewsClick}
               />
             </>
           )}
+        </div>
+      ) : currentPageNode.id === 'settings' ? (
+        <SettingsPage
+          version={APP_VERSION}
+          themeMode={themeMode}
+          onToggleTheme={toggleTheme}
+          onOpenFeeds={() => {
+            navigationActions.push({ id: 'feeds', label: 'Gestisci Feed' });
+          }}
+        />
+      ) : currentPageNode.id === 'feeds' ? (
+        <SubpageContainer
+          title="Gestisci Feed"
+          onBack={() => navigationActions.pop()}
+        >
+          <FeedsContent
+            feeds={state.feeds}
+            loading={state.loading}
+            addFeedError={state.error}
+            onAddFeed={addFeed}
+            onClearError={clearError}
+            onRemoveFeed={removeFeed}
+            onMoveFeed={moveFeed}
+            onMoveFeedToIndex={moveFeedToIndex}
+            onEditFeed={updateFeed}
+            onRefresh={refreshNews}
+          />
+        </SubpageContainer>
+      ) : (
+        <div className="app-container py-8 stagger-in">
+          <p className="text-center text-muted">Pagina non trovata</p>
         </div>
       )}
 

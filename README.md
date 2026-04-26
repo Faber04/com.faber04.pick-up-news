@@ -18,7 +18,8 @@ PickUpNews allows you to easily aggregate and read all your favorite RSS feeds. 
 - **🧯 Inline Add Feed Errors**: If detection fails, the add panel stays open and shows an inline URL error (no modal alerts)
 - **🛑 Duplicate Protection**: Duplicate feed URLs are blocked with immediate inline feedback
 - **🧩 Multi-Format Support**: Native support for JSON Feed, RSS 2.0, and Atom feeds
-- **⚙️ Settings Hub**: Single Settings panel for credits, theme toggle, and entry point to feed management
+- **⚙️ Settings Hub**: Menu first, mobile-first settings page with top actions for theme and feed management
+- **🧭 Breadcrumb Navigation**: Sticky breadcrumb for fast movement between pages and nested subpages
 - **📅 Chronological View**: See all news sorted by date (most recent first)
 - **🏷️ Site View**: Group news by source/site
 - **🧭 Consistent Source Order**: In "By Site" mode, Home follows the same order configured in Feeds
@@ -126,6 +127,14 @@ Each call is protected by a **10-second timeout** using `AbortController`: if a 
 - 📂 Moved the main "Feed" menu item into the Settings page (no longer a top-level nav entry)
 - 🌙 Moved dark/light theme toggle to Settings; removed all other occurrences from the UI
 
+### v1.4.2 ✅
+- ✅ Home empty-state CTA updated from "Vai a Settings" to "Aggiungi un feed RSS" (direct access to Settings > Gestisci Feed)
+- ✅ Settings layout flattened: removed nested PickUpNews card and removed logo/title/subtitle block
+- ✅ Settings top actions are now full-width menu actions: theme toggle + "Gestisci Feed"
+- ✅ "Gestione Feed" converted into a nested Settings subpage
+- ✅ Introduced scalable stack-based breadcrumb navigation for nested pages/subpages
+- ✅ Added sticky top breadcrumb for mobile-first navigation between sections and sub-sections
+
 ### v2.0.0
 - 📥 Export feeds to JSON file
   - Download all feeds with title and URL as a JSON file
@@ -201,14 +210,14 @@ The app has two top-level sections accessible from the header:
 
 ### Adding an RSS Feed
 1. Open **Settings** from the header
-2. Click **"Apri Gestione Feed"**
-2. Click on **"+ Add RSS Feed"**
-3. Enter the feed name (e.g., "The Guardian")
-4. Enter a website URL or feed URL (e.g., `theguardian.com` or `https://www.theguardian.com/uk/rss`)
-5. Click **"Add Feed"**
-6. PickUpNews tries automatic detection (JSON Feed first, then RSS/Atom)
-7. If no valid feed is detected, the panel stays open and an inline error appears under the URL field
-8. Correct the URL and retry without reopening the add panel
+2. Click **"Gestisci Feed"**
+3. Click on **"+ Add RSS Feed"**
+4. Enter the feed name (e.g., "The Guardian")
+5. Enter a website URL or feed URL (e.g., `theguardian.com` or `https://www.theguardian.com/uk/rss`)
+6. Click **"Add Feed"**
+7. PickUpNews tries automatic detection (JSON Feed first, then RSS/Atom)
+8. If no valid feed is detected, the panel stays open and an inline error appears under the URL field
+9. Correct the URL and retry without reopening the add panel
 
 ### Viewing News
 From the **Home** section, you can choose two viewing modes:
@@ -223,34 +232,35 @@ From the **Home** section, you can choose two viewing modes:
 ### Settings and Credits
 1. Open **Settings** from the header
 2. Use the dark/light toggle directly in Settings
-3. Use **"Apri Gestione Feed"** to access feed add/reorder/edit/remove
+3. Use **"Gestisci Feed"** to access feed add/reorder/edit/remove
 4. Use the GitHub link to reach the Faber04 profile
+5. Use the sticky breadcrumb to move quickly between **Home**, **Settings**, and nested Settings subpages
 
 ### Removing a Feed
 1. Open **Settings** from the header
-2. Click **"Apri Gestione Feed"**
-2. Click on the 🗑️ icon next to the feed to remove
+2. Click **"Gestisci Feed"**
+3. Click on the 🗑️ icon next to the feed to remove
 
 ### Reordering Feeds
 1. Open **Settings** from the header
-2. Click **"Apri Gestione Feed"**
-2. Use **↑** or **↓** next to a feed to move it up or down
-3. Or drag a feed using the **⋮⋮** handle and drop it in the desired position
-4. The new order is saved automatically
+2. Click **"Gestisci Feed"**
+3. Use **↑** or **↓** next to a feed to move it up or down
+4. Or drag a feed using the **⋮⋮** handle and drop it in the desired position
+5. The new order is saved automatically
 
 ### Feed Order in Home (By Site)
-1. Reorder feeds in the **Feeds** section
+1. Reorder feeds in **Settings > Gestisci Feed**
 2. Go back to **Home** and switch to **By Site**
 3. Feed groups will follow the same order configured in Feeds
 
 ### Editing a Feed
 1. Open **Settings** from the header
-2. Click **"Apri Gestione Feed"**
-2. Click the **✏️** icon next to the feed
-3. Update name and/or URL
-4. Verify the URL status in real time
-5. Click **Salva** and confirm
-6. The feed is reloaded automatically and "Last updated" is refreshed
+2. Click **"Gestisci Feed"**
+3. Click the **✏️** icon next to the feed
+4. Update name and/or URL
+5. Verify the URL status in real time
+6. Click **Salva** and confirm
+7. The feed is reloaded automatically and "Last updated" is refreshed
 
 ## 📁 Project Structure
 

@@ -153,6 +153,17 @@ Each call is protected by a **10-second timeout** using `AbortController`: if a 
 - ✅ Fixed production crash (`Minified React error #310`) caused by hook-order mismatch in `NewsList`
 - ✅ Kept by-site accordion UX behavior unchanged after fix
 
+### v1.4.6 ✅
+- ✅ Fixed the `orderedGroups` dependency warning in `NewsList`
+- ✅ Memoized by-site derived collections to keep dependencies stable across renders
+- ✅ Kept existing by-site behavior unchanged while reducing internal React noise
+
+### v1.4.7 ✅
+- ✅ Centralized component and page prop interfaces into dedicated `src/types/*` modules
+- ✅ Moved shared `ThemeMode` typing into the common type layer
+- ✅ Tightened navigation param typing from `any` to `unknown`
+- ✅ Kept runtime behavior unchanged; structural TypeScript refactor only
+
 ### v1.4.8
 - 🌍 Planned app localization in Italian and English, with scalable support for future languages
 - ⚙️ Planned language entry in Settings leading to a dedicated language-selection subpage

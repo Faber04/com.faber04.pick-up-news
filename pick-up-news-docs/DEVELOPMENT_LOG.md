@@ -2,6 +2,32 @@
 
 This file logs all development sessions for the PickUpNews project.
 
+## Session: Implement v1.4.3 theme toggle relocation to navigation
+- Date: 26 April 2026
+
+## Changes Made
+- Removed the dark/light toggle action from Settings page
+- Added theme toggle action to desktop main header navigation
+- Added theme toggle action to mobile hamburger drawer navigation
+- Introduced dedicated visual styles for theme actions to clearly differentiate them from regular menu entries
+- Wired App -> Header props so theme state/action are controlled at root and rendered in navigation
+- Updated app version to `1.4.3` in `package.json` and app constant
+- Updated README and PROJECT_STATE to reflect the new theme-control flow
+
+## Testing
+- Build passed (`npm run build`)
+- Browser validation on local dev server:
+  - desktop header shows a dedicated theme action distinct from regular nav items
+  - mobile drawer shows a dedicated theme action distinct from regular nav items
+  - theme switching works from both desktop and mobile navigation
+  - Settings page no longer contains dark/light action
+
+## Issues Encountered
+- None
+
+## Next Steps
+- Proceed with v2.0.0 export/import feeds roadmap
+
 ## Session: Implement v1.4.2 settings/feed nested navigation + mobile-first flattening
 - Date: 26 April 2026
 

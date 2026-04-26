@@ -135,6 +135,11 @@ Each call is protected by a **10-second timeout** using `AbortController`: if a 
 - ✅ Introduced scalable stack-based breadcrumb navigation for nested pages/subpages
 - ✅ Added sticky top breadcrumb for mobile-first navigation between sections and sub-sections
 
+### v1.4.3 ✅
+- ✅ Removed dark/light toggle from Settings page
+- ✅ Added dark/light toggle to main header navigation and mobile hamburger drawer
+- ✅ Styled theme action as a distinct menu control to visually separate it from regular navigation items
+
 ### v2.0.0
 - 📥 Export feeds to JSON file
   - Download all feeds with title and URL as a JSON file
@@ -206,7 +211,7 @@ Notes:
 ### Navigation
 The app has two top-level sections accessible from the header:
 - **🏠 Home** — the list of news from your feeds
-- **⚙️ Settings** — app info, credits, theme toggle, and access to feed management
+- **⚙️ Settings** — app info, credits, and access to feed management
 
 ### Adding an RSS Feed
 1. Open **Settings** from the header
@@ -231,10 +236,13 @@ From the **Home** section, you can choose two viewing modes:
 
 ### Settings and Credits
 1. Open **Settings** from the header
-2. Use the dark/light toggle directly in Settings
-3. Use **"Gestisci Feed"** to access feed add/reorder/edit/remove
-4. Use the GitHub link to reach the Faber04 profile
-5. Use the sticky breadcrumb to move quickly between **Home**, **Settings**, and nested Settings subpages
+2. Use **Gestisci Feed** to access feed add/reorder/edit/remove
+3. Use the GitHub link to reach the Faber04 profile
+4. Use the sticky breadcrumb to move quickly between **Home**, **Settings**, and nested Settings subpages
+
+### Theme Switch
+1. On desktop, use the highlighted theme action in the main header menu
+2. On mobile, open the hamburger drawer and use the dedicated theme action
 
 ### Removing a Feed
 1. Open **Settings** from the header

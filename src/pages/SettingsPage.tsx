@@ -1,25 +1,15 @@
-import type { ThemeMode } from '../hooks/useAppState';
-
 interface SettingsPageProps {
   version: string;
-  themeMode: ThemeMode;
-  onToggleTheme: () => void;
   onOpenFeeds: () => void;
 }
 
 const currentYear = new Date().getFullYear();
 
-export const SettingsPage = ({ version, themeMode, onToggleTheme, onOpenFeeds }: SettingsPageProps) => {
+export const SettingsPage = ({ version, onOpenFeeds }: SettingsPageProps) => {
   return (
     <div className="app-container py-8 stagger-in">
       {/* Menu top - full-width buttons */}
       <div className="space-y-3 mb-8">
-        <button
-          className="btn-neutral w-full rounded-lg px-4 py-3 text-sm font-medium transition"
-          onClick={onToggleTheme}
-        >
-          {themeMode === 'dark' ? '☀️ Passa a Light' : '🌙 Passa a Dark'}
-        </button>
         <button
           className="btn-brand w-full rounded-lg px-4 py-3 text-sm font-medium transition"
           onClick={onOpenFeeds}

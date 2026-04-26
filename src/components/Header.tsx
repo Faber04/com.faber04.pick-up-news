@@ -1,12 +1,15 @@
 import { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
+import type { ThemeMode } from '../hooks/useAppState';
 
 interface HeaderProps {
   currentPage: 'home' | 'settings';
+  themeMode: ThemeMode;
+  onToggleTheme: () => void;
   onNavigate: (page: 'home' | 'settings') => void;
 }
 
-export const Header = ({ currentPage, onNavigate }: HeaderProps) => {
+export const Header = ({ currentPage, themeMode, onToggleTheme, onNavigate }: HeaderProps) => {
   const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
@@ -66,6 +69,14 @@ export const Header = ({ currentPage, onNavigate }: HeaderProps) => {
               {label}
             </button>
           ))}
+          <button
+            onClick={onToggleTheme}
+            className="nav-theme-action-mobile w-full"
+            aria-label="Cambia tema"
+          >
+            <span>{themeMode === 'dark' ? '☀️ Passa a Light' : '🌙 Passa a Dark'}</span>
+            <span className="text-xs uppercase tracking-[0.14em] opacity-85">Tema</span>
+          </button>
         </nav>
 
       </aside>
@@ -105,6 +116,13 @@ export const Header = ({ currentPage, onNavigate }: HeaderProps) => {
               {label}
             </button>
           ))}
+          <button
+            onClick={onToggleTheme}
+            className="nav-theme-action"
+            aria-label="Cambia tema"
+          >
+            {themeMode === 'dark' ? '☀️ Light' : '🌙 Dark'}
+          </button>
         </nav>
 
         {/* Mobile Hamburger Button */}

@@ -13,7 +13,7 @@ import { SettingsPage } from './pages/SettingsPage';
 import { NewsItem } from './types';
 import type { NavigationState, BreadcrumbNode, NavigationActions } from './types/navigation';
 
-const APP_VERSION = '1.4.2';
+const APP_VERSION = '1.4.3';
 
 function App() {
   const {
@@ -95,6 +95,8 @@ function App() {
     <div className="app-shell">
       <Header
         currentPage={headerPage}
+        themeMode={themeMode}
+        onToggleTheme={toggleTheme}
         onNavigate={(page) => {
           if (page === 'home') {
             navigationActions.reset();
@@ -165,8 +167,6 @@ function App() {
       ) : currentPageNode.id === 'settings' ? (
         <SettingsPage
           version={APP_VERSION}
-          themeMode={themeMode}
-          onToggleTheme={toggleTheme}
           onOpenFeeds={() => {
             navigationActions.push({ id: 'feeds', label: 'Gestisci Feed' });
           }}

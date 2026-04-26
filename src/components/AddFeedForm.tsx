@@ -87,7 +87,7 @@ export const AddFeedForm = ({ onAddFeed, loading, error, onClearError, onClose }
           <button
             type="submit"
             disabled={loading || isSubmitting}
-            className="btn-brand disabled:opacity-60 px-4 py-2 rounded-md font-medium transition"
+            className="btn-feeds-action disabled:opacity-60 px-4 py-2 rounded-md font-medium transition"
           >
             {loading || isSubmitting ? messages.feeds.addFeedSubmitting : messages.feeds.addFeedButton}
           </button>
@@ -95,7 +95,7 @@ export const AddFeedForm = ({ onAddFeed, loading, error, onClearError, onClose }
             <button
               type="button"
               onClick={onClose}
-              className="btn-neutral px-4 py-2 rounded-md font-medium transition"
+              className="btn-feeds-action-secondary px-4 py-2 rounded-md font-medium transition"
             >
               {messages.feeds.cancel}
             </button>

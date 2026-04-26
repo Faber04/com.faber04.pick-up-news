@@ -124,6 +124,32 @@ h4 {
 	filter: brightness(1.01);
 }
 
+.btn-feeds-action {
+	background: color-mix(in srgb, var(--brand) 18%, var(--surface-strong) 82%);
+	color: var(--brand-strong);
+	border: 1px solid color-mix(in srgb, var(--brand) 28%, var(--border) 72%);
+	box-shadow: 0 10px 24px -20px rgba(2, 8, 23, 0.45);
+}
+
+.btn-feeds-action:hover {
+	background: color-mix(in srgb, var(--brand) 24%, var(--surface-muted) 76%);
+	border-color: color-mix(in srgb, var(--brand) 34%, var(--border) 66%);
+	filter: brightness(1.01);
+}
+
+.btn-feeds-action-secondary {
+	background: color-mix(in srgb, var(--ring) 14%, var(--surface-strong) 86%);
+	color: var(--text-primary);
+	border: 1px solid color-mix(in srgb, var(--ring) 24%, var(--border) 76%);
+	box-shadow: 0 10px 24px -20px rgba(2, 8, 23, 0.42);
+}
+
+.btn-feeds-action-secondary:hover {
+	background: color-mix(in srgb, var(--ring) 18%, var(--surface-muted) 82%);
+	border-color: color-mix(in srgb, var(--ring) 30%, var(--border) 70%);
+	filter: brightness(1.01);
+}
+
 .btn-success {
 	background: linear-gradient(120deg, #059669 0%, #0284c7 100%);
 	color: #f8fafc;

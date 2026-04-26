@@ -191,14 +191,14 @@ export const FeedList = ({ feeds, onRemoveFeed, onMoveFeed, onMoveFeedToIndex, o
                   <button
                     onClick={() => saveEditing(feed.id)}
                     disabled={!editTitle.trim() || !isUrlValid || savingFeedId === feed.id}
-                    className="btn-brand disabled:opacity-50 px-3 py-2 rounded-md text-sm font-medium"
+                    className="btn-feeds-action disabled:opacity-50 px-3 py-2 rounded-md text-sm font-medium"
                     title={messages.feeds.saveTitle}
                   >
                     {savingFeedId === feed.id ? messages.feeds.saving : messages.feeds.save}
                   </button>
                   <button
                     onClick={cancelEditing}
-                    className="btn-neutral px-3 py-2 rounded-md text-sm font-medium"
+                    className="btn-feeds-action-secondary px-3 py-2 rounded-md text-sm font-medium"
                     title={messages.feeds.cancelEditTitle}
                   >
                     {messages.feeds.cancel}
@@ -216,7 +216,7 @@ export const FeedList = ({ feeds, onRemoveFeed, onMoveFeed, onMoveFeedToIndex, o
                   <button
                     onClick={() => onMoveFeed(feed.id, 'up')}
                     disabled={index === 0}
-                    className="btn-neutral disabled:opacity-40 px-2 py-1 rounded-md"
+                    className="btn-feeds-action-secondary disabled:opacity-40 px-2 py-1 rounded-md"
                     title={messages.feeds.moveUp}
                   >
                     ↑
@@ -224,14 +224,14 @@ export const FeedList = ({ feeds, onRemoveFeed, onMoveFeed, onMoveFeedToIndex, o
                   <button
                     onClick={() => onMoveFeed(feed.id, 'down')}
                     disabled={index === feeds.length - 1}
-                    className="btn-neutral disabled:opacity-40 px-2 py-1 rounded-md"
+                    className="btn-feeds-action-secondary disabled:opacity-40 px-2 py-1 rounded-md"
                     title={messages.feeds.moveDown}
                   >
                     ↓
                   </button>
                   <button
                     onClick={() => startEditing(feed)}
-                    className="btn-neutral px-2 py-1 rounded-md"
+                    className="btn-feeds-action-secondary px-2 py-1 rounded-md"
                     title={messages.feeds.editFeed}
                   >
                     ✏️

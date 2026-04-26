@@ -24,7 +24,7 @@ export const FeedsContent = ({
       <div className="mb-6 flex flex-col gap-3 sm:flex-row">
         <button
           onClick={() => setShowForm(!showForm)}
-          className="btn-brand w-full rounded-lg px-4 py-3 font-medium transition sm:w-auto"
+          className="btn-feeds-action w-full rounded-lg px-4 py-3 font-medium transition sm:w-auto"
         >
           {messages.feeds.addFeedToggle}
         </button>
@@ -32,7 +32,7 @@ export const FeedsContent = ({
           <button
             onClick={onRefresh}
             disabled={loading}
-            className="btn-success w-full rounded-lg px-4 py-3 font-medium text-white transition disabled:opacity-60 sm:w-auto"
+            className="btn-feeds-action-secondary w-full rounded-lg px-4 py-3 font-medium transition disabled:opacity-60 sm:w-auto"
           >
             {loading ? messages.feeds.refreshing : messages.feeds.refresh}
           </button>

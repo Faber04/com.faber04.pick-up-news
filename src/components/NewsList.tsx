@@ -1,15 +1,8 @@
 import { useEffect, useMemo, useState } from 'react';
-import { NewsItem, ViewMode } from '../types';
+import { NewsItem } from '../types';
+import type { FeedAccordionProps, NewsCardProps, NewsListProps } from '../types/component-props';
 
 const ACCORDION_STORAGE_KEY = 'pickUpNews_byFeed_openAccordions';
-
-interface NewsListProps {
-  news: NewsItem[];
-  viewMode: ViewMode;
-  feedOrder: string[];
-  loading: boolean;
-  onNewsClick: (newsItem: NewsItem) => void;
-}
 
 export const NewsList = ({ news, viewMode, feedOrder, loading, onNewsClick }: NewsListProps) => {
   const [openFeedIds, setOpenFeedIds] = useState<Set<string>>(() => {
@@ -178,15 +171,6 @@ export const NewsList = ({ news, viewMode, feedOrder, loading, onNewsClick }: Ne
   );
 };
 
-interface FeedAccordionProps {
-  feedId: string;
-  feedTitle: string;
-  feedNews: NewsItem[];
-  isOpen: boolean;
-  onToggle: (feedId: string) => void;
-  onNewsClick: (newsItem: NewsItem) => void;
-}
-
 const FeedAccordion = ({ feedId, feedTitle, feedNews, isOpen, onToggle, onNewsClick }: FeedAccordionProps) => {
   return (
     <div className="surface rounded-lg overflow-hidden">
@@ -224,12 +208,6 @@ const FeedAccordion = ({ feedId, feedTitle, feedNews, isOpen, onToggle, onNewsCl
     </div>
   );
 };
-
-interface NewsCardProps {
-  newsItem: NewsItem;
-  onClick: (newsItem: NewsItem) => void;
-  showFeedTitle?: boolean;
-}
 
 const NewsCard = ({ newsItem, onClick, showFeedTitle = true }: NewsCardProps) => {
   const formatDate = (dateString?: string) => {

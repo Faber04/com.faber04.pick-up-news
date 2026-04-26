@@ -1,19 +1,6 @@
 import { useState } from 'react';
 import { AddFeedForm, FeedList } from '../components';
-import { RSSFeed } from '../types';
-
-interface FeedsPageProps {
-  feeds: RSSFeed[];
-  loading: boolean;
-  addFeedError: string | null;
-  onAddFeed: (url: string, title: string) => Promise<boolean>;
-  onClearError: () => void;
-  onRemoveFeed: (feedId: string) => void;
-  onMoveFeed: (feedId: string, direction: 'up' | 'down') => void;
-  onMoveFeedToIndex: (feedId: string, targetIndex: number) => void;
-  onEditFeed: (feedId: string, updates: { title: string; url: string }) => Promise<boolean>;
-  onRefresh: () => Promise<void>;
-}
+import type { FeedsPageProps } from '../types/page-props';
 
 export const FeedsPage = ({
   feeds,

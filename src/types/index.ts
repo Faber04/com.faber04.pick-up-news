@@ -45,6 +45,9 @@ export interface AppState {
 // View modes
 export type ViewMode = 'chronological' | 'by-feed';
 
+// Theme mode
+export type ThemeMode = 'light' | 'dark';
+
 // Filter options
 export interface FilterOptions {
   feedId?: string;

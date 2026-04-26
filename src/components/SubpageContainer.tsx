@@ -1,10 +1,4 @@
-import { ReactNode } from 'react';
-
-interface SubpageContainerProps {
-  title: string;
-  children: ReactNode;
-  onBack: () => void;
-}
+import type { SubpageContainerProps } from '../types/component-props';
 
 export const SubpageContainer = ({ title, children, onBack }: SubpageContainerProps) => {
   return (

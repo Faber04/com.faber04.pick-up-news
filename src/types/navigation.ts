@@ -5,7 +5,7 @@
 export type BreadcrumbNode = {
   id: string;                    // unique page id: 'home', 'settings', 'feeds', etc.
   label: string;                 // display label for breadcrumb
-  params?: Record<string, any>;  // dynamic data if needed (e.g. feedId, userId)
+  params?: Record<string, unknown>;  // dynamic data if needed (e.g. feedId, userId)
 };
 
 export type NavigationState = {

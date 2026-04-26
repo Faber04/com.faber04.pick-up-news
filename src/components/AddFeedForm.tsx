@@ -1,12 +1,5 @@
 import { useState } from 'react';
-
-interface AddFeedFormProps {
-  onAddFeed: (url: string, title: string) => Promise<boolean>;
-  loading: boolean;
-  error?: string | null;
-  onClearError?: () => void;
-  onClose?: () => void;
-}
+import type { AddFeedFormProps } from '../types/component-props';
 
 export const AddFeedForm = ({ onAddFeed, loading, error, onClearError, onClose }: AddFeedFormProps) => {
   const [url, setUrl] = useState('');

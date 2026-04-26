@@ -1,10 +1,4 @@
-import { NewsItem } from '../types';
-
-interface NewsDetailModalProps {
-  newsItem: NewsItem | null;
-  isOpen: boolean;
-  onClose: () => void;
-}
+import type { NewsDetailModalProps } from '../types/component-props';
 
 export const NewsDetailModal = ({ newsItem, isOpen, onClose }: NewsDetailModalProps) => {
   if (!isOpen || !newsItem) return null;

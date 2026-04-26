@@ -1,7 +1,4 @@
-interface SettingsPageProps {
-  version: string;
-  onOpenFeeds: () => void;
-}
+import type { SettingsPageProps } from '../types/page-props';
 
 const currentYear = new Date().getFullYear();
 

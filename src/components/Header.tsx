@@ -1,13 +1,6 @@
 import { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
-import type { ThemeMode } from '../hooks/useAppState';
-
-interface HeaderProps {
-  currentPage: 'home' | 'settings';
-  themeMode: ThemeMode;
-  onToggleTheme: () => void;
-  onNavigate: (page: 'home' | 'settings') => void;
-}
+import type { HeaderProps } from '../types/component-props';
 
 export const Header = ({ currentPage, themeMode, onToggleTheme, onNavigate }: HeaderProps) => {
   const [menuOpen, setMenuOpen] = useState(false);

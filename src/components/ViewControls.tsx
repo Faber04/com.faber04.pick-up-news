@@ -1,9 +1,4 @@
-import { ViewMode } from '../types';
-
-interface ViewControlsProps {
-  viewMode: ViewMode;
-  onViewModeChange: (mode: ViewMode) => void;
-}
+import type { ViewControlsProps } from '../types/component-props';
 
 export const ViewControls = ({ viewMode, onViewModeChange }: ViewControlsProps) => {
   return (

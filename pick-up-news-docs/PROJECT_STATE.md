@@ -73,6 +73,7 @@
 **v1.4.4** (Commit UNRELEASED) — By-site accordion UX controls and persistence ✅ COMPLETED
 **v1.4.5** (Commit UNRELEASED) — Production React #310 fix in NewsList hook ordering ✅ COMPLETED
 **v1.4.6** (Commit UNRELEASED) — NewsList memoization fix for orderedGroups dependency warning ✅ COMPLETED
+**v1.4.7** (Commit UNRELEASED) — Centralized component/page interfaces into `types/*` modules ✅ COMPLETED
 **v2.0.0** (PLANNED) — Export/Import feeds
 **v3.0.0** (PLANNED) — Replace corsproxy.io with Cloudflare Workers (self-hosted CORS proxy)
 

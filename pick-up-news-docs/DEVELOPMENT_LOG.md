@@ -2,6 +2,29 @@
 
 This file logs all development sessions for the PickUpNews project.
 
+## Session: Refactor type interfaces into centralized type modules (v1.4.7)
+- Date: 26 April 2026
+
+## Changes Made
+- Centralized component/page props interfaces into new files:
+  - `src/types/component-props.ts`
+  - `src/types/page-props.ts`
+- Updated components and pages to import props interfaces from `src/types/*` instead of inline declarations
+- Moved shared `ThemeMode` type into `src/types/index.ts` and updated hook usage
+- Hardened navigation node params typing from `Record<string, any>` to `Record<string, unknown>`
+- Kept runtime behavior unchanged (pure structural/type refactor)
+- Bumped app version to `1.4.7`
+
+## Testing
+- Build passed (`npm run build`)
+- Lint passed (`npm run lint`)
+
+## Issues Encountered
+- None
+
+## Next Steps
+- Continue v2.0.0 export/import feeds roadmap
+
 ## Session: Fix orderedGroups warning with memoization (v1.4.6)
 - Date: 26 April 2026
 

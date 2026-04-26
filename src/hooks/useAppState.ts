@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
-import { RSSFeed, AppState, ViewMode, FilterOptions } from '../types';
+import { RSSFeed, AppState, ViewMode, FilterOptions, ThemeMode } from '../types';
 import { RSSService } from '../services';
 
 const STORAGE_KEYS = {
@@ -7,8 +7,6 @@ const STORAGE_KEYS = {
   VIEW_MODE: 'pickUpNews_viewMode',
   THEME: 'pickUpNews_theme'
 };
-
-export type ThemeMode = 'light' | 'dark';
 
 export const useAppState = () => {
   const pendingAddUrlsRef = useRef<Set<string>>(new Set());

@@ -1,14 +1,7 @@
 import { useState } from 'react';
-import { RSSFeed } from '../types';
 import { RSSService } from '../services';
-
-interface FeedListProps {
-  feeds: RSSFeed[];
-  onRemoveFeed: (feedId: string) => void;
-  onMoveFeed: (feedId: string, direction: 'up' | 'down') => void;
-  onMoveFeedToIndex: (feedId: string, targetIndex: number) => void;
-  onEditFeed: (feedId: string, updates: { title: string; url: string }) => Promise<boolean>;
-}
+import type { FeedListProps } from '../types/component-props';
+import type { RSSFeed } from '../types';
 
 export const FeedList = ({ feeds, onRemoveFeed, onMoveFeed, onMoveFeedToIndex, onEditFeed }: FeedListProps) => {
   const [editingFeedId, setEditingFeedId] = useState<string | null>(null);

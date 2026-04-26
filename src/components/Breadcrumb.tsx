@@ -1,9 +1,4 @@
-import type { BreadcrumbNode, NavigationActions } from '../types/navigation';
-
-interface BreadcrumbProps {
-  trail: BreadcrumbNode[];
-  onNavigate: NavigationActions;
-}
+import type { BreadcrumbProps } from '../types/component-props';
 
 export const Breadcrumb = ({ trail, onNavigate }: BreadcrumbProps) => {
   if (trail.length <= 1) {

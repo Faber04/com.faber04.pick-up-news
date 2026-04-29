@@ -4,7 +4,7 @@
 
 🌐 **Live Demo**: [www.faber04.com/app/pick-up-news](https://www.faber04.com/app/pick-up-news/)
 
-PickUpNews allows you to easily aggregate and read all your favorite RSS feeds. Manually add your RSS feeds, view news in chronological order or grouped by site, and read full articles with a simple click.
+PickUpNews allows you to easily aggregate and read all your favorite RSS feeds. Manually add your RSS feeds, view news in chronological order or grouped by site, and read full articles with a simple and clean interface.
 
 ## ✨ Key Features
 
@@ -56,7 +56,7 @@ RSS feeds are read directly from the browser using a 2-level proxy/fallback chai
 | 1st (primary) | [corsproxy.io](https://corsproxy.io) | Returns raw XML → parsed with `DOMParser` | All feed items |
 | 2nd (final fallback) | [rss2json.com](https://rss2json.com) | Returns pre-parsed JSON | Max 10 items (free tier) |
 
-Each call is protected by a **10-second timeout** using `AbortController`: if a proxy does not respond within the limit, it automatically switches to the next one. Items are always sorted by descending date (most recent first) with cross-browser normalization of the date format.
+Each call is protected by a **10-second timeout** using `AbortController`: if a proxy does not respond within the limit, it automatically switches to the next one. Items are always sorted by descending date.
 
 ## 🗓️ Roadmap
 
@@ -172,6 +172,11 @@ Each call is protected by a **10-second timeout** using `AbortController`: if a 
 - ✅ Introduced centralized JSON locale dictionaries for visible UI labels
 - ✅ Added language picker with flag + native language label, ready for future variants such as `English (UK)` and `English (US)`
 
+### v1.4.9
+- 🎨 Aggiornamento dell'UI tramite la libreria shadcn/ui
+  - Integrazione di componenti moderni e accessibili
+  - Restyling generale dell'interfaccia utente
+
 ### v2.0.0
 - 📥 Export feeds to JSON file
   - Download all feeds with title and URL as a JSON file
@@ -213,17 +218,17 @@ npm run dev
 
 The application will be available at `http://localhost:5173/`
 
-### 3. Build for Production
+### 4. Build for Production
 ```bash
 npm run build
 ```
 
 Optimized files will be in the `dist/` folder
 
-### 4. Online Deployment
+### 5. Online Deployment
 The application will be available at: `https://www.faber04.com/app/pick-up-news/`
 
-### 5. Autonomous FTP Publish Setup (One Time)
+### 6. Autonomous FTP Publish Setup (One Time)
 To allow repeatable FTP deployment with a single command:
 
 1. Copy `ftp.env.example` to `INTERNAL/.ftp.env`

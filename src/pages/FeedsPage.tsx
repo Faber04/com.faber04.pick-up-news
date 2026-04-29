@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { AddFeedForm, FeedList } from '../components';
 import type { FeedsPageProps } from '../types/page-props';
+import { Button } from '../components/ui';
 
 export const FeedsPage = ({
   feeds,
@@ -22,20 +23,22 @@ export const FeedsPage = ({
       
       {/* Buttons header - aligned horizontally */}
       <div className="flex gap-3 mb-6">
-        <button
+        <Button
+          type="button"
           onClick={() => setShowForm(!showForm)}
-          className="btn-brand px-4 py-2 rounded-lg font-medium transition"
+          variant="brand"
         >
           + Aggiungi Feed RSS
-        </button>
+        </Button>
         {feeds.length > 0 && (
-          <button
+          <Button
+            type="button"
             onClick={onRefresh}
             disabled={loading}
-            className="btn-success disabled:opacity-60 text-white px-4 py-2 rounded-lg font-medium transition"
+            variant="secondary"
           >
             {loading ? 'Aggiornando...' : '🔄 Aggiorna'}
-          </button>
+          </Button>
         )}
       </div>
       

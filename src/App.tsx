@@ -11,11 +11,12 @@ import {
   SubpageContainer,
   FeedsContent,
 } from './components';
+import { Alert, AlertDescription, Badge, Button, Card, CardContent, CardHeader, CardTitle } from './components/ui';
 import { SettingsPage } from './pages/SettingsPage';
 import { NewsItem } from './types';
 import type { NavigationState, BreadcrumbNode, NavigationActions } from './types/navigation';
 
-const APP_VERSION = '1.4.8';
+const APP_VERSION = '1.4.9';
 
 function App() {
   const { messages, supportedLanguages, language, setLanguage } = useI18n();
@@ -131,15 +132,20 @@ function App() {
       {/* Error Message */}
       {state.error && currentPageNode.id !== 'feeds' && (
         <div className="app-container pt-4">
-          <div className="surface rounded-lg px-4 py-3 flex justify-between items-center text-secondary">
-            <span className="text-[var(--danger)]">{state.error}</span>
-            <button
+          <Alert variant="destructive" className="flex items-start justify-between gap-4">
+            <AlertDescription className="text-[color:var(--danger)]">
+              {state.error}
+            </AlertDescription>
+            <Button
+              type="button"
               onClick={clearError}
-              className="text-[var(--danger)] hover:opacity-80 font-bold"
+              variant="ghost"
+              size="icon"
+              className="h-8 w-8 shrink-0 text-[color:var(--danger)] hover:bg-transparent hover:opacity-80"
             >
               ✕
-            </button>
-          </div>
+            </Button>
+          </Alert>
         </div>
       )}
 
@@ -147,25 +153,32 @@ function App() {
       {currentPageNode.id === 'home' ? (
         <div className="app-container py-8 stagger-in">
           {state.feeds.length === 0 ? (
-            <div className="text-center py-16 text-muted surface rounded-2xl">
-              <img
-                src={`${import.meta.env.BASE_URL}pickupnews-mark.svg`}
-                alt="PN"
-                className="w-16 h-16 mx-auto mb-4 opacity-80"
-              />
-              <p className="text-lg font-semibold mb-2 text-primary">{messages.home.emptyTitle}</p>
-              <p className="text-sm mb-4">{messages.home.emptyDescription}</p>
-              <button
-                onClick={() => {
-                  navigationActions.reset();
-                  navigationActions.push(createNode('settings'));
-                  navigationActions.push(createNode('feeds'));
-                }}
-                className="btn-brand px-6 py-2 rounded-lg font-medium transition"
-              >
-                {messages.home.emptyAction}
-              </button>
-            </div>
+            <Card className="overflow-hidden">
+              <CardHeader className="items-center text-center py-10">
+                <div className="mb-4 inline-flex rounded-[1.75rem] border border-[color:var(--border)] bg-[color:var(--surface-strong)] p-3 shadow-[0_20px_40px_-30px_rgba(2,8,23,0.8)]">
+                  <img
+                    src={`${import.meta.env.BASE_URL}pickupnews-mark.svg`}
+                    alt="PN"
+                    className="h-14 w-14 opacity-90"
+                  />
+                </div>
+                <CardTitle className="max-w-lg text-3xl">{messages.home.emptyTitle}</CardTitle>
+                <p className="max-w-md text-sm text-secondary">{messages.home.emptyDescription}</p>
+              </CardHeader>
+              <CardContent className="pb-10 text-center">
+                <Button
+                  variant="brand"
+                  size="lg"
+                  onClick={() => {
+                    navigationActions.reset();
+                    navigationActions.push(createNode('settings'));
+                    navigationActions.push(createNode('feeds'));
+                  }}
+                >
+                  {messages.home.emptyAction}
+                </Button>
+              </CardContent>
+            </Card>
           ) : (
             <>
               <ViewControls
@@ -204,23 +217,25 @@ function App() {
                 const isActive = option.code === language;
 
                 return (
-                  <button
+                  <Button
                     key={option.code}
                     type="button"
                     onClick={() => setLanguage(option.code)}
-                    className={`surface w-full rounded-xl border px-4 py-3 text-left transition ${
+                    variant={isActive ? 'secondary' : 'outline'}
+                    size="lg"
+                    className={`h-auto w-full justify-between rounded-2xl px-4 py-3 text-left ${
                       isActive
-                        ? 'border-[color:var(--ring)] ring-2 ring-[color:var(--ring)]'
-                        : 'border-[color:var(--border)] hover:bg-[color:var(--surface-muted)]'
+                        ? 'ring-2 ring-[color:var(--ring)]'
+                        : ''
                     }`}
                   >
                     <div className="flex items-center justify-between gap-3">
                       <span className="text-base font-medium text-primary">
                         {option.flag} {option.label}
                       </span>
-                      {isActive && <span className="text-xs badge-brand rounded-full px-2 py-1">{messages.settings.currentLanguage}</span>}
+                      {isActive && <Badge variant="brand" className="text-xs">{messages.settings.currentLanguage}</Badge>}
                     </div>
-                  </button>
+                  </Button>
                 );
               })}
             </div>
@@ -246,7 +261,11 @@ function App() {
         </SubpageContainer>
       ) : (
         <div className="app-container py-8 stagger-in">
-          <p className="text-center text-muted">{messages.common.pageNotFound}</p>
+          <Card>
+            <CardContent className="py-8 text-center text-muted">
+              <p>{messages.common.pageNotFound}</p>
+            </CardContent>
+          </Card>
         </div>
       )}
 

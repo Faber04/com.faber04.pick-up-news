@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { AddFeedForm, FeedList } from './index';
 import type { FeedsContentProps } from '../types/component-props';
 import { useI18n } from '../i18n/useI18n';
+import { Button } from './ui';
 
 export const FeedsContent = ({
   feeds,
@@ -22,20 +23,26 @@ export const FeedsContent = ({
     <div>
       {/* Buttons header - aligned horizontally */}
       <div className="mb-6 flex flex-col gap-3 sm:flex-row">
-        <button
+        <Button
+          type="button"
           onClick={() => setShowForm(!showForm)}
-          className="btn-feeds-action w-full rounded-lg px-4 py-3 font-medium transition sm:w-auto"
+          variant="brand"
+          size="xl"
+          className="w-full sm:w-auto"
         >
           {messages.feeds.addFeedToggle}
-        </button>
+        </Button>
         {feeds.length > 0 && (
-          <button
+          <Button
+            type="button"
             onClick={onRefresh}
             disabled={loading}
-            className="btn-feeds-action-secondary w-full rounded-lg px-4 py-3 font-medium transition disabled:opacity-60 sm:w-auto"
+            variant="secondary"
+            size="xl"
+            className="w-full sm:w-auto"
           >
             {loading ? messages.feeds.refreshing : messages.feeds.refresh}
-          </button>
+          </Button>
         )}
       </div>
 

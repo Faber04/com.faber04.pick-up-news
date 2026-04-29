@@ -3,6 +3,7 @@ import { RSSService } from '../services';
 import type { FeedListProps } from '../types/component-props';
 import type { RSSFeed } from '../types';
 import { useI18n } from '../i18n/useI18n';
+import { Button, Card, CardContent, Input } from './ui';
 
 export const FeedList = ({ feeds, onRemoveFeed, onMoveFeed, onMoveFeedToIndex, onEditFeed }: FeedListProps) => {
   const { messages, locale, formatMessage } = useI18n();
@@ -137,115 +138,134 @@ export const FeedList = ({ feeds, onRemoveFeed, onMoveFeed, onMoveFeedToIndex, o
             onTouchStart={() => handleTouchStart(feed.id)}
             onTouchMove={handleTouchMove}
             onTouchEnd={handleTouchEnd}
-            className={`surface rounded-lg p-4 transition md:flex md:items-center md:justify-between ${draggedFeedId === feed.id ? 'opacity-60' : ''} ${dragOverFeedId === feed.id && draggedFeedId !== feed.id ? 'ring-2 ring-[color:var(--ring)]' : ''}`}
+            className={`${draggedFeedId === feed.id ? 'opacity-60' : ''}`}
           >
-            <div className="md:flex-1">
-              {isEditing(feed.id) ? (
-                <div className="space-y-2 pr-4">
-                  <div>
-                    <label htmlFor={`feed-title-${feed.id}`} className="block text-xs font-medium text-secondary mb-1">
-                      {messages.feeds.feedNameShort}
-                    </label>
-                    <input
-                      id={`feed-title-${feed.id}`}
-                      type="text"
-                      value={editTitle}
-                      onChange={(e) => setEditTitle(e.target.value)}
-                      className="input-field"
-                    />
-                  </div>
-                  <div>
-                    <label htmlFor={`feed-url-${feed.id}`} className="block text-xs font-medium text-secondary mb-1">
-                      {messages.feeds.feedUrlShort}
-                    </label>
-                    <input
-                      id={`feed-url-${feed.id}`}
-                      type="text"
-                      value={editUrl}
-                      onChange={(e) => setEditUrl(e.target.value)}
-                      className="input-field"
-                    />
-                    <p className={`text-xs mt-1 ${isUrlValid ? 'text-emerald-600' : 'text-[var(--danger)]'}`}>
-                      {isUrlValid ? messages.feeds.validUrl : messages.feeds.invalidUrl}
+            <Card className={`transition md:flex md:items-center md:justify-between ${dragOverFeedId === feed.id && draggedFeedId !== feed.id ? 'ring-2 ring-[color:var(--ring)]' : ''}`}>
+              <CardContent className="p-4 md:flex md:w-full md:items-center md:justify-between">
+                <div className="md:flex-1">
+                  {isEditing(feed.id) ? (
+                    <div className="space-y-3 pr-4">
+                      <div>
+                        <label htmlFor={`feed-title-${feed.id}`} className="mb-1 block text-xs font-medium text-secondary">
+                          {messages.feeds.feedNameShort}
+                        </label>
+                        <Input
+                          id={`feed-title-${feed.id}`}
+                          type="text"
+                          value={editTitle}
+                          onChange={(e) => setEditTitle(e.target.value)}
+                        />
+                      </div>
+                      <div>
+                        <label htmlFor={`feed-url-${feed.id}`} className="mb-1 block text-xs font-medium text-secondary">
+                          {messages.feeds.feedUrlShort}
+                        </label>
+                        <Input
+                          id={`feed-url-${feed.id}`}
+                          type="text"
+                          value={editUrl}
+                          onChange={(e) => setEditUrl(e.target.value)}
+                          className={!isUrlValid && editUrl.trim() ? 'border-[color:var(--danger)] focus-visible:ring-[color:var(--danger)]' : ''}
+                        />
+                        <p className={`mt-1 text-xs ${isUrlValid ? 'text-emerald-600' : 'text-[var(--danger)]'}`}>
+                          {isUrlValid ? messages.feeds.validUrl : messages.feeds.invalidUrl}
+                        </p>
+                      </div>
+                    </div>
+                  ) : (
+                    <>
+                      <h3 className="font-medium text-primary">{feed.title}</h3>
+                      <p className="truncate text-sm text-secondary">{feed.url}</p>
+                    </>
+                  )}
+                  {feed.lastFetched && (
+                    <p className="text-xs text-muted">
+                      {formatMessage(messages.feeds.lastUpdated, { date: new Date(feed.lastFetched).toLocaleString(locale) })}
                     </p>
-                  </div>
+                  )}
+                  {feed.error && (
+                    <p className="text-xs text-[var(--danger)]">{formatMessage(messages.feeds.errorLabel, { error: feed.error })}</p>
+                  )}
                 </div>
-              ) : (
-                <>
-                  <h3 className="font-medium text-primary">{feed.title}</h3>
-                  <p className="text-sm text-secondary truncate">{feed.url}</p>
-                </>
-              )}
-              {feed.lastFetched && (
-                <p className="text-xs text-muted">
-                  {formatMessage(messages.feeds.lastUpdated, { date: new Date(feed.lastFetched).toLocaleString(locale) })}
-                </p>
-              )}
-              {feed.error && (
-                <p className="text-xs text-[var(--danger)]">{formatMessage(messages.feeds.errorLabel, { error: feed.error })}</p>
-              )}
-            </div>
-            <div className="mt-3 flex flex-wrap items-center gap-2 md:mt-0 md:ml-4 md:flex-nowrap md:justify-end">
-              {isEditing(feed.id) ? (
-                <>
-                  <button
-                    onClick={() => saveEditing(feed.id)}
-                    disabled={!editTitle.trim() || !isUrlValid || savingFeedId === feed.id}
-                    className="btn-feeds-action disabled:opacity-50 px-3 py-2 rounded-md text-sm font-medium"
-                    title={messages.feeds.saveTitle}
-                  >
-                    {savingFeedId === feed.id ? messages.feeds.saving : messages.feeds.save}
-                  </button>
-                  <button
-                    onClick={cancelEditing}
-                    className="btn-feeds-action-secondary px-3 py-2 rounded-md text-sm font-medium"
-                    title={messages.feeds.cancelEditTitle}
-                  >
-                    {messages.feeds.cancel}
-                  </button>
-                </>
-              ) : (
-                <>
-                  <span
-                    className="text-muted px-2 py-1 select-none cursor-grab"
-                    title={messages.feeds.dragReorderHint}
-                    aria-label={messages.feeds.dragReorder}
-                  >
-                    ⋮⋮
-                  </span>
-                  <button
-                    onClick={() => onMoveFeed(feed.id, 'up')}
-                    disabled={index === 0}
-                    className="btn-feeds-action-secondary disabled:opacity-40 px-2 py-1 rounded-md"
-                    title={messages.feeds.moveUp}
-                  >
-                    ↑
-                  </button>
-                  <button
-                    onClick={() => onMoveFeed(feed.id, 'down')}
-                    disabled={index === feeds.length - 1}
-                    className="btn-feeds-action-secondary disabled:opacity-40 px-2 py-1 rounded-md"
-                    title={messages.feeds.moveDown}
-                  >
-                    ↓
-                  </button>
-                  <button
-                    onClick={() => startEditing(feed)}
-                    className="btn-feeds-action-secondary px-2 py-1 rounded-md"
-                    title={messages.feeds.editFeed}
-                  >
-                    ✏️
-                  </button>
-                  <button
-                    onClick={() => onRemoveFeed(feed.id)}
-                    className="text-[var(--danger)] hover:opacity-80 p-2 rounded-full hover:bg-[color:var(--surface-muted)] transition-colors"
-                    title={messages.feeds.removeFeed}
-                  >
-                    🗑️
-                  </button>
-                </>
-              )}
-            </div>
+                <div className="mt-3 flex flex-wrap items-center gap-2 md:mt-0 md:ml-4 md:flex-nowrap md:justify-end">
+                  {isEditing(feed.id) ? (
+                    <>
+                      <Button
+                        type="button"
+                        onClick={() => saveEditing(feed.id)}
+                        disabled={!editTitle.trim() || !isUrlValid || savingFeedId === feed.id}
+                        variant="brand"
+                        size="sm"
+                        title={messages.feeds.saveTitle}
+                      >
+                        {savingFeedId === feed.id ? messages.feeds.saving : messages.feeds.save}
+                      </Button>
+                      <Button
+                        type="button"
+                        onClick={cancelEditing}
+                        variant="secondary"
+                        size="sm"
+                        title={messages.feeds.cancelEditTitle}
+                      >
+                        {messages.feeds.cancel}
+                      </Button>
+                    </>
+                  ) : (
+                    <>
+                      <span
+                        className="select-none px-2 py-1 text-muted cursor-grab"
+                        title={messages.feeds.dragReorderHint}
+                        aria-label={messages.feeds.dragReorder}
+                      >
+                        ⋮⋮
+                      </span>
+                      <Button
+                        type="button"
+                        onClick={() => onMoveFeed(feed.id, 'up')}
+                        disabled={index === 0}
+                        variant="secondary"
+                        size="sm"
+                        className="px-2"
+                        title={messages.feeds.moveUp}
+                      >
+                        ↑
+                      </Button>
+                      <Button
+                        type="button"
+                        onClick={() => onMoveFeed(feed.id, 'down')}
+                        disabled={index === feeds.length - 1}
+                        variant="secondary"
+                        size="sm"
+                        className="px-2"
+                        title={messages.feeds.moveDown}
+                      >
+                        ↓
+                      </Button>
+                      <Button
+                        type="button"
+                        onClick={() => startEditing(feed)}
+                        variant="secondary"
+                        size="sm"
+                        className="px-2"
+                        title={messages.feeds.editFeed}
+                      >
+                        ✏️
+                      </Button>
+                      <Button
+                        type="button"
+                        onClick={() => onRemoveFeed(feed.id)}
+                        variant="ghost"
+                        size="icon"
+                        className="h-9 w-9 text-[color:var(--danger)] hover:bg-[color:color-mix(in_srgb,var(--danger)_12%,var(--surface-muted)_88%)] hover:text-[color:var(--danger)]"
+                        title={messages.feeds.removeFeed}
+                      >
+                        🗑️
+                      </Button>
+                    </>
+                  )}
+                </div>
+              </CardContent>
+            </Card>
           </div>
         ))}
       </div>

@@ -1,4 +1,5 @@
 import type { BreadcrumbProps } from '../types/component-props';
+import { Button } from './ui';
 
 export const Breadcrumb = ({ trail, onNavigate }: BreadcrumbProps) => {
   if (trail.length <= 1) {
@@ -10,16 +11,20 @@ export const Breadcrumb = ({ trail, onNavigate }: BreadcrumbProps) => {
       <div className="app-container h-auto flex items-center gap-1 px-4 py-2 overflow-x-auto">
         {trail.map((node, index) => (
           <div key={node.id} className="flex items-center gap-1 min-w-fit">
-            <button
+            <Button
+              type="button"
               onClick={() => onNavigate.goToIndex(index)}
-              className={`text-sm font-medium px-2 py-1 rounded transition-colors ${
+              variant={index === trail.length - 1 ? 'secondary' : 'ghost'}
+              size="sm"
+              disabled={index === trail.length - 1}
+              className={`h-8 rounded-lg px-2.5 ${
                 index === trail.length - 1
-                  ? 'text-primary cursor-default'
-                  : 'text-secondary hover:text-primary hover:bg-[color:var(--surface-muted)]'
+                  ? 'cursor-default'
+                  : ''
               }`}
             >
               {node.label}
-            </button>
+            </Button>
 
             {index < trail.length - 1 && (
               <span className="text-muted text-xs">/</span>

@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import type { AddFeedFormProps } from '../types/component-props';
 import { useI18n } from '../i18n/useI18n';
+import { Alert, AlertDescription, Button, Card, CardContent, CardHeader, CardTitle, Input } from './ui';
 
 export const AddFeedForm = ({ onAddFeed, loading, error, onClearError, onClose }: AddFeedFormProps) => {
   const { messages } = useI18n();
@@ -28,31 +29,34 @@ export const AddFeedForm = ({ onAddFeed, loading, error, onClearError, onClose }
   };
 
   return (
-    <div className="surface rounded-lg p-4 mb-6">
-      <div className="flex justify-between items-center mb-4">
-        <h3 className="text-lg font-semibold text-primary">{messages.feeds.addFeedTitle}</h3>
+    <Card className="mb-6 overflow-hidden">
+      <CardHeader className="flex flex-row items-center justify-between gap-4 pb-4">
+        <CardTitle className="text-lg">{messages.feeds.addFeedTitle}</CardTitle>
         {onClose && (
-          <button
+          <Button
+            type="button"
             onClick={onClose}
-            className="text-muted hover:text-primary"
+            variant="ghost"
+            size="icon"
+            className="h-8 w-8"
           >
             ✕
-          </button>
+          </Button>
         )}
-      </div>
+      </CardHeader>
 
+      <CardContent>
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
           <label htmlFor="feed-title" className="block text-sm font-medium text-secondary mb-1">
             {messages.feeds.feedName}
           </label>
-          <input
+          <Input
             id="feed-title"
             type="text"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             placeholder={messages.feeds.feedNamePlaceholder}
-            className="input-field"
             required
           />
         </div>
@@ -61,7 +65,7 @@ export const AddFeedForm = ({ onAddFeed, loading, error, onClearError, onClose }
           <label htmlFor="feed-url" className="block text-sm font-medium text-secondary mb-1">
             {messages.feeds.feedUrl}
           </label>
-          <input
+          <Input
             id="feed-url"
             type="text"
             value={url}
@@ -72,11 +76,13 @@ export const AddFeedForm = ({ onAddFeed, loading, error, onClearError, onClose }
               }
             }}
             placeholder={messages.feeds.feedUrlPlaceholder}
-            className={`input-field ${error ? 'border-[var(--danger)] focus:border-[var(--danger)]' : ''}`}
+            className={error ? 'border-[color:var(--danger)] focus-visible:ring-[color:var(--danger)]' : ''}
             required
           />
           {error && (
-            <p className="text-xs text-[var(--danger)] mt-1">{error}</p>
+            <Alert variant="destructive" className="mt-2 py-2">
+              <AlertDescription className="text-[color:var(--danger)]">{error}</AlertDescription>
+            </Alert>
           )}
           <p className="text-xs text-muted mt-1">
             {messages.feeds.detectionHint}
@@ -84,24 +90,25 @@ export const AddFeedForm = ({ onAddFeed, loading, error, onClearError, onClose }
         </div>
 
         <div className="flex gap-2">
-          <button
+          <Button
             type="submit"
             disabled={loading || isSubmitting}
-            className="btn-feeds-action disabled:opacity-60 px-4 py-2 rounded-md font-medium transition"
+            variant="brand"
           >
             {loading || isSubmitting ? messages.feeds.addFeedSubmitting : messages.feeds.addFeedButton}
-          </button>
+          </Button>
           {onClose && (
-            <button
+            <Button
               type="button"
               onClick={onClose}
-              className="btn-feeds-action-secondary px-4 py-2 rounded-md font-medium transition"
+              variant="secondary"
             >
               {messages.feeds.cancel}
-            </button>
+            </Button>
           )}
         </div>
       </form>
-    </div>
+      </CardContent>
+    </Card>
   );
 };

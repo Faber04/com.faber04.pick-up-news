@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { NewsItem } from '../types';
 import type { FeedAccordionProps, NewsCardProps, NewsListProps } from '../types/component-props';
 import { useI18n } from '../i18n/useI18n';
+import { Badge, Button, Card, CardContent } from './ui';
 
 const ACCORDION_STORAGE_KEY = 'pickUpNews_byFeed_openAccordions';
 
@@ -119,10 +120,12 @@ export const NewsList = ({ news, viewMode, feedOrder, loading, onNewsClick }: Ne
 
   if (news.length === 0) {
     return (
-      <div className="text-center py-8 text-muted surface rounded-xl">
-        <p>{messages.home.noNewsTitle}</p>
-        <p className="text-sm mt-2">{messages.home.noNewsDescription}</p>
-      </div>
+      <Card>
+        <CardContent className="py-8 text-center text-muted">
+          <p>{messages.home.noNewsTitle}</p>
+          <p className="mt-2 text-sm">{messages.home.noNewsDescription}</p>
+        </CardContent>
+      </Card>
     );
   }
 
@@ -137,20 +140,20 @@ export const NewsList = ({ news, viewMode, feedOrder, loading, onNewsClick }: Ne
       ) : (
         <div className="space-y-3">
           <div className="flex flex-wrap items-center gap-2">
-            <button
-              type="button"
+            <Button
               onClick={handleExpandAll}
-              className="btn-neutral rounded-lg px-3 py-2 text-xs font-semibold"
+              variant="outline"
+              size="sm"
             >
                 {messages.home.expandAll}
-            </button>
-            <button
-              type="button"
+            </Button>
+            <Button
               onClick={handleCollapseAll}
-              className="btn-neutral rounded-lg px-3 py-2 text-xs font-semibold"
+              variant="outline"
+              size="sm"
             >
                 {messages.home.collapseAll}
-            </button>
+            </Button>
             <span className="ml-auto text-xs text-muted">
                 {formatMessage(messages.home.openCount, { openCount, totalCount })}
             </span>
@@ -176,17 +179,17 @@ export const NewsList = ({ news, viewMode, feedOrder, loading, onNewsClick }: Ne
 
 const FeedAccordion = ({ feedId, feedTitle, feedNews, isOpen, onToggle, onNewsClick, locale }: FeedAccordionProps) => {
   return (
-    <div className="surface rounded-lg overflow-hidden">
+    <Card className="overflow-hidden">
       {/* Accordion Header */}
       <button
         onClick={() => onToggle(feedId)}
-        className="w-full flex items-center justify-between px-4 py-3 surface-muted hover:brightness-95 transition-colors text-left"
+        className="flex w-full items-center justify-between bg-[color:var(--surface-muted)] px-4 py-3 text-left transition-colors hover:brightness-95"
       >
         <div className="flex items-center gap-2">
           <span className="font-semibold text-primary">{feedTitle}</span>
-          <span className="text-xs badge-brand font-medium px-2 py-0.5 rounded-full">
+          <Badge variant="brand" className="text-xs">
             {feedNews.length}
-          </span>
+          </Badge>
         </div>
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -208,7 +211,7 @@ const FeedAccordion = ({ feedId, feedTitle, feedNews, isOpen, onToggle, onNewsCl
           ))}
         </div>
       )}
-    </div>
+    </Card>
   );
 };
 
@@ -229,34 +232,36 @@ const NewsCard = ({ newsItem, onClick, showFeedTitle = true, locale }: NewsCardP
   };
 
   return (
-    <div
-      className="news-card p-4 cursor-pointer"
+    <Card
+      className="cursor-pointer transition-transform duration-200 hover:-translate-y-0.5"
       onClick={() => onClick(newsItem)}
     >
-      <div className="flex justify-between items-start mb-2">
-        <h4 className="font-medium text-primary line-clamp-2 flex-1 mr-4">
-          {newsItem.title}
-        </h4>
-        <span className="text-xs text-muted whitespace-nowrap">
-          {formatDate(newsItem.isoDate || newsItem.pubDate)}
-        </span>
-      </div>
-
-      <div
-        className="text-sm text-secondary mb-2 line-clamp-2"
-        dangerouslySetInnerHTML={{ __html: newsItem.truncatedDescription }}
-      />
-
-      <div className="flex justify-between items-center">
-        {showFeedTitle && (
-          <span className="text-xs text-[color:var(--brand)] font-medium">
-            {newsItem.feedTitle}
+      <CardContent className="p-4">
+        <div className="mb-2 flex items-start justify-between">
+          <h4 className="mr-4 line-clamp-2 flex-1 font-medium text-primary">
+            {newsItem.title}
+          </h4>
+          <span className="whitespace-nowrap text-xs text-muted">
+            {formatDate(newsItem.isoDate || newsItem.pubDate)}
           </span>
-        )}
-        <span className="text-xs text-muted ml-auto">
-          →
-        </span>
-      </div>
-    </div>
+        </div>
+
+        <div
+          className="mb-2 line-clamp-2 text-sm text-secondary"
+          dangerouslySetInnerHTML={{ __html: newsItem.truncatedDescription }}
+        />
+
+        <div className="flex items-center justify-between">
+          {showFeedTitle && (
+            <span className="text-xs font-medium text-[color:var(--brand)]">
+              {newsItem.feedTitle}
+            </span>
+          )}
+          <span className="ml-auto text-xs text-muted">
+            →
+          </span>
+        </div>
+      </CardContent>
+    </Card>
   );
 };

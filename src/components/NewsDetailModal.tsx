@@ -1,5 +1,6 @@
 import type { NewsDetailModalProps } from '../types/component-props';
 import { useI18n } from '../i18n/useI18n';
+import { Badge, Button, Card } from './ui';
 
 export const NewsDetailModal = ({ newsItem, isOpen, onClose }: NewsDetailModalProps) => {
   const { messages, locale, formatMessage } = useI18n();
@@ -32,24 +33,27 @@ export const NewsDetailModal = ({ newsItem, isOpen, onClose }: NewsDetailModalPr
       className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 p-3 sm:p-4"
       onClick={handleBackdropClick}
     >
-      <div className="surface-strong max-h-[90vh] w-full max-w-4xl overflow-hidden rounded-2xl border border-[color:var(--border)] shadow-xl">
+      <Card className="max-h-[90vh] w-full max-w-4xl overflow-hidden bg-[color:var(--surface-strong)] shadow-xl">
         <div className="flex items-start justify-between gap-4 border-b border-[color:var(--border)] p-4 sm:items-center sm:p-6">
           <h2 className="line-clamp-3 text-xl font-bold text-primary sm:text-2xl">
             {newsItem.title}
           </h2>
-          <button
+          <Button
+            type="button"
             onClick={onClose}
-            className="text-2xl leading-none text-muted hover:text-primary"
+            variant="ghost"
+            size="icon"
+            className="h-9 w-9 text-xl leading-none"
           >
             ✕
-          </button>
+          </Button>
         </div>
 
         <div className="max-h-[calc(90vh-104px)] overflow-y-auto p-4 sm:max-h-[calc(90vh-120px)] sm:p-6">
           <div className="mb-4 flex flex-wrap items-start gap-2 text-sm text-secondary sm:gap-4">
-            <span className="badge-brand rounded-full px-2 py-1">
+            <Badge variant="brand">
               {newsItem.feedTitle}
-            </span>
+            </Badge>
             <span className="min-w-0 break-words">
               {formatDate(newsItem.isoDate || newsItem.pubDate)}
             </span>
@@ -79,18 +83,19 @@ export const NewsDetailModal = ({ newsItem, isOpen, onClose }: NewsDetailModalPr
 
           {newsItem.link && (
             <div className="mt-6 pt-4 border-t border-[color:var(--border)]">
-              <a
-                href={newsItem.link}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 btn-brand px-4 py-2 rounded-lg font-medium transition"
-              >
-                {messages.article.readFullArticle}
-              </a>
+              <Button asChild variant="brand">
+                <a
+                  href={newsItem.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {messages.article.readFullArticle}
+                </a>
+              </Button>
             </div>
           )}
         </div>
-      </div>
+      </Card>
     </div>
   );
 };

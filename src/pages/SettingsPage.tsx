@@ -1,5 +1,6 @@
 import type { SettingsPageProps } from '../types/page-props';
 import { useI18n } from '../i18n/useI18n';
+import { Button } from '../components/ui';
 
 const currentYear = new Date().getFullYear();
 
@@ -8,32 +9,35 @@ export const SettingsPage = ({ version, onOpenFeeds, onOpenLanguage }: SettingsP
 
   return (
     <div className="app-container py-8 stagger-in">
-      {/* Menu top - full-width buttons */}
-      <div className="space-y-3 mb-8">
-        <button
-          className="btn-settings-action w-full rounded-lg px-4 py-3 text-sm font-medium transition"
-          onClick={onOpenLanguage}
-        >
-          {messages.settings.languageAction}
-        </button>
-        <button
-          className="btn-settings-action w-full rounded-lg px-4 py-3 text-sm font-medium transition"
-          onClick={onOpenFeeds}
-        >
-          {messages.settings.manageFeedsAction}
-        </button>
-      </div>
+      <div className="grid gap-8 lg:grid-cols-[minmax(0,0.95fr)_minmax(19rem,0.85fr)] lg:items-start">
+        <section className="space-y-3">
+          <Button
+            variant="secondary"
+            size="lg"
+            className="w-full justify-between rounded-2xl px-5"
+            onClick={onOpenLanguage}
+          >
+            <span>{messages.settings.languageAction}</span>
+            <span aria-hidden="true">→</span>
+          </Button>
+          <Button
+            variant="secondary"
+            size="lg"
+            className="w-full justify-between rounded-2xl px-5"
+            onClick={onOpenFeeds}
+          >
+            <span>{messages.settings.manageFeedsAction}</span>
+            <span aria-hidden="true">→</span>
+          </Button>
+        </section>
 
-      {/* Info section - esploso, senza box */}
-      <section className="space-y-6">
-        <div>
-          <p className="text-xs font-semibold uppercase tracking-[0.16em] text-muted mb-2">{messages.settings.appInfo}</p>
-          <dl className="space-y-3 text-sm text-secondary">
-            <div className="flex items-start justify-between gap-4 border-b border-[color:var(--border)] pb-3">
+        <section className="space-y-5 pt-1">
+          <dl className="space-y-4 text-sm text-secondary">
+            <div className="flex items-start justify-between gap-4 border-b border-[color:var(--border)] pb-4">
               <dt className="text-muted">{messages.settings.copyright}</dt>
               <dd className="font-medium text-primary">© {currentYear}</dd>
             </div>
-            <div className="flex items-start justify-between gap-4">
+            <div className="flex items-start justify-between gap-4 border-b border-[color:var(--border)] pb-4">
               <dt className="text-muted">{messages.settings.repository}</dt>
               <dd className="font-medium text-primary">
                 <a
@@ -46,13 +50,13 @@ export const SettingsPage = ({ version, onOpenFeeds, onOpenLanguage }: SettingsP
                 </a>
               </dd>
             </div>
-            <div className="flex items-start justify-between gap-4 border-t border-[color:var(--border)] pt-3">
+            <div className="flex items-start justify-between gap-4">
               <dt className="text-muted">{messages.settings.version}</dt>
               <dd className="font-medium text-primary">v{version}</dd>
             </div>
           </dl>
-        </div>
-      </section>
+        </section>
+      </div>
     </div>
   );
 };

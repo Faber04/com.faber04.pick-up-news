@@ -11,6 +11,7 @@ PickUpNews allows you to easily aggregate and read all your favorite RSS feeds. 
 - **📡 RSS Feed Management**: Easily add and remove RSS feeds manually
 - **🌍 Bilingual UI Foundation**: Interface available in Italian and English with persistent language preference
 - **🏳️ Language Settings**: Dedicated Settings subpage for language selection with flag + native label
+- **🧱 UI Refresh Foundation**: New reusable UI primitives for buttons, cards, and alerts now drive the first v1.4.9 refreshed surfaces
 - **↕️ Feed Ordering**: Reorder feeds in the Feeds page and keep order persisted in localStorage
 - **🖱️ Drag & Drop Ordering**: Reorder feeds by dragging directly in the Feeds page
 - **📲 Touch Drag & Drop**: Feed drag & drop sorting also works on mobile touch devices
@@ -42,6 +43,7 @@ PickUpNews allows you to easily aggregate and read all your favorite RSS feeds. 
 - **Frontend Framework**: React 18 with TypeScript
 - **Build Tool**: Vite 4 (fast development and optimized build)
 - **Styling**: Tailwind CSS 3 (utility-first CSS framework)
+- **UI Primitives**: shadcn/ui-style component foundation with `class-variance-authority`, `clsx`, `tailwind-merge`, and Radix Slot
 - **RSS Parsing**: Custom XML parser via the browser's native `DOMParser` (supports RSS 2.0 and Atom)
 - **Routing**: React Router DOM (for future expansions)
 - **State Management**: React Hooks + localStorage
@@ -172,10 +174,12 @@ Each call is protected by a **10-second timeout** using `AbortController`: if a 
 - ✅ Introduced centralized JSON locale dictionaries for visible UI labels
 - ✅ Added language picker with flag + native language label, ready for future variants such as `English (UK)` and `English (US)`
 
-### v1.4.9
-- 🎨 UI update using the shadcn/ui library
-  - Integration of modern, accessible components
-  - Overall interface restyling
+### v1.4.9 🚧
+- 🎨 UI refresh using a shadcn/ui-style foundation
+  - ✅ Added reusable Button, Card, and Alert primitives
+  - ✅ Added reusable Input primitive and completed migration of the replaceable legacy UI components
+  - ✅ Refreshed Header, Settings, Home empty state, feed management, breadcrumbs, language selection, news cards, and article modal with the new component layer
+  - ⏳ Continue with final visual polish and consistency refinements on the v1.4.9 design system
 
 ### v2.0.0
 - 📥 Export feeds to JSON file

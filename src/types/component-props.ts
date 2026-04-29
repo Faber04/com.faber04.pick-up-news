@@ -72,6 +72,7 @@ export interface NewsCardProps {
   onClick: (newsItem: NewsItem) => void;
   showFeedTitle?: boolean;
   locale: string;
+  compact?: boolean;
 }
 
 export interface SubpageContainerProps {

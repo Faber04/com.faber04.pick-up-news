@@ -1,8 +1,8 @@
 import { useEffect, useMemo, useState } from 'react';
 import { NewsItem } from '../types';
-import type { FeedAccordionProps, NewsCardProps, NewsListProps } from '../types/component-props';
+import type { NewsCardProps, NewsListProps } from '../types/component-props';
 import { useI18n } from '../i18n/useI18n';
-import { Badge, Button, Card, CardContent } from './ui';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger, Badge, Button, Card, CardContent } from './ui';
 
 const ACCORDION_STORAGE_KEY = 'pickUpNews_byFeed_openAccordions';
 
@@ -84,18 +84,6 @@ export const NewsList = ({ news, viewMode, feedOrder, loading, onNewsClick }: Ne
     });
   }, [orderedGroups]);
 
-  const handleToggleAccordion = (feedId: string) => {
-    setOpenFeedIds((prev) => {
-      const next = new Set(prev);
-      if (next.has(feedId)) {
-        next.delete(feedId);
-      } else {
-        next.add(feedId);
-      }
-      return next;
-    });
-  };
-
   const handleExpandAll = () => {
     setOpenFeedIds(new Set(orderedGroups.map(([feedId]) => feedId)));
   };
@@ -159,63 +147,45 @@ export const NewsList = ({ news, viewMode, feedOrder, loading, onNewsClick }: Ne
             </span>
           </div>
 
-          {orderedGroups.map(([feedId, group]) => (
-            <FeedAccordion
-              key={feedId}
-              feedId={feedId}
-              feedTitle={group.feedTitle}
-              feedNews={group.items}
-              isOpen={openFeedIds.has(feedId)}
-              onToggle={handleToggleAccordion}
-              onNewsClick={onNewsClick}
-              locale={locale}
-            />
-          ))}
+          <Accordion
+            type="multiple"
+            value={Array.from(openFeedIds)}
+            onValueChange={(values) => setOpenFeedIds(new Set(values))}
+            className="space-y-3"
+          >
+            {orderedGroups.map(([feedId, group]) => (
+              <AccordionItem key={feedId} value={feedId}>
+                <AccordionTrigger>
+                  <div className="flex items-center gap-2">
+                    <span className="font-semibold text-primary">{group.feedTitle}</span>
+                    <Badge variant="brand" className="text-xs">
+                      {group.items.length}
+                    </Badge>
+                  </div>
+                </AccordionTrigger>
+                <AccordionContent>
+                  <div className="space-y-2.5">
+                    {group.items.map((item, index) => (
+                      <NewsCard
+                        key={`${item.feedId}-${index}`}
+                        newsItem={item}
+                        onClick={onNewsClick}
+                        showFeedTitle={false}
+                        locale={locale}
+                        compact
+                      />
+                    ))}
+                  </div>
+                </AccordionContent>
+              </AccordionItem>
+            ))}
+          </Accordion>
         </div>
       )}
     </div>
   );
 };
-
-const FeedAccordion = ({ feedId, feedTitle, feedNews, isOpen, onToggle, onNewsClick, locale }: FeedAccordionProps) => {
-  return (
-    <Card className="overflow-hidden">
-      {/* Accordion Header */}
-      <button
-        onClick={() => onToggle(feedId)}
-        className="flex w-full items-center justify-between bg-[color:var(--surface-muted)] px-4 py-3 text-left transition-colors hover:brightness-95"
-      >
-        <div className="flex items-center gap-2">
-          <span className="font-semibold text-primary">{feedTitle}</span>
-          <Badge variant="brand" className="text-xs">
-            {feedNews.length}
-          </Badge>
-        </div>
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          className={`w-5 h-5 text-muted transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`}
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-          strokeWidth={2}
-        >
-          <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
-        </svg>
-      </button>
-
-      {/* Accordion Body */}
-      {isOpen && (
-        <div className="divide-y divide-[color:var(--border)]">
-          {feedNews.map((item, index) => (
-            <NewsCard key={`${item.feedId}-${index}`} newsItem={item} onClick={onNewsClick} showFeedTitle={false} locale={locale} />
-          ))}
-        </div>
-      )}
-    </Card>
-  );
-};
-
-const NewsCard = ({ newsItem, onClick, showFeedTitle = true, locale }: NewsCardProps) => {
+const NewsCard = ({ newsItem, onClick, showFeedTitle = true, locale, compact = false }: NewsCardProps) => {
   const formatDate = (dateString?: string) => {
     if (!dateString) return '';
     try {
@@ -233,12 +203,12 @@ const NewsCard = ({ newsItem, onClick, showFeedTitle = true, locale }: NewsCardP
 
   return (
     <Card
-      className="cursor-pointer transition-transform duration-200 hover:-translate-y-0.5"
+      className={`cursor-pointer transition-transform duration-200 ${compact ? 'rounded-lg hover:-translate-y-0 shadow-[0_10px_24px_-20px_rgba(2,8,23,0.8)]' : 'hover:-translate-y-0.5'}`}
       onClick={() => onClick(newsItem)}
     >
-      <CardContent className="p-4">
-        <div className="mb-2 flex items-start justify-between">
-          <h4 className="mr-4 line-clamp-2 flex-1 font-medium text-primary">
+      <CardContent className={compact ? 'p-3 pt-2.5' : 'p-4'}>
+        <div className={`flex items-start justify-between ${compact ? 'mb-1.5' : 'mb-2'}`}>
+          <h4 className={`mr-4 line-clamp-2 flex-1 font-medium text-primary ${compact ? 'text-[0.92rem] leading-snug' : ''}`}>
             {newsItem.title}
           </h4>
           <span className="whitespace-nowrap text-xs text-muted">
@@ -247,7 +217,7 @@ const NewsCard = ({ newsItem, onClick, showFeedTitle = true, locale }: NewsCardP
         </div>
 
         <div
-          className="mb-2 line-clamp-2 text-sm text-secondary"
+          className={`line-clamp-2 text-secondary ${compact ? 'mb-1.5 text-[0.82rem] leading-snug' : 'mb-2 text-sm'}`}
           dangerouslySetInnerHTML={{ __html: newsItem.truncatedDescription }}
         />
 

@@ -173,9 +173,9 @@ Each call is protected by a **10-second timeout** using `AbortController`: if a 
 - ✅ Added language picker with flag + native language label, ready for future variants such as `English (UK)` and `English (US)`
 
 ### v1.4.9
-- 🎨 Aggiornamento dell'UI tramite la libreria shadcn/ui
-  - Integrazione di componenti moderni e accessibili
-  - Restyling generale dell'interfaccia utente
+- 🎨 UI update using the shadcn/ui library
+  - Integration of modern, accessible components
+  - Overall interface restyling
 
 ### v2.0.0
 - 📥 Export feeds to JSON file

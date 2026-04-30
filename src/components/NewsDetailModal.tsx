@@ -49,40 +49,42 @@ export const NewsDetailModal = ({ newsItem, isOpen, onClose }: NewsDetailModalPr
           </Button>
         </div>
 
-        <div className="max-h-[calc(90vh-104px)] overflow-y-auto p-4 sm:max-h-[calc(90vh-120px)] sm:p-6">
-          <div className="mb-4 flex flex-wrap items-start gap-2 text-sm text-secondary sm:gap-4">
-            <Badge variant="brand">
-              {newsItem.feedTitle}
-            </Badge>
-            <span className="min-w-0 break-words">
-              {formatDate(newsItem.isoDate || newsItem.pubDate)}
-            </span>
-            {newsItem.creator && (
-              <span className="min-w-0 break-words">{formatMessage(messages.article.authorBy, { author: newsItem.creator })}</span>
+        <div className="max-h-[calc(90vh-104px)] overflow-y-auto p-4 sm:max-h-[calc(90vh-120px)] sm:p-6 flex flex-col">
+          <div className="flex-1">
+            <div className="mb-4 flex flex-wrap items-start gap-2 text-sm text-secondary sm:gap-4">
+              <Badge variant="brand">
+                {newsItem.feedTitle}
+              </Badge>
+              <span className="min-w-0 break-words">
+                {formatDate(newsItem.isoDate || newsItem.pubDate)}
+              </span>
+              {newsItem.creator && (
+                <span className="min-w-0 break-words">{formatMessage(messages.article.authorBy, { author: newsItem.creator })}</span>
+              )}
+            </div>
+
+            {newsItem.content ? (
+              <div
+                className="prose prose-sm max-w-none"
+                dangerouslySetInnerHTML={{ __html: newsItem.content }}
+              />
+            ) : newsItem.contentSnippet ? (
+              <div
+                className="prose prose-sm max-w-none text-secondary leading-relaxed"
+                dangerouslySetInnerHTML={{ __html: newsItem.contentSnippet }}
+              />
+            ) : newsItem.summary ? (
+              <div
+                className="prose prose-sm max-w-none text-secondary leading-relaxed"
+                dangerouslySetInnerHTML={{ __html: newsItem.summary }}
+              />
+            ) : (
+              <p className="text-muted italic">{messages.article.noContent}</p>
             )}
           </div>
 
-          {newsItem.content ? (
-            <div
-              className="prose prose-sm max-w-none"
-              dangerouslySetInnerHTML={{ __html: newsItem.content }}
-            />
-          ) : newsItem.contentSnippet ? (
-            <div
-              className="prose prose-sm max-w-none text-secondary leading-relaxed"
-              dangerouslySetInnerHTML={{ __html: newsItem.contentSnippet }}
-            />
-          ) : newsItem.summary ? (
-            <div
-              className="prose prose-sm max-w-none text-secondary leading-relaxed"
-              dangerouslySetInnerHTML={{ __html: newsItem.summary }}
-            />
-          ) : (
-            <p className="text-muted italic">{messages.article.noContent}</p>
-          )}
-
           {newsItem.link && (
-            <div className="mt-6 pt-4 pb-4 border-t border-[color:var(--border)]">
+            <div className="mt-6 pt-4 border-t border-[color:var(--border)]">
               <Button asChild variant="brand">
                 <a
                   href={newsItem.link}

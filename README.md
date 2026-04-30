@@ -182,13 +182,14 @@ Each call is protected by a **10-second timeout** using `AbortController`: if a 
   - ✅ Replaced custom by-site accordion with Radix/shadcn accordion primitive
   - ✅ Improved grouped news readability with optimized spacing/padding
 
-### v1.4.10
-- Add greater visual emphasis on article hover/tap in Home page
-  - Enhance hover state styling for news items
-  - Improve touch feedback on mobile article selection
-- Fix news modal padding issue
-  - Add bottom padding to button container to prevent "Read full article" button from being cut off
-- Align mobile navigation button colors with theme colors used in other views
+### v1.4.10 ✅
+- ✅ Enhanced visual emphasis on article hover/tap in Home page
+  - `scale` + `hover:-translate-y-1` transforms and increased shadow intensity on hover
+  - `active:scale-95` for immediate tap feedback on mobile
+- ✅ Fixed news modal layout for long articles
+  - Modal refactored with scrollable content area + fixed footer button
+  - "Read full article" button is always visible regardless of article length
+- ✅ Aligned mobile navigation button colors with desktop and other views
 
 ### v2.0.0
 - 📥 Export feeds to JSON file

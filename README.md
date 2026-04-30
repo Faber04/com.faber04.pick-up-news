@@ -174,12 +174,21 @@ Each call is protected by a **10-second timeout** using `AbortController`: if a 
 - ✅ Introduced centralized JSON locale dictionaries for visible UI labels
 - ✅ Added language picker with flag + native language label, ready for future variants such as `English (UK)` and `English (US)`
 
-### v1.4.9 🚧
+### v1.4.9 ✅
 - 🎨 UI refresh using a shadcn/ui-style foundation
   - ✅ Added reusable Button, Card, and Alert primitives
   - ✅ Added reusable Input primitive and completed migration of the replaceable legacy UI components
   - ✅ Refreshed Header, Settings, Home empty state, feed management, breadcrumbs, language selection, news cards, and article modal with the new component layer
-  - ⏳ Continue with final visual polish and consistency refinements on the v1.4.9 design system
+  - ✅ Replaced custom by-site accordion with Radix/shadcn accordion primitive
+  - ✅ Improved grouped news readability with optimized spacing/padding
+
+### v1.4.10
+- Add greater visual emphasis on article hover/tap in Home page
+  - Enhance hover state styling for news items
+  - Improve touch feedback on mobile article selection
+- Fix news modal padding issue
+  - Add bottom padding to button container to prevent "Read full article" button from being cut off
+- Align mobile navigation button colors with theme colors used in other views
 
 ### v2.0.0
 - 📥 Export feeds to JSON file

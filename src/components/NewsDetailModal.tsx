@@ -33,7 +33,7 @@ export const NewsDetailModal = ({ newsItem, isOpen, onClose }: NewsDetailModalPr
       className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 p-3 sm:p-4"
       onClick={handleBackdropClick}
     >
-      <Card className="max-h-[90vh] w-full max-w-4xl overflow-hidden bg-[color:var(--surface-strong)] shadow-xl">
+      <Card className="max-h-[90vh] w-full max-w-4xl overflow-hidden bg-[color:var(--surface-strong)] shadow-xl flex flex-col">
         <div className="flex items-start justify-between gap-4 border-b border-[color:var(--border)] p-4 sm:items-center sm:p-6">
           <h2 className="line-clamp-3 text-xl font-bold text-primary sm:text-2xl">
             {newsItem.title}
@@ -49,54 +49,52 @@ export const NewsDetailModal = ({ newsItem, isOpen, onClose }: NewsDetailModalPr
           </Button>
         </div>
 
-        <div className="max-h-[calc(90vh-104px)] overflow-y-auto p-4 sm:max-h-[calc(90vh-120px)] sm:p-6 flex flex-col">
-          <div className="flex-1">
-            <div className="mb-4 flex flex-wrap items-start gap-2 text-sm text-secondary sm:gap-4">
-              <Badge variant="brand">
-                {newsItem.feedTitle}
-              </Badge>
-              <span className="min-w-0 break-words">
-                {formatDate(newsItem.isoDate || newsItem.pubDate)}
-              </span>
-              {newsItem.creator && (
-                <span className="min-w-0 break-words">{formatMessage(messages.article.authorBy, { author: newsItem.creator })}</span>
-              )}
-            </div>
-
-            {newsItem.content ? (
-              <div
-                className="prose prose-sm max-w-none"
-                dangerouslySetInnerHTML={{ __html: newsItem.content }}
-              />
-            ) : newsItem.contentSnippet ? (
-              <div
-                className="prose prose-sm max-w-none text-secondary leading-relaxed"
-                dangerouslySetInnerHTML={{ __html: newsItem.contentSnippet }}
-              />
-            ) : newsItem.summary ? (
-              <div
-                className="prose prose-sm max-w-none text-secondary leading-relaxed"
-                dangerouslySetInnerHTML={{ __html: newsItem.summary }}
-              />
-            ) : (
-              <p className="text-muted italic">{messages.article.noContent}</p>
+        <div className="flex-1 overflow-y-auto p-4 sm:p-6">
+          <div className="mb-4 flex flex-wrap items-start gap-2 text-sm text-secondary sm:gap-4">
+            <Badge variant="brand">
+              {newsItem.feedTitle}
+            </Badge>
+            <span className="min-w-0 break-words">
+              {formatDate(newsItem.isoDate || newsItem.pubDate)}
+            </span>
+            {newsItem.creator && (
+              <span className="min-w-0 break-words">{formatMessage(messages.article.authorBy, { author: newsItem.creator })}</span>
             )}
           </div>
 
-          {newsItem.link && (
-            <div className="mt-6 pt-4 border-t border-[color:var(--border)]">
-              <Button asChild variant="brand">
-                <a
-                  href={newsItem.link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  {messages.article.readFullArticle}
-                </a>
-              </Button>
-            </div>
+          {newsItem.content ? (
+            <div
+              className="prose prose-sm max-w-none"
+              dangerouslySetInnerHTML={{ __html: newsItem.content }}
+            />
+          ) : newsItem.contentSnippet ? (
+            <div
+              className="prose prose-sm max-w-none text-secondary leading-relaxed"
+              dangerouslySetInnerHTML={{ __html: newsItem.contentSnippet }}
+            />
+          ) : newsItem.summary ? (
+            <div
+              className="prose prose-sm max-w-none text-secondary leading-relaxed"
+              dangerouslySetInnerHTML={{ __html: newsItem.summary }}
+            />
+          ) : (
+            <p className="text-muted italic">{messages.article.noContent}</p>
           )}
         </div>
+
+        {newsItem.link && (
+          <div className="border-t border-[color:var(--border)] p-4 sm:p-6">
+            <Button asChild variant="brand">
+              <a
+                href={newsItem.link}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {messages.article.readFullArticle}
+              </a>
+            </Button>
+          </div>
+        )}
       </Card>
     </div>
   );

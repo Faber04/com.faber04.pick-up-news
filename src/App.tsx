@@ -16,7 +16,7 @@ import { SettingsPage } from './pages/SettingsPage';
 import { NewsItem } from './types';
 import type { NavigationState, BreadcrumbNode, NavigationActions } from './types/navigation';
 
-const APP_VERSION = '1.4.9';
+const APP_VERSION = '1.4.10';
 
 function App() {
   const { messages, supportedLanguages, language, setLanguage } = useI18n();

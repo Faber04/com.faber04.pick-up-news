@@ -60,7 +60,7 @@ export const Header = ({ currentPage, themeMode, onToggleTheme, onNavigate }: He
               key={page}
               type="button"
               onClick={() => handleNavigate(page)}
-              variant={currentPage === page ? 'brand' : 'outline'}
+              variant={currentPage === page ? 'brand' : 'ghost'}
               className={`w-full justify-start rounded-2xl px-4 py-3 text-left ${
                 currentPage === page
                   ? 'shadow-[0_18px_34px_-28px_rgba(2,8,23,0.9)]'

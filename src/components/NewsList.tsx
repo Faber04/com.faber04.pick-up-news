@@ -203,7 +203,7 @@ const NewsCard = ({ newsItem, onClick, showFeedTitle = true, locale, compact = f
 
   return (
     <Card
-      className={`cursor-pointer transition-transform duration-200 ${compact ? 'rounded-lg hover:-translate-y-0 shadow-[0_10px_24px_-20px_rgba(2,8,23,0.8)]' : 'hover:-translate-y-0.5'}`}
+      className={`cursor-pointer transition-all duration-200 ${compact ? 'rounded-lg hover:-translate-y-1 hover:scale-[1.02] hover:shadow-[0_14px_32px_-24px_rgba(2,8,23,0.9)] active:scale-95 active:translate-y-0' : 'hover:-translate-y-1 hover:scale-[1.01] hover:shadow-[0_14px_32px_-24px_rgba(2,8,23,0.85)] active:scale-95 active:translate-y-0'}`}
       onClick={() => onClick(newsItem)}
     >
       <CardContent className={compact ? 'p-3 pt-2.5' : 'p-4'}>

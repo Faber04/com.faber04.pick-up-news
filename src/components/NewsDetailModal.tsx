@@ -82,7 +82,7 @@ export const NewsDetailModal = ({ newsItem, isOpen, onClose }: NewsDetailModalPr
           )}
 
           {newsItem.link && (
-            <div className="mt-6 pt-4 border-t border-[color:var(--border)]">
+            <div className="mt-6 pt-4 pb-4 border-t border-[color:var(--border)]">
               <Button asChild variant="brand">
                 <a
                   href={newsItem.link}

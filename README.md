@@ -190,6 +190,22 @@ Each call is protected by a **10-second timeout** using `AbortController`: if a 
   - Duplicate detection by feed URL
   - Feeds with duplicate URL are skipped
 
+### v2.1.0
+- 📲 Installable PWA
+  - `manifest.json` with app name, icons, theme color, and `standalone` display mode
+  - Service Worker for offline caching of shell assets
+  - Install prompt surfaced on supported browsers (Android Chrome, desktop Chromium)
+- 🔔 Push alert subscription
+  - Settings toggle to enable/disable browser push notifications
+  - Web Push API with VAPID keys to subscribe the user's browser
+  - Push notification triggered when a feed refresh detects new articles since the last visit
+- 🗃️ In-app notification center
+  - Bell icon in the header with unread badge count
+  - Notification panel (side panel or dropdown) listing recent alerts
+  - Each entry shows: feed name, article title, and timestamp
+  - Notifications persisted in localStorage and cleared when read
+  - "Mark all as read" action in the notification panel
+
 ### v3.0.0
 - 🔧 Replace `corsproxy.io` with a self-hosted Cloudflare Worker
   - `corsproxy.io` free tier is limited to localhost; production requests may be blocked
